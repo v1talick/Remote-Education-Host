@@ -13,4 +13,8 @@ public class Group {
     Specialty specialty;
     String name;
     Date creationDate;
+
+    public Group(int id) {
+        this.id = id;
+    }
 }

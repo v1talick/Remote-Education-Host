@@ -19,7 +19,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
     public Optional<Department> getDepartmentById(int id) {
         String sql = "select * from departments d where d.department_id=?";
         try {
-            return Optional.of((Department) jdbcTemplate.query(sql, (rs, rowNum) ->
+            return Optional.of((Department) jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
                     new Department(rs.getInt("department_id"), rs.getString("department_name")
                             , rs.getString("description"), rs.getDate("created_at"))
                     ,id));
@@ -39,14 +39,14 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     @Override
     public void saveDepartment(Department department) {
-        String sql = "insert into departments (department_id, department_name, description, created_at) values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, department.getId(), department.getName(), department.getDescription(), department.getCreatedAt());
+        String sql = "insert into departments (department_name, description, created_at) values (?, ?, ?)";
+        jdbcTemplate.update(sql,  department.getName(), department.getDescription(), department.getCreatedAt());
     }
 
     @Override
     public void updateDepartment(Department department) {
         String sql = "update departments set department_name=?, description=?, created_at=? where department_id=?";
-        jdbcTemplate.update(sql, department.getId(), department.getName(), department.getDescription(), department.getCreatedAt());
+        jdbcTemplate.update(sql, department.getName(), department.getDescription(), department.getCreatedAt(), department.getId());
     }
 
     @Override

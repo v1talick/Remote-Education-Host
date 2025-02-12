@@ -9,7 +9,7 @@ import lombok.Setter;
 public class Specialty {
     int id;
     String name;
-    String department;
+    Department department;
 
     public Specialty(int id) {
         this.id = id;

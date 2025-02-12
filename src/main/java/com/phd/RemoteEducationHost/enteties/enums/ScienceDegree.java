@@ -7,5 +7,11 @@ public enum ScienceDegree {
     DoctorOfPhilosophy,
     DoctorOfScience,
     ProfessionalDoctorate,
-    None
+    None;
+    public static ScienceDegree getEnum(String s) {
+        s = s.replaceAll("\\s+","");
+        s = s.replaceAll("of", "Of");
+
+        return ScienceDegree.valueOf(s);
+    }
 }

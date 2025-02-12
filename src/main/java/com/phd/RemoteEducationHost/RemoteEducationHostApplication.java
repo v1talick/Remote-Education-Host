@@ -5,6 +5,7 @@ import com.phd.RemoteEducationHost.enteties.Specialty;
 import com.phd.RemoteEducationHost.mappers.GroupMapper;
 import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
 import com.phd.RemoteEducationHost.repositories.GroupRepository;
+import com.phd.RemoteEducationHost.repositories.TeacherRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +19,8 @@ public class RemoteEducationHostApplication {
 	GroupRepository groupRepository;
 	@Autowired
 	DepartmentRepository departmentRepository;
+	@Autowired
+	TeacherRepository teacherRepository;
 	public static void main(String[] args) {
 		SpringApplication.run(RemoteEducationHostApplication.class, args);
 	}
@@ -25,7 +28,7 @@ public class RemoteEducationHostApplication {
 	public void test() {
 		try {
 //			System.out.println(groupRepository.getGroupById(228));
-			departmentRepository.getAllDepartments().forEach(System.out::println);
+			teacherRepository.getAllTeachers().forEach(System.out::println);
 		} catch (EmptyResultDataAccessException e) {
 			System.out.println("Group with id 228 not found");
 		}

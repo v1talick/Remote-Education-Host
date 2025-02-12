@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost.mappers;
 
+import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Group;
 import com.phd.RemoteEducationHost.enteties.Specialty;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,7 +22,7 @@ public class GroupMapper implements RowMapper {
         group.setSpecialty(specialty);
         if(rs.getMetaData().getColumnCount() > 4) {
             specialty.setName(rs.getString("specialty_name"));
-            specialty.setDepartment(rs.getString("department_name"));
+            specialty.setDepartment(new Department(rs.getInt("department_id")));
         }
         return group;
     }

@@ -14,4 +14,8 @@ public class Department {
     String name;
     String description;
     Date createdAt;
+
+    public Department(int id) {
+        this.id = id;
+    }
 }
