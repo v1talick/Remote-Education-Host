@@ -18,11 +18,11 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     TeacherMapper teacherMapper;
     @Override
     public Optional<Teacher> getTeacherById(int id) {
-        String sql = "select * from teachers t" +
-                "join profiles p on p.profile_id=t.teacher_id" +
+        String sql = "select * from teachers t " +
+                "join profiles p on p.profile_id=t.teacher_id " +
                 "where t.teacher_id=?";
         try {
-            return Optional.of((Teacher) jdbcTemplate.query(sql, teacherMapper, id));
+            return Optional.of((Teacher) jdbcTemplate.queryForObject(sql, teacherMapper, id));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -38,16 +38,20 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
     public void saveTeacher(Teacher teacher) {
-
+        String sql = "insert into teachers (teacher_id, science_degree, department) values (?,?,?)";
+        jdbcTemplate.update(sql, teacher.getId(), teacher.getScienceDegree().toString(), teacher.getDepartment().getId());
     }
 
     @Override
     public void updateTeacher(Teacher teacher) {
-
+        String sql = "update teachers set science_degree=?, department=? where teacher_id=?";
+        jdbcTemplate.update(sql, teacher.getScienceDegree().toString()
+                , teacher.getDepartment().getId(), teacher.getId());
     }
 
     @Override
     public void deleteTeacher(int teacherId) {
-
+        String sql = "delete from teachers where teacher_id=?";
+        jdbcTemplate.update(sql, teacherId);
     }
 }

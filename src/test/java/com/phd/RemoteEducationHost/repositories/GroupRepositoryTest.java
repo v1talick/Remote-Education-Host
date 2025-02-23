@@ -1,0 +1,40 @@
+package com.phd.RemoteEducationHost.repositories;
+
+import com.phd.RemoteEducationHost.configuration.SystemTestConfiguration;
+import com.phd.RemoteEducationHost.enteties.Group;
+import com.phd.RemoteEducationHost.enteties.Specialty;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringJUnitConfig(SystemTestConfiguration.class)
+public class GroupRepositoryTest {
+    @Autowired
+    GroupRepository groupRepository;
+    @Test
+    public void saveGroupTest() {
+        Group group = new Group(0, new Specialty(1),"testName", new Date());
+        groupRepository.saveGroup(group);
+        assertEquals(7, groupRepository.getAllGroups().size());
+    }
+    @Test
+    public void getGroupByIdTest() {
+        Group group = groupRepository.getGroupById(1).get();
+        assertEquals("CS-101", group.getName());
+    }
+    @Test
+    public void updateGroupTest() {
+        Group group = new Group(2, new Specialty(1), "testName2", new Date());
+        groupRepository.updateGroup(group);
+        assertEquals("testName2", groupRepository.getGroupById(2).get().getName());
+    }
+    @Test
+    public void deleteGroupTest() {
+        groupRepository.deleteGroup(7);
+        assertFalse(groupRepository.getGroupById(7).isPresent());
+    }
+}

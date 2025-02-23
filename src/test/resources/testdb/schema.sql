@@ -1,7 +1,7 @@
-CREATE TYPE public.lesson_type_enum AS ENUM
+CREATE TYPE lesson_type_enum AS ENUM
     ('Lecture', 'Laboratory lesson', 'Practical lesson');
 
-CREATE TYPE public.science_degree_enum AS ENUM
+CREATE TYPE science_degree_enum AS ENUM
     ('Associate of Science', 'Bachelor of Science', 'Master of Science', 'Doctor of Philosophy', 'Doctor of Science', 'Professional Doctorate', 'None');
 
 DROP TABLE IF EXISTS departments;
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS profiles
     lastname VARCHAR(255) NOT NULL,
     creation_date DATE DEFAULT CURRENT_DATE,
     birthday_date DATE NOT NULL,
-    CONSTRAINT profile_email_key UNIQUE (email),
-    CONSTRAINT profiles_email_check CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')
+--    CONSTRAINT profiles_email_check CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
+    CONSTRAINT profile_email_key UNIQUE (email)
 );
 
 DROP TABLE IF EXISTS students;

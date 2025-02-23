@@ -12,10 +12,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//@TestPropertySource(locations = "classpath:test-application.properties")
 @SpringJUnitConfig(SystemTestConfiguration.class)
-@TestPropertySource(locations = "classpath:test-application.properties")
 public class DepartmentRepositoryTest {
-    //h2 local db isnt seted up, tables missing
     @Autowired
     DepartmentRepository departmentRepository;
 
@@ -52,5 +51,8 @@ public class DepartmentRepositoryTest {
         departmentRepository.deleteDepartment(4);
         Optional<Department> department = departmentRepository.getDepartmentById(4);
         assertFalse(department.isPresent());
+    }
+    public static Department getTestDepartment() {
+        return new Department(0, "testName", "testDescription", new Date());
     }
 }

@@ -11,6 +11,7 @@ public interface GroupRepository {
     List<Group> getAllGroups();
     void saveGroup(Group group);
     void updateGroup(Group group);
+    void deleteGroup(int id);
 
 }
 

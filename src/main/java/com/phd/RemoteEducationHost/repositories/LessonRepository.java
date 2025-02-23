@@ -13,7 +13,7 @@ public interface LessonRepository {
     List<Lesson> getLessonsByDay(DayOfWeek day);
     List<Lesson> getLessonsByGroupId(int groupId);
     List<Lesson> getLessonsByTeacherId(int teacherId);
-    List<Lesson> getLessonsByDisciplineId(int disciplineId);
+    List<Lesson> getLessonsByClassId(int disciplineId);
     Optional<Lesson> getLessonByGroupIdAndDay(int groupId, DayOfWeek day);
     void saveLesson(Lesson lesson);
     void updateLesson(Lesson lesson);

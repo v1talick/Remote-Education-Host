@@ -5,18 +5,20 @@ import com.phd.RemoteEducationHost.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Override
     public Optional<User> getUserById(int id) {
-        String sql = "select * from profiles where id = ?";
+        String sql = "select * from profiles where profile_id = ?";
         try {
-            return Optional.of((User) jdbcTemplate.query(sql, (rs, rowNum) -> new User(rs.getInt("profile_id"),
+            return Optional.of((User) jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new User(rs.getInt("profile_id"),
                     rs.getString("email"),
                     rs.getString("encrypted_password"),
                     rs.getString("firstname"),
@@ -42,8 +44,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void saveUser(User user) {
-        String sql = "insert into profiles (profile_id, email, encrypted_password, firstname, lastname, creation_date, birthday_date) values (?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getId(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getCreateAt(), user.getBirthdayDate());
+        String sql = "insert into profiles (email, encrypted_password, firstname, lastname, creation_date, birthday_date) values (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getCreateAt(), user.getBirthdayDate());
     }
 
     @Override

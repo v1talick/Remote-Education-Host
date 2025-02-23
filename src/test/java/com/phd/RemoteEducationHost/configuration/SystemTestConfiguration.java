@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-
+import static org.junit.jupiter.api.Assertions.*;
 import javax.sql.DataSource;
 
 @Configuration

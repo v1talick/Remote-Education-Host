@@ -14,7 +14,7 @@ public class TeacherMapper implements RowMapper<Teacher> {
     public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
         Teacher teacher = new Teacher();
         teacher.setId(rs.getInt("teacher_id"));
-//        teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));
+        teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));
         teacher.setDepartment(new Department(rs.getInt("department")));
         teacher.setBirthdayDate(rs.getDate("birthday_date"));
         teacher.setCreateAt(rs.getDate("creation_date"));

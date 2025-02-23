@@ -1,0 +1,50 @@
+package com.phd.RemoteEducationHost.repositories;
+
+import com.phd.RemoteEducationHost.configuration.SystemTestConfiguration;
+import com.phd.RemoteEducationHost.enteties.Group;
+import com.phd.RemoteEducationHost.enteties.Student;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringJUnitConfig(SystemTestConfiguration.class)
+public class StudentRepositoryTest {
+    @Autowired
+    StudentRepository studentRepository;
+
+    @Test
+    public void saveStudentTest() {
+        Student student = new Student(5, "testEmail@mail.com", "testSurname"
+                , "testEmail@mail.com", "testPassword", new Date(), new Date(), new Group(1));
+        studentRepository.saveStudent(student);
+        assertEquals(3, studentRepository.getAllStudents().size());
+    }
+
+    @Test
+    public void getStudentByIdTest() {
+        Student expectedStudent = new Student(1, "alice.smith@example.com", "hashed_password_1"
+                , "Alice", "Smith", new Date(), new Date(), new Group(1));
+        Student student = studentRepository.getStudentById(1).get();
+        assertEquals("hashed_password_1", student.getPassword());
+        assertEquals(student, expectedStudent);
+    }
+
+    @Test
+    public void updateStudentTest() {
+        Student student = studentRepository.getStudentById(2).get();
+        Group group = new Group(6);
+        student.setGroup(group);
+        studentRepository.updateStudent(student);
+        assertEquals(6, studentRepository.getStudentById(2).get().getGroup().getId());
+    }
+    @Test
+    public void deleteStudentTest() {
+        studentRepository.deleteStudent(5);
+        assertEquals(2, studentRepository.getAllStudents().size());
+        assertFalse(studentRepository.getStudentById(5).isPresent());
+    }
+}

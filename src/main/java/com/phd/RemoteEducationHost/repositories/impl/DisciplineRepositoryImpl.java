@@ -15,9 +15,9 @@ public class DisciplineRepositoryImpl implements DisciplineRepository {
     JdbcTemplate jdbcTemplate;
     @Override
     public Optional<Discipline> getDisciplineById(int id) {
-        String sql = "select * from disciplines where id = ?";
+        String sql = "select * from disciplines where discipline_id = ?";
         try {
-            return Optional.of((Discipline) jdbcTemplate.query(sql,
+            return Optional.of((Discipline) jdbcTemplate.queryForObject(sql,
                     (rs, rowNum) -> new Discipline(rs.getInt("discipline_id"),
                             rs.getString("discipline_name"),
                             rs.getString("description")), id));
@@ -37,8 +37,8 @@ public class DisciplineRepositoryImpl implements DisciplineRepository {
 
     @Override
     public void saveDiscipline(Discipline discipline) {
-        String sql = "insert into disciplines (discipline_id, discipline_name, description) values (?, ?, ?)";
-        jdbcTemplate.update(sql, discipline.getId(), discipline.getName(), discipline.getDescription());
+        String sql = "insert into disciplines (discipline_name, description) values (?, ?)";
+        jdbcTemplate.update(sql, discipline.getName(), discipline.getDescription());
     }
 
     @Override

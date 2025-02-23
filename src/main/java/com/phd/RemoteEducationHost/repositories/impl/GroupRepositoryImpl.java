@@ -47,13 +47,19 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     @Override
     public void saveGroup(Group group) {
-        String sql = "insert into groups_ (group_id, group_name, creation_date, specialty) values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, group.getId(), group.getName(), group.getCreationDate(), group.getSpecialty().getId());
+        String sql = "insert into groups_ (group_name, creation_date, specialty) values (?, ?, ?)";
+        jdbcTemplate.update(sql, group.getName(), group.getCreationDate(), group.getSpecialty().getId());
     }
 
     @Override
     public void updateGroup(Group group) {
         String sql = "update groups_ set group_name=?, creation_date=?, specialty=? where group_id=?";
         jdbcTemplate.update(sql, group.getName(), group.getCreationDate(), group.getSpecialty().getId(), group.getId());
+    }
+
+    @Override
+    public void deleteGroup(int id) {
+        String sql = "delete from groups_ where group_id=?";
+        jdbcTemplate.update(sql, id);
     }
 }
