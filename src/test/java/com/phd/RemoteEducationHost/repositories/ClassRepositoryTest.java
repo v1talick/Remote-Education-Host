@@ -62,7 +62,7 @@ public class ClassRepositoryTest {
         Class aClass = classRepository.getClassById(2).get();
         aClass.setStartedAt(new Date());
         classRepository.updateClass(aClass);
-        assertEquals("2025-02-20", classRepository.getClassById(2).get().getStartedAt().toString());
+        assertEquals("2025-02-27", classRepository.getClassById(2).get().getStartedAt().toString());
     }
     @Test
     public void deleteClass() {

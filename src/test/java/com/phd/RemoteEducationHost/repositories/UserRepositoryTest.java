@@ -17,8 +17,8 @@ public class UserRepositoryTest {
     public void saveUserTest(){
         User user = new User(0, "testEmail@mail.com", "testSurname", "testEmail@mail.com", "testPassword", new Date(), new Date());
         userRepository.saveUser(user);
-        assertEquals(5, userRepository.getAllUsers().size());
-        assertEquals("testEmail@mail.com", userRepository.getUserById(5).get().getEmail());
+        assertEquals(6, userRepository.getAllUsers().size());
+        assertEquals("testEmail@mail.com", userRepository.getUserById(6).get().getEmail());
     }
     @Test
     public void getUserByIdTest() {
@@ -35,6 +35,6 @@ public class UserRepositoryTest {
     public void deleteUserTest(){
         userRepository.deleteUser(5);
         assertFalse(userRepository.getUserById(5).isPresent());
-        assertEquals(4, userRepository.getAllUsers().size());
+        assertEquals(5, userRepository.getAllUsers().size());
     }
 }

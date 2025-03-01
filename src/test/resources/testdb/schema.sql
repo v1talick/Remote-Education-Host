@@ -1,9 +1,3 @@
-CREATE TYPE lesson_type_enum AS ENUM
-    ('Lecture', 'Laboratory lesson', 'Practical lesson');
-
-CREATE TYPE science_degree_enum AS ENUM
-    ('Associate of Science', 'Bachelor of Science', 'Master of Science', 'Doctor of Philosophy', 'Doctor of Science', 'Professional Doctorate', 'None');
-
 DROP TABLE IF EXISTS departments;
 CREATE TABLE IF NOT EXISTS departments
 (
@@ -56,6 +50,8 @@ CREATE TABLE IF NOT EXISTS students
     CONSTRAINT students_group_fkey FOREIGN KEY (group_) REFERENCES groups_ (group_id) ON DELETE NO ACTION,
     CONSTRAINT students_student_id_fkey FOREIGN KEY (student_id) REFERENCES profiles (profile_id) ON DELETE NO ACTION
 );
+CREATE TYPE science_degree_enum AS ENUM
+    ('Associate of Science', 'Bachelor of Science', 'Master of Science', 'Doctor of Philosophy', 'Doctor of Science', 'Professional Doctorate', 'None');
 
 DROP TABLE IF EXISTS teachers;
 CREATE TABLE IF NOT EXISTS teachers
@@ -120,6 +116,8 @@ CREATE TABLE IF NOT EXISTS answers
     CONSTRAINT answers_file_path_check CHECK (file_path ~ '^/uploads/.*\\.(txt|pdf|docs|jpg|png)$'),
     CONSTRAINT answers_grade_check CHECK (grade > 0 AND grade < 101)
 );
+CREATE TYPE lesson_type_enum AS ENUM
+    ('Lecture', 'Laboratory lesson', 'Practical lesson');
 
 DROP TABLE IF EXISTS lessons;
 

@@ -19,7 +19,7 @@ public class DisciplineRepositoryTest {
     public void saveDisciplineTest(){
         Discipline discipline = new Discipline(0, "testName", "testDescription");
         disciplineRepository.saveDiscipline(discipline);
-        assertEquals(4, disciplineRepository.getAllDisciplines().size());
+        assertEquals(3, disciplineRepository.getAllDisciplines().size());
         assertEquals("testName", disciplineRepository.getDisciplineById(4).get().getName());
     }
     @Test

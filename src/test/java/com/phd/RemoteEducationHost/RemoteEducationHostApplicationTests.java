@@ -1,9 +1,12 @@
 package com.phd.RemoteEducationHost;
 
+import com.phd.RemoteEducationHost.configuration.SystemTestConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringBootTest
+@SpringJUnitConfig(SystemTestConfiguration.class)
 class RemoteEducationHostApplicationTests {
 
 	@Test
