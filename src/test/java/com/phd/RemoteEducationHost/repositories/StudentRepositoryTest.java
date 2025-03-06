@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +20,7 @@ public class StudentRepositoryTest {
     @Test
     public void saveStudentTest() {
         Student student = new Student(5, "testEmail@mail.com", "testSurname"
-                , "testEmail@mail.com", "testPassword", new Date(), new Date(), new Group(1));
+                , "testEmail@mail.com", "testPassword", new Date(), new Date(), List.of(), new Group(1));
         studentRepository.saveStudent(student);
         assertEquals(3, studentRepository.getAllStudents().size());
     }
@@ -27,7 +28,7 @@ public class StudentRepositoryTest {
     @Test
     public void getStudentByIdTest() {
         Student expectedStudent = new Student(1, "alice.smith@example.com", "hashed_password_1"
-                , "Alice", "Smith", new Date(), new Date(), new Group(1));
+                , "Alice", "Smith", new Date(), new Date(), List.of(), new Group(1));
         Student student = studentRepository.getStudentById(1).get();
         assertEquals("hashed_password_1", student.getPassword());
         assertEquals(student, expectedStudent);

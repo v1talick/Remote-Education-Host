@@ -10,6 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 
 @SpringBootApplication
 public class RemoteEducationHostApplication {
@@ -26,7 +29,7 @@ public class RemoteEducationHostApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RemoteEducationHostApplication.class, args);
 	}
-	@PostConstruct
+//	@PostConstruct
 	public void test() {
 		try {
 //			System.out.println(groupRepository.getGroupById(228));
@@ -35,5 +38,6 @@ public class RemoteEducationHostApplication {
 		} catch (EmptyResultDataAccessException e) {
 			System.out.println("Group with id 228 not found");
 		}
+
 	}
 }

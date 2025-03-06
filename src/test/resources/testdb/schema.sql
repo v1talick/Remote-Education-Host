@@ -50,6 +50,14 @@ CREATE TABLE IF NOT EXISTS students
     CONSTRAINT students_group_fkey FOREIGN KEY (group_) REFERENCES groups_ (group_id) ON DELETE NO ACTION,
     CONSTRAINT students_student_id_fkey FOREIGN KEY (student_id) REFERENCES profiles (profile_id) ON DELETE NO ACTION
 );
+
+DROP TABLE IF EXISTS admins;
+CREATE TABLE IF NOT EXISTS admins
+(
+    admin_id BIGINT NOT NULL PRIMARY KEY,
+    CONSTRAINT students_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES profiles (profile_id) ON DELETE NO ACTION
+);
+
 CREATE TYPE science_degree_enum AS ENUM
     ('Associate of Science', 'Bachelor of Science', 'Master of Science', 'Doctor of Philosophy', 'Doctor of Science', 'Professional Doctorate', 'None');
 

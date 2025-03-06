@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface UserRepository {
     Optional<User> getUserById(int id);
+    Optional<User> getUserWithRolesById(int id);
     List<User> getAllUsers();
     void saveUser(User user);
     void updateUser(User user);
