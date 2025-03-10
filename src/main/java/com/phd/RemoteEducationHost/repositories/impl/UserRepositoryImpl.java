@@ -35,6 +35,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email) {
+        String sql = "select * from profiles where email = ?";
+        try {
+            User user = (User) jdbcTemplate.queryForObject(sql, userMapper, email);
+            return Optional.of(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public Optional<User> getUserWithRolesById(int id) {
         String sql = "select * from profiles where profile_id = ?";
         try {

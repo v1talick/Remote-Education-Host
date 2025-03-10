@@ -1,27 +1,24 @@
 package com.phd.RemoteEducationHost.configuration;
 
-import com.nimbusds.jose.jwk.RSAKey;
+import com.phd.RemoteEducationHost.security.jwt.JwtTokenValidator;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -31,16 +28,51 @@ public class SecurityConfiguration {
         return NimbusJwtDecoder.withIssuerLocation("https://idp.example.com/issuer")
                 .jwsAlgorithm(SignatureAlgorithm.RS256).build();
     }
+
+    @SuppressWarnings("deprecation")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        http.sessionManagement(management ->
+                        management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().authenticated()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/register").permitAll()
+                                .anyRequest().authenticated()
+//                        .anyRequest().permitAll()
                 )
-                .oauth2ResourceServer((oauth2) -> oauth2
-                        .jwt(Customizer.withDefaults())
-//                        .jwt(jwt -> jwt.decoder(jwtDecoder()))
-                );
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .permitAll())
+                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+//                .oauth2ResourceServer((oauth2) -> oauth2
+//                        .jwt(Customizer.withDefaults())
+////                        .jwt(jwt -> jwt.decoder(jwtDecoder()))
+//                );
         return http.build();
     }
+
+    private CorsConfigurationSource corsConfigurationSource() {
+        return new CorsConfigurationSource() {
+            @Override
+            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                CorsConfiguration ccfg = new CorsConfiguration();
+                ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                ccfg.setAllowedMethods(Collections.singletonList("*"));
+                ccfg.setAllowCredentials(true);
+                ccfg.setAllowedHeaders(Collections.singletonList("*"));
+                ccfg.setExposedHeaders(Arrays.asList("Authorization"));
+                ccfg.setMaxAge(3600L);
+                return ccfg;
+
+            }
+        };
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

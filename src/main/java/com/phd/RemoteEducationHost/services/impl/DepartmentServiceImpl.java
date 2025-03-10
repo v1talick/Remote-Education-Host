@@ -3,6 +3,7 @@ package com.phd.RemoteEducationHost.services.impl;
 import com.phd.RemoteEducationHost.DTOs.DepartmentDTO;
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.mappers.DepartmentMapper;
+import com.phd.RemoteEducationHost.mappers.UserMapper;
 import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
 import com.phd.RemoteEducationHost.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     DepartmentRepository departmentRepository;
     @Override
     public Optional<DepartmentDTO> getDepartmentById(int id) {
-        if (departmentRepository.getDepartmentById(id).isPresent()) {
-            return Optional.of(DepartmentMapper.departmentToDepartmentDTO(departmentRepository.getDepartmentById(id).get()));
-        }
-        return Optional.empty();
+        return departmentRepository.getDepartmentById(id).map(DepartmentMapper::departmentToDepartmentDTO);
     }
 
     @Override

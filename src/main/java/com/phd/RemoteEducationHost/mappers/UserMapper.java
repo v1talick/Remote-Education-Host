@@ -23,7 +23,7 @@ public class UserMapper implements RowMapper<User> {
         user.setPassword(rs.getString("encrypted_password"));
         return user;
     }
-    public static UserDTO userToUserDTO(User user) {
+    public static UserDTO userCreationDTOToUser(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(userDTO.getEmail());
@@ -36,10 +36,10 @@ public class UserMapper implements RowMapper<User> {
         return userDTO;
     }
 
-    public static User userToUserDTO(UserCreationDTO userDTO) {
+    public static User userCreationDTOToUser(UserCreationDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
-        user.setEmail(user.getEmail());
+        user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
