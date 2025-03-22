@@ -22,39 +22,27 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserMapper userMapper;
 
 
-
     @Override
-    public Optional<User> getUserById(int id) {
+    public User getUserById(int id) {
         String sql = "select * from profiles where profile_id = ?";
-        try {
-            User user = (User) jdbcTemplate.queryForObject(sql, userMapper, id);
-            return Optional.of(user);
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (User) jdbcTemplate.queryForObject(sql, userMapper, id);
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         String sql = "select * from profiles where email = ?";
-        try {
-            User user = (User) jdbcTemplate.queryForObject(sql, userMapper, email);
-            return Optional.of(user);
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (User) jdbcTemplate.queryForObject(sql, userMapper, email);
     }
 
     @Override
-    public Optional<User> getUserWithRolesById(int id) {
+    public User getUserWithRolesById(int id) {
         String sql = "select * from profiles where profile_id = ?";
-        try {
-            User user = (User) jdbcTemplate.queryForObject(sql, userMapper, id);
-            user.setRoles(getUserRoles(user.getId()));
-            return Optional.of(user);
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        User user = (User) jdbcTemplate.queryForObject(sql, userMapper, id);
+        user.setRoles(getUserRoles(user.getId()));
+        return user;
     }
 
     @Override

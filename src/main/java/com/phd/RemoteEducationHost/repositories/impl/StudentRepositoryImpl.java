@@ -20,18 +20,15 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
 
     private final StudentMapper studentMapper;
     @Override
-    public Optional<Student> getStudentById(int id) {
+    public Student getStudentById(int id) {
 //        String sql = "select * from students s " +
 //                "join profiles p on p.profile_id=s.student_id " +
 //                "where s.student_id = ?";
         String sql = "SELECT * FROM students s \n" +
                 "JOIN profiles p ON p.profile_id = s.student_id \n" +
                 "WHERE s.student_id = ?\n";
-        try {
-            return Optional.of((Student) jdbcTemplate.queryForObject(sql, studentMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (Student) jdbcTemplate.queryForObject(sql, studentMapper, id);
     }
 
     @Override

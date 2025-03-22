@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DisciplineRepository {
-    Optional<Discipline> getDisciplineById(int id);
+    Discipline getDisciplineById(int id);
     List<Discipline> getAllDisciplines();
     void saveDiscipline(Discipline discipline);
     void updateDiscipline(Discipline discipline);

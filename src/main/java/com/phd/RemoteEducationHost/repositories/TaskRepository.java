@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository {
-    Optional<Task> getTaskById(int id);
-    Optional<Task> getTaskWithDetailsById(int id);
+    Task getTaskById(int id);
+    Task getTaskWithDetailsById(int id);
     List<Task> getAllTasksByClassId(int classId);
     List<Task> getAllTasks();
     void saveTask(Task task);

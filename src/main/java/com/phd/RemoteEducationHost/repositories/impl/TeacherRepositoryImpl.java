@@ -17,15 +17,12 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     @Autowired
     TeacherMapper teacherMapper;
     @Override
-    public Optional<Teacher> getTeacherById(int id) {
+    public Teacher getTeacherById(int id) {
         String sql = "select * from teachers t " +
                 "join profiles p on p.profile_id=t.teacher_id " +
                 "where t.teacher_id=?";
-        try {
-            return Optional.of((Teacher) jdbcTemplate.queryForObject(sql, teacherMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (Teacher) jdbcTemplate.queryForObject(sql, teacherMapper, id);
     }
 
     @Override

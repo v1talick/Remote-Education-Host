@@ -20,18 +20,15 @@ public class LessonRepositoryImpl implements LessonRepository {
     LessonMapper lessonMapper;
 
     @Override
-    public Optional<Lesson> getLessonById(int id) {
+    public Lesson getLessonById(int id) {
         String sql = "select * from lessons " +
                 "where lesson_id=?";
-        try {
-            return Optional.of((Lesson) jdbcTemplate.queryForObject(sql, lessonMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (Lesson) jdbcTemplate.queryForObject(sql, lessonMapper, id);
     }
 
     @Override
-    public Optional<Lesson> getLessonWithDetailsById(int id) {
+    public Lesson getLessonWithDetailsById(int id) {
         String sql = "select * from lessons l " +
                 "join classes c on c.class_id=l.class_ " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -39,11 +36,8 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "where l.lesson_id=?";
-        try {
-            return Optional.of((Lesson) jdbcTemplate.queryForObject(sql, lessonMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (Lesson) jdbcTemplate.queryForObject(sql, lessonMapper, id);
     }
 
     @Override
@@ -106,7 +100,7 @@ public class LessonRepositoryImpl implements LessonRepository {
     }
 
     @Override
-    public Optional<Lesson> getLessonByGroupIdAndDay(int groupId, DayOfWeek day) {
+    public Lesson getLessonByGroupIdAndDay(int groupId, DayOfWeek day) {
         return null;
     }
 

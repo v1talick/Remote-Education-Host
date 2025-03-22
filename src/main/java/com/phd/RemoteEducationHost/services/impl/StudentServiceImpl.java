@@ -16,8 +16,8 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
     public final StudentRepository studentRepository;
     @Override
-    public Optional<StudentDTO> getStudentById(int id) {
-        return studentRepository.getStudentById(id).map(StudentMapper::studentToStudentDTO);
+    public StudentDTO getStudentById(int id) {
+        return StudentMapper.studentToStudentDTO(studentRepository.getStudentById(id));
     }
 
     @Override

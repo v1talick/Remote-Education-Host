@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClassRepository {
-    Optional<Class> getClassById(int id);
-    Optional<Class> getClassWithDetailsById(int id);
+    Class getClassById(int id);
+    Class getClassWithDetailsById(int id);
     List<Class> getAllClasses();
     List<Class> getClassesByTeacherId(int teacherId);
     List<Class> getClassesByGroupId(int groupId);

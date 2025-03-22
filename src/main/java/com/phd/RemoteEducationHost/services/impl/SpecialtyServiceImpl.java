@@ -16,8 +16,8 @@ import java.util.Optional;
 public class SpecialtyServiceImpl implements SpecialtyService{
     private final SpecialtyRepository specialtyRepository;
     @Override
-    public Optional<SpecialtyDTO> getSpecialtyById(int id) {
-        return specialtyRepository.getSpecialtyById(id).map(SpecialtyMapper::specialtyToSpecialtyDTO);
+    public SpecialtyDTO getSpecialtyById(int id) {
+        return SpecialtyMapper.specialtyToSpecialtyDTO(specialtyRepository.getSpecialtyById(id));
     }
 
     @Override

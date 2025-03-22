@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository {
-    Optional<Student> getStudentById(int id);
+    Student getStudentById(int id);
     List<Student> getAllStudents();
     List<Student> getStudentsByGroupId(int groupId);
     void saveStudent(Student student);

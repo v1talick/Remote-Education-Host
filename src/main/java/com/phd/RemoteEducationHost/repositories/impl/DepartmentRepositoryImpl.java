@@ -1,7 +1,9 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Department;
+import com.phd.RemoteEducationHost.mappers.DepartmentMapper;
 import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,20 +14,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class DepartmentRepositoryImpl implements DepartmentRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+    private final DepartmentMapper departmentMapper;
+
     @Override
-    public Optional<Department> getDepartmentById(int id) {
+    public Department getDepartmentById(int id) {
         String sql = "select * from departments d where d.department_id=?";
-        try {
-            return Optional.of((Department) jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+            return (Department) jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
                     new Department(rs.getInt("department_id"), rs.getString("department_name")
                             , rs.getString("description"), rs.getDate("created_at"))
-                    ,id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+                    ,id);
+
     }
 
     @Override

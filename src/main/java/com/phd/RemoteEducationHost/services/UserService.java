@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<UserDTO> getUserById(int id);
+    UserDTO getUserById(int id);
     List<UserDTO> getAllUser();
     AuthResponse saveUser(UserCreationDTO userCreationDTO);
     AuthResponse login(UserCreationDTO userCreationDTO);

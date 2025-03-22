@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SpecialtyRepository {
-    Optional<Specialty> getSpecialtyById(int id);
-    Optional<Specialty> getSpecialtyWithDetailsById(int id);
+    Specialty getSpecialtyById(int id);
+    Specialty getSpecialtyWithDetailsById(int id);
     List<Specialty> getAllSpecialties();
     void saveSpecialty(Specialty specialty);
     void updateSpecialty(Specialty specialty);

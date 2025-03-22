@@ -17,13 +17,10 @@ public class DisciplineRepositoryImpl implements DisciplineRepository {
     @Autowired
     DisciplineMapper disciplineMapper;
     @Override
-    public Optional<Discipline> getDisciplineById(int id) {
+    public Discipline getDisciplineById(int id) {
         String sql = "select * from disciplines where discipline_id = ?";
-        try {
-            return Optional.of((Discipline) jdbcTemplate.queryForObject(sql, disciplineMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (Discipline) jdbcTemplate.queryForObject(sql, disciplineMapper, id);
     }
 
     @Override

@@ -17,18 +17,15 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Autowired
     TaskMapper taskMapper;
     @Override
-    public Optional<Task> getTaskById(int id) {
+    public Task getTaskById(int id) {
         String sql = "select * from tasks " +
                 "where task_id=?";
-        try {
-            return Optional.of ((Task) jdbcTemplate.queryForObject(sql, taskMapper, id));
-        } catch (EmptyResultDataAccessException e){
-            return Optional.empty();
-        }
+
+        return (Task) jdbcTemplate.queryForObject(sql, taskMapper, id);
     }
 
     @Override
-    public Optional<Task> getTaskWithDetailsById(int id) {
+    public Task getTaskWithDetailsById(int id) {
         String sql = "select * from tasks t " +
                 "join classes c on t.class_=c.class_id " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -36,11 +33,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "where task_id=?";
-        try {
-            return Optional.of ((Task) jdbcTemplate.queryForObject(sql, taskMapper, id));
-        } catch (EmptyResultDataAccessException e){
-            return Optional.empty();
-        }
+
+        return (Task) jdbcTemplate.queryForObject(sql, taskMapper, id);
     }
 
     @Override

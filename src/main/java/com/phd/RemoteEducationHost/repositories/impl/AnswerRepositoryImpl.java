@@ -19,17 +19,14 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     AnswerMapper answerMapper;
 
     @Override
-    public Optional<Answer> getAnswerById(int id) {
+    public Answer getAnswerById(int id) {
         String sql = "select * from answers a " +
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
                 "where a.answer_id=?";
-        try {
-            return Optional.of((Answer) jdbcTemplate.queryForObject(sql, answerMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+            return (Answer) jdbcTemplate.queryForObject(sql, answerMapper, id);
     }
 
     @Override

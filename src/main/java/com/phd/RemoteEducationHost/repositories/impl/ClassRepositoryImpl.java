@@ -17,28 +17,21 @@ public class ClassRepositoryImpl implements ClassRepository {
     @Autowired
     ClassMapper classMapper;
     @Override
-    public Optional<Class> getClassById(int id) {
+    public Class getClassById(int id) {
         String sql = "select * from classes where class_id=?";
-        try {
-            return Optional.of((Class) jdbcTemplate.queryForObject(sql, classMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+
+        return (Class) jdbcTemplate.queryForObject(sql, classMapper, id);
     }
 
     @Override
-    public Optional<Class> getClassWithDetailsById(int id) {
+    public Class getClassWithDetailsById(int id) {
         String sql = "select * from classes c " +
                 "join disciplines d on d.discipline_id=c.discipline " +
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "join profiles p on p.profile_id=c.teacher " +
                 "where class_id=?";
-        try {
-            return Optional.of((Class) jdbcTemplate.queryForObject(sql, classMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+        return (Class) jdbcTemplate.queryForObject(sql, classMapper, id);
     }
 
     @Override

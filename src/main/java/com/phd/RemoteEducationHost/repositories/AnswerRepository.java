@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AnswerRepository {
-    Optional<Answer> getAnswerById(int id);
+    Answer getAnswerById(int id);
     List<Answer> getAnswersByStudentId(int studentId);
     List<Answer> getAnswersByTaskId(int taskId);
     List<Answer> getAllAnswers();

@@ -19,25 +19,17 @@ public class GroupRepositoryImpl implements GroupRepository {
     @Autowired
     private GroupMapper groupMapper;
     @Override
-    public Optional<Group> getGroupById(@lombok.NonNull int id) {
+    public Group getGroupById(@lombok.NonNull int id) {
         String sql = "select * from groups_ g where g.group_id=?";
-        try {
-            return Optional.of((Group) jdbcTemplate.queryForObject(sql, groupMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-//            System.out.println("Group with id " + id + " not found");
-            return Optional.empty();
-        }
+
+        return (Group) jdbcTemplate.queryForObject(sql, groupMapper, id);
     }
 
     @Override
-    public Optional<Group> getGroupWithDetailsById(@NonNull int id) {
+    public Group getGroupWithDetailsById(@NonNull int id) {
         String sql = "select * from groups_ g join specialties s on g.specialty=s.specialty_id where g.group_id=?";
-        try {
-            return Optional.of((Group) jdbcTemplate.queryForObject(sql, groupMapper, id));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
 
-        }
+        return (Group) jdbcTemplate.queryForObject(sql, groupMapper, id);
     }
 
     @Override

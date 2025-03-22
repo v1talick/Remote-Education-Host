@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// TODO: separate into 2 classes by creating UserRowMapper
 @Component
 public class UserMapper implements RowMapper<User> {
     @Override
@@ -23,7 +24,7 @@ public class UserMapper implements RowMapper<User> {
         user.setPassword(rs.getString("encrypted_password"));
         return user;
     }
-    public static UserDTO userCreationDTOToUser(User user) {
+    public static UserDTO userToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(userDTO.getEmail());

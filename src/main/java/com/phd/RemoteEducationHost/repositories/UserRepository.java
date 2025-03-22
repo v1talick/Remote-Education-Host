@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<User> getUserById(int id);
-    Optional<User> getUserByEmail(String email);
-    Optional<User> getUserWithRolesById(int id);
+    User getUserById(int id);
+    User getUserByEmail(String email);
+    User getUserWithRolesById(int id);
     List<User> getAllUsers();
     void saveUser(User user);
     void updateUser(User user);

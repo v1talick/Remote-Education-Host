@@ -18,8 +18,8 @@ import java.util.Optional;
 public class DisciplineServiceImpl implements DisciplineService {
     private final DisciplineRepository disciplineRepository;
     @Override
-    public Optional<DisciplineDTO> getDisciplineById(int id) {
-        return disciplineRepository.getDisciplineById(id).map(DisciplineMapper::disciplineToDisciplineDTO);
+    public DisciplineDTO getDisciplineById(int id) {
+        return DisciplineMapper.disciplineToDisciplineDTO(disciplineRepository.getDisciplineById(id));
     }
 
     @Override

@@ -6,18 +6,19 @@ import com.phd.RemoteEducationHost.mappers.DepartmentMapper;
 import com.phd.RemoteEducationHost.mappers.UserMapper;
 import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
 import com.phd.RemoteEducationHost.services.DepartmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 @Service
+@RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
-    @Autowired
-    DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
     @Override
-    public Optional<DepartmentDTO> getDepartmentById(int id) {
-        return departmentRepository.getDepartmentById(id).map(DepartmentMapper::departmentToDepartmentDTO);
+    public DepartmentDTO getDepartmentById(int id) {
+        return DepartmentMapper.departmentToDepartmentDTO(departmentRepository.getDepartmentById(id));
     }
 
     @Override

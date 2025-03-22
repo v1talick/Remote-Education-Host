@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     @Override
-    public Optional<UserDTO> getUserById(int id) {
-        return userRepository.getUserById(id).map(UserMapper::userCreationDTOToUser);
+    public UserDTO getUserById(int id) {
+        return UserMapper.userToUserDTO(userRepository.getUserById(id));
     }
 
     @Override
     public List<UserDTO> getAllUser() {
-        return userRepository.getAllUsers().stream().map(UserMapper::userCreationDTOToUser).toList();
+        return userRepository.getAllUsers().stream().map(UserMapper::userToUserDTO).toList();
     }
 
     @Override
