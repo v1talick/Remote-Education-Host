@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost.mappers;
 
+import com.phd.RemoteEducationHost.DTOs.GroupDTO;
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Group;
 import com.phd.RemoteEducationHost.enteties.Specialty;
@@ -18,7 +19,10 @@ public class GroupMapper implements RowMapper {
         group.setId(rs.getInt("group_id"));
         group.setName(rs.getString("group_name"));
         group.setCreationDate(rs.getDate("creation_date"));
-        Specialty specialty = new Specialty(rs.getInt("specialty"));
+
+        Specialty specialty = new Specialty();
+        specialty.setId(rs.getInt("specialty"));
+
         group.setSpecialty(specialty);
         if(rs.getMetaData().getColumnCount() > 4) {
             specialty.setName(rs.getString("specialty_name"));
@@ -26,7 +30,23 @@ public class GroupMapper implements RowMapper {
         }
         return group;
     }
-//    public static Group groupDTOtoGroup(){
-//        return new Group();
-//    }
+    public static Group groupDTOtoGroup(GroupDTO groupDTO){
+        Group group = new Group();
+        group.setId(groupDTO.getId());
+        group.setName(groupDTO.getName());
+        group.setSpecialty(groupDTO.getSpecialty());
+        group.setCreationDate(groupDTO.getCreationDate());
+
+        return group;
+    }
+
+    public static GroupDTO groupToGroupDTO(Group groupDTO){
+        GroupDTO group = new GroupDTO();
+        group.setId(groupDTO.getId());
+        group.setName(groupDTO.getName());
+        group.setSpecialty(groupDTO.getSpecialty());
+        group.setCreationDate(groupDTO.getCreationDate());
+
+        return group;
+    }
 }

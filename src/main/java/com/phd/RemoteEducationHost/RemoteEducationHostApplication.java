@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost;
 
+import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Group;
 import com.phd.RemoteEducationHost.enteties.Specialty;
 import com.phd.RemoteEducationHost.enteties.User;

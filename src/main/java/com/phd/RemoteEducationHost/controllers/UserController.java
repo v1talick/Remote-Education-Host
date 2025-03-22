@@ -26,10 +26,10 @@ public class UserController {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody UserCreationDTO user) {
+    public ResponseEntity<AuthResponse> login(@RequestBody UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = new AuthResponse();
         try {
-            Authentication authentication = authenticate(user.getEmail(), user.getPassword());
+            Authentication authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = JwtProvider.generateToken(authentication);
 
@@ -45,26 +45,11 @@ public class UserController {
     }
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody UserCreationDTO userCreationDTO) {
-        AuthResponse authResponse = new AuthResponse();
-        try {
-            userCreationDTO.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-            userService.saveUser(userCreationDTO);
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userCreationDTO.getEmail(), userCreationDTO.getPassword());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = JwtProvider.generateToken(authentication);
-
-            authResponse.setJwt(jwt);
-            authResponse.setMessage("Success register");
-            authResponse.setStatus(true);
-
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
-            authResponse.setMessage("Wrong data");
-            authResponse.setStatus(false);
-            return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
+        AuthResponse authResponse = userService.saveUser(userCreationDTO);
+        if (!authResponse.getStatus()) {
+            return new ResponseEntity(authResponse, HttpStatus.OK);
         }
+        return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
     }
     private Authentication authenticate(String username, String password) {
 

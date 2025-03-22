@@ -1,6 +1,7 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Discipline;
+import com.phd.RemoteEducationHost.mappers.DisciplineMapper;
 import com.phd.RemoteEducationHost.repositories.DisciplineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -13,14 +14,13 @@ import java.util.Optional;
 public class DisciplineRepositoryImpl implements DisciplineRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    DisciplineMapper disciplineMapper;
     @Override
     public Optional<Discipline> getDisciplineById(int id) {
         String sql = "select * from disciplines where discipline_id = ?";
         try {
-            return Optional.of((Discipline) jdbcTemplate.queryForObject(sql,
-                    (rs, rowNum) -> new Discipline(rs.getInt("discipline_id"),
-                            rs.getString("discipline_name"),
-                            rs.getString("description")), id));
+            return Optional.of((Discipline) jdbcTemplate.queryForObject(sql, disciplineMapper, id));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -29,10 +29,7 @@ public class DisciplineRepositoryImpl implements DisciplineRepository {
     @Override
     public List<Discipline> getAllDisciplines() {
         String sql = "select * from disciplines";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Discipline(
-                rs.getInt("discipline_id"),
-                rs.getString("discipline_name"),
-                rs.getString("description")));
+        return jdbcTemplate.query(sql, disciplineMapper);
     }
 
     @Override

@@ -17,5 +17,5 @@ public class UserDTO {
     String lastName;
     Date createAt;
     Date birthdayDate;
-    List<Role> roles;
+    List<Role roles;
 }

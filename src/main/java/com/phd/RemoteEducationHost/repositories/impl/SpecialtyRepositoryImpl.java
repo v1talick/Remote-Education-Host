@@ -2,6 +2,7 @@ package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Specialty;
+import com.phd.RemoteEducationHost.mappers.SpecialtyMapper;
 import com.phd.RemoteEducationHost.repositories.SpecialtyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,14 +15,13 @@ import java.util.Optional;
 public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    SpecialtyMapper specialtyMapper;
     @Override
     public Optional<Specialty> getSpecialtyById(int id) {
         String sql = "SELECT * FROM specialties WHERE specialty_id = ?";
         try {
-            return Optional.of((Specialty) jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new Specialty(
-                    rs.getInt("specialty_id"),
-                    rs.getString("specialty_name"),
-                    new Department(rs.getInt("department"))), id));
+            return Optional.of((Specialty) jdbcTemplate.queryForObject(sql, specialtyMapper, id));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -31,11 +31,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     public Optional<Specialty> getSpecialtyWithDetailsById(int id) {
         String sql = "select * from specialties s join departments d 0n s.department=d.department_id where s.specialty_id=?";
         try {
-            return Optional.of((Specialty) jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new Specialty(
-                    rs.getInt("specialty_id"),
-                    rs.getString("specialty_name"),
-                    new Department(rs.getInt("department"),rs.getString("department_name"),rs.getString("description"),rs.getDate("created_at")))
-                    , id));
+            return Optional.of((Specialty) jdbcTemplate.queryForObject(sql, specialtyMapper, id));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

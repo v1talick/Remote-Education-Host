@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
@@ -52,7 +53,7 @@ public class DepartmentRepositoryTest {
         Optional<Department> department = departmentRepository.getDepartmentById(4);
         assertFalse(department.isPresent());
     }
-    public static Department getTestDepartment() {
-        return new Department(0, "testName", "testDescription", new Date());
-    }
+//    public static Department getTestDepartment() {
+//        return new Department(0, "testName", "testDescription", new Date());
+//    }
 }

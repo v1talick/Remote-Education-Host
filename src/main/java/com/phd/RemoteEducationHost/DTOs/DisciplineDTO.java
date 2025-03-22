@@ -1,16 +1,14 @@
-package com.phd.RemoteEducationHost.enteties;
+package com.phd.RemoteEducationHost.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Specialty {
+@AllArgsConstructor
+public class DisciplineDTO {
     int id;
     String name;
-    Department department;
+    String description;
 }
-

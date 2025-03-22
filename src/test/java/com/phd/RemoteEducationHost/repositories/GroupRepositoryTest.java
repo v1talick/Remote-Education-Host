@@ -17,7 +17,9 @@ public class GroupRepositoryTest {
     GroupRepository groupRepository;
     @Test
     public void saveGroupTest() {
-        Group group = new Group(0, new Specialty(1),"testName", new Date());
+        Specialty specialty = new Specialty();
+        specialty.setId(1);
+        Group group = new Group(0, specialty,"testName", new Date());
         groupRepository.saveGroup(group);
         assertEquals(7, groupRepository.getAllGroups().size());
     }
@@ -28,7 +30,9 @@ public class GroupRepositoryTest {
     }
     @Test
     public void updateGroupTest() {
-        Group group = new Group(2, new Specialty(1), "testName2", new Date());
+        Specialty specialty = new Specialty();
+        specialty.setId(2);
+        Group group = new Group(2, specialty, "testName2", new Date());
         groupRepository.updateGroup(group);
         assertEquals("testName2", groupRepository.getGroupById(2).get().getName());
     }

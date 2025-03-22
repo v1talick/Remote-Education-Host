@@ -38,7 +38,10 @@ public class ClassMapper implements RowMapper {
             group.setId(rs.getInt("group_id"));
             group.setName(rs.getString("group_name"));
             group.setCreationDate(rs.getDate("creation_date"));
-            Specialty specialty = new Specialty(rs.getInt("specialty"));
+
+            Specialty specialty = new Specialty();
+            specialty.setId(rs.getInt("specialty"));
+
             group.setSpecialty(specialty);
         }
         aClass.setDiscipline(discipline);
