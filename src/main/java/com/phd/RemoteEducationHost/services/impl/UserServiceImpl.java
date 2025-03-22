@@ -63,7 +63,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthResponse login(UserCreationDTO userCreationDTO) {
-        return null;
+        AuthResponse authResponse = new AuthResponse();
+        Authentication authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
+        authResponse.setMessage("User successfully logged in");
+        authResponse.setStatus(true);
+        authResponse.setJwt(JwtProvider.generateToken(authentication));
+
+        return authResponse;
     }
 
     @Override

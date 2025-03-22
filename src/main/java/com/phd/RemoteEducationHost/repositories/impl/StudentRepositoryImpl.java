@@ -48,10 +48,8 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
 
     @Override
     public void saveStudent(Student student) {
-        if(userRepository.getUserById(student.getId()).isEmpty()) {
-            userRepository.saveUser(student);
-        }
         String sql = "insert into students(student_id, group_) values(?, ?)";
+
         jdbcTemplate.update(sql, student.getId(), student.getGroup().getId());
     }
 

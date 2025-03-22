@@ -24,9 +24,7 @@ public class DepartmentController {
 
     @GetMapping("{id}")
     public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable int id) {
-        return departmentService.getDepartmentById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(departmentService.getDepartmentById(id));
     }
     @GetMapping
     public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {

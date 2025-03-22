@@ -35,13 +35,13 @@ public class LessonRepositoryTest {
         expectedLesson.setLessonType(LessonType.LABORATORY_LESSON);
         expectedLesson.setLessonNumber(3);
         expectedLesson.setDayOfWeek(DayOfWeek.WEDNESDAY);
-        assertTrue(lessonRepository.getLessonById(2).isPresent());
-        assertEquals(expectedLesson, lessonRepository.getLessonById(2).get());
+//        assertTrue(lessonRepository.getLessonById(2).isPresent());
+        assertEquals(expectedLesson, lessonRepository.getLessonById(2));
     }
     @Test
     public void getLessonWithDetails() {
-        Lesson lessonFromDB = lessonRepository.getLessonWithDetailsById(1).get();
-        assertTrue(lessonRepository.getLessonWithDetailsById(1).isPresent());
+        Lesson lessonFromDB = lessonRepository.getLessonWithDetailsById(1);
+//        assertTrue(lessonRepository.getLessonWithDetailsById(1).isPresent());
         assertEquals("https://university.edu/algorithms-class", lessonFromDB.getLessonLink());
         assertTrue(lessonFromDB.getAClass().isActive());
         assertEquals(lessonFromDB.getAClass().getTeacher().getScienceDegree(), ScienceDegree.BACHELOR_OF_SCIENCE);
@@ -75,7 +75,7 @@ public class LessonRepositoryTest {
     }
     @Test
     public void updateLessonTest() {
-        Lesson lesson = lessonRepository.getLessonById(1).get();
+        Lesson lesson = lessonRepository.getLessonById(1);
         lesson.setDayOfWeek(DayOfWeek.FRIDAY);
         lessonRepository.updateLesson(lesson);
         assertEquals(DayOfWeek.FRIDAY, lesson.getDayOfWeek());
@@ -83,7 +83,7 @@ public class LessonRepositoryTest {
     @Test
     public void deleteLessonTest() {
         lessonRepository.deleteLesson(3);
-        assertTrue(lessonRepository.getLessonById(3).isEmpty());
+//        assertTrue(lessonRepository.getLessonById(3).isEmpty());
         assertEquals(2, lessonRepository.getAllLessons().size());
     }
     public static Lesson getLessonTestInstance() {

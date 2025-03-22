@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        if(userRepository.getUserByEmail(username).isEmpty()) {
 //            throw new UsernameNotFoundException("User not found with this email"+username);
 //        }
-        // remake this
-        return userRepository.getUserByEmail(username).orElseThrow();
+        // TODO: remake this
+        return userRepository.getUserByEmail(username);
     }
 }

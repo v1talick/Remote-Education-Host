@@ -4,6 +4,7 @@ import com.phd.RemoteEducationHost.configuration.SystemTestConfiguration;
 import com.phd.RemoteEducationHost.enteties.Department;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +24,13 @@ public class DepartmentRepositoryTest {
     public void saveDepartmentTest(){
         Department department = new Department(0, "testName", "testDescription", new Date());
         departmentRepository.saveDepartment(department);
-//        assertEquals("testName", departmentRepository.getDepartmentById(1).get().getName());
+//        assertEquals("testName", departmentRepository.getDepartmentById(1).getName());
         assertEquals(4, departmentRepository.getAllDepartments().size());
     }
     @Test
     void getDepartmentByIdTest() {
-        Optional<Department> departmentOptional = departmentRepository.getDepartmentById(1);
-        assertTrue(departmentOptional.isPresent());
-        assertEquals("Computer Science", departmentOptional.get().getName());
+        Department department = departmentRepository.getDepartmentById(1);
+        assertEquals("Computer Science", department.getName());
     }
 
     @Test
@@ -39,9 +39,8 @@ public class DepartmentRepositoryTest {
 //                "HR", "Handles recruitment", new java.sql.Date(System.currentTimeMillis()));
         Department department = new Department(1, "IT", "Handles technology", new java.sql.Date(System.currentTimeMillis()));
         departmentRepository.updateDepartment(department);
-        Optional<Department> updatedDepartment = departmentRepository.getDepartmentById(1);
-        assertTrue(updatedDepartment.isPresent());
-        assertEquals("IT", updatedDepartment.get().getName());
+        Department updatedDepartment = departmentRepository.getDepartmentById(1);
+        assertEquals("IT", updatedDepartment.getName());
     }
 
     @Test
@@ -50,8 +49,10 @@ public class DepartmentRepositoryTest {
 //        jdbcTemplate.update("INSERT INTO departments (department_name, description, created_at) VALUES (?, ?, ?)",
 //                "HR", "Handles recruitment", new java.sql.Date(System.currentTimeMillis()));
         departmentRepository.deleteDepartment(4);
-        Optional<Department> department = departmentRepository.getDepartmentById(4);
-        assertFalse(department.isPresent());
+
+        //TODO: make this way in other deleteTests
+        assertThrows(EmptyResultDataAccessException.class
+                , () -> departmentRepository.getDepartmentById(4));
     }
 //    public static Department getTestDepartment() {
 //        return new Department(0, "testName", "testDescription", new Date());

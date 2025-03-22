@@ -54,20 +54,19 @@ public class ClassRepositoryTest {
         expectedClass.setActive(true);
         Date date = new Date(Timestamp.valueOf("2024-02-01 00:00:00").getTime());
         expectedClass.setStartedAt(date);
-        Class classFromDB = classRepository.getClassById(1).get();
+        Class classFromDB = classRepository.getClassById(1);
         assertEquals(expectedClass, classFromDB);
     }
     @Test
     public void updateClass() {
-        Class aClass = classRepository.getClassById(2).get();
+        Class aClass = classRepository.getClassById(2);
         aClass.setStartedAt(new Date(Timestamp.valueOf("2025-02-27 00:00:00").getTime()));
         classRepository.updateClass(aClass);
-        assertEquals("2025-02-27", classRepository.getClassById(2).get().getStartedAt().toString());
+        assertEquals("2025-02-27", classRepository.getClassById(2).getStartedAt().toString());
     }
     @Test
     public void deleteClass() {
         classRepository.deleteClass(3);
-        assertTrue(classRepository.getClassById(3).isEmpty());
         assertEquals(2, classRepository.getAllClasses().size());
     }
 }

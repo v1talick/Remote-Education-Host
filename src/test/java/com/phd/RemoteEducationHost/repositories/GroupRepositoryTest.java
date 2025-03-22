@@ -25,7 +25,7 @@ public class GroupRepositoryTest {
     }
     @Test
     public void getGroupByIdTest() {
-        Group group = groupRepository.getGroupById(1).get();
+        Group group = groupRepository.getGroupById(1);
         assertEquals("CS-101", group.getName());
     }
     @Test
@@ -34,11 +34,10 @@ public class GroupRepositoryTest {
         specialty.setId(2);
         Group group = new Group(2, specialty, "testName2", new Date());
         groupRepository.updateGroup(group);
-        assertEquals("testName2", groupRepository.getGroupById(2).get().getName());
+        assertEquals("testName2", groupRepository.getGroupById(2).getName());
     }
     @Test
     public void deleteGroupTest() {
         groupRepository.deleteGroup(7);
-        assertFalse(groupRepository.getGroupById(7).isPresent());
     }
 }

@@ -4,6 +4,7 @@ import com.phd.RemoteEducationHost.configuration.SystemTestConfiguration;
 import com.phd.RemoteEducationHost.enteties.Discipline;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
@@ -20,18 +21,18 @@ public class DisciplineRepositoryTest {
         Discipline discipline = new Discipline(0, "testName", "testDescription");
         disciplineRepository.saveDiscipline(discipline);
         assertEquals(3, disciplineRepository.getAllDisciplines().size());
-        assertEquals("testName", disciplineRepository.getDisciplineById(4).get().getName());
+        assertEquals("testName", disciplineRepository.getDisciplineById(4).getName());
     }
     @Test
     public void getDisciplineByIdTest(){
-        Discipline discipline = disciplineRepository.getDisciplineById(1).get();
+        Discipline discipline = disciplineRepository.getDisciplineById(1);
         assertEquals("Algorithms and Data Structures", discipline.getName());
     }
     @Test
     public void updateDisciplineTest(){
         Discipline discipline = new Discipline(2, "testName2", "testDescription");
         disciplineRepository.updateDiscipline(discipline);
-        assertEquals("testName2", disciplineRepository.getDisciplineById(2).get().getName());
+        assertEquals("testName2", disciplineRepository.getDisciplineById(2).getName());
     }
     @Test
     public void getAllDisciplinesTest() {
@@ -42,7 +43,7 @@ public class DisciplineRepositoryTest {
     @Test
     public void deleteDisciplineTest(){
         disciplineRepository.deleteDiscipline(3);
-//        assertEquals(3, disciplineRepository.getAllDisciplines().size());
-        assertFalse(disciplineRepository.getDisciplineById(3).isPresent());
+        assertEquals(2, disciplineRepository.getAllDisciplines().size());
+        assertThrows(EmptyResultDataAccessException.class, () -> disciplineRepository.getDisciplineById(3));
     }
 }

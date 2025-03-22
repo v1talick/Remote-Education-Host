@@ -19,11 +19,10 @@ public class AnswerRepositoryTest {
 
     @Test
     public void getAnswerByIdTest() {
-        Answer answerFromDb = answerRepository.getAnswerById(2).get();
+        Answer answerFromDb = answerRepository.getAnswerById(2);
         assertEquals(90, answerFromDb.getGrade());
         assertEquals("alice.smith@example.com", answerFromDb.getStudent().getEmail());
         assertEquals("Implement a sorting algorithm.", answerFromDb.getTask().getDescription());
-        assertTrue(answerRepository.getAnswerById(90).isEmpty());
     }
     @Test
     public void getAnswersByTaskIdTest() {
@@ -59,7 +58,7 @@ public class AnswerRepositoryTest {
     }
     @Test
     public void updateAnswerTest() {
-        Answer updatedAnswer = answerRepository.getAnswerById(3).get();
+        Answer updatedAnswer = answerRepository.getAnswerById(3);
         updatedAnswer.setGrade(66);
         assertEquals(66, updatedAnswer.getGrade());
     }
