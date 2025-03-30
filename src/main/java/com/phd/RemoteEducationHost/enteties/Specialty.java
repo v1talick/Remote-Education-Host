@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Specialty {
-    int id;
+    Integer id;
     String name;
     Department department;
 }

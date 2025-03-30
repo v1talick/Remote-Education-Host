@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SpecialtyDTO {
-    int id;
+    Integer id;
     String name;
     DepartmentDTO department;
 }

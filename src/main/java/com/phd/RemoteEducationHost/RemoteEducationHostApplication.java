@@ -25,5 +25,4 @@ public class RemoteEducationHostApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RemoteEducationHostApplication.class, args);
 	}
-
 }

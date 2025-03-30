@@ -17,7 +17,7 @@ import java.util.Optional;
 public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;
     @Override
-    public DepartmentDTO getDepartmentById(int id) {
+    public DepartmentDTO getDepartmentById(Integer id) {
         return DepartmentMapper.departmentToDepartmentDTO(departmentRepository.getDepartmentById(id));
     }
 
@@ -37,7 +37,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void deleteDepartment(int departmentId) {
+    public void deleteDepartment(Integer departmentId) {
         departmentRepository.getDepartmentById(departmentId);
     }
 }

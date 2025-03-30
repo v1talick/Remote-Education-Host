@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GroupRepository {
-    Group getGroupById(int id);
-    Group getGroupWithDetailsById(int id);
+    Group getGroupById(Integer id);
+    Group getGroupWithDetailsById(Integer id);
     List<Group> getAllGroups();
     void saveGroup(Group group);
     void updateGroup(Group group);
-    void deleteGroup(int id);
+    void deleteGroup(Integer id);
 
 }
 

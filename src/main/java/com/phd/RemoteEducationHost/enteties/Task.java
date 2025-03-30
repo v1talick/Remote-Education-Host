@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task {
-    int id;
+    Integer id;
     Class aClass;
     String description;
     String filePath;

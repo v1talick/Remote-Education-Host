@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LessonRepository {
-    Lesson getLessonById(int id);
-    Lesson getLessonWithDetailsById(int id);
-    Lesson getLessonByGroupIdAndDay(int groupId, DayOfWeek day);
+    Lesson getLessonById(Integer id);
+    Lesson getLessonWithDetailsById(Integer id);
+    Lesson getLessonByGroupIdAndDay(Integer groupId, DayOfWeek day);
     List<Lesson> getAllLessons();
     List<Lesson> getLessonsByDay(DayOfWeek day);
-    List<Lesson> getLessonsByGroupId(int groupId);
-    List<Lesson> getLessonsByTeacherId(int teacherId);
-    List<Lesson> getLessonsByClassId(int disciplineId);
+    List<Lesson> getLessonsByGroupId(Integer groupId);
+    List<Lesson> getLessonsByTeacherId(Integer teacherId);
+    List<Lesson> getLessonsByClassId(Integer disciplineId);
     void saveLesson(Lesson lesson);
     void updateLesson(Lesson lesson);
-    void deleteLesson(int lessonId);
+    void deleteLesson(Integer lessonId);
 }

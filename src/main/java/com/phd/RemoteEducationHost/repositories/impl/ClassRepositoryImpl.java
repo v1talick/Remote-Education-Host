@@ -1,37 +1,35 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Class;
-import com.phd.RemoteEducationHost.mappers.ClassMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.ClassRowMapper;
 import com.phd.RemoteEducationHost.repositories.ClassRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 @Repository
+@RequiredArgsConstructor
 public class ClassRepositoryImpl implements ClassRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    ClassMapper classMapper;
+    private final JdbcTemplate jdbcTemplate;
+    private final ClassRowMapper classRowMapper;
     @Override
-    public Class getClassById(int id) {
+    public Class getClassById(Integer id) {
         String sql = "select * from classes where class_id=?";
 
-        return (Class) jdbcTemplate.queryForObject(sql, classMapper, id);
+        return (Class) jdbcTemplate.queryForObject(sql, classRowMapper, id);
     }
 
     @Override
-    public Class getClassWithDetailsById(int id) {
+    public Class getClassWithDetailsById(Integer id) {
         String sql = "select * from classes c " +
                 "join disciplines d on d.discipline_id=c.discipline " +
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "join profiles p on p.profile_id=c.teacher " +
                 "where class_id=?";
-        return (Class) jdbcTemplate.queryForObject(sql, classMapper, id);
+        return (Class) jdbcTemplate.queryForObject(sql, classRowMapper, id);
     }
 
     @Override
@@ -41,16 +39,16 @@ public class ClassRepositoryImpl implements ClassRepository {
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_";
-        return jdbcTemplate.query(sql,classMapper);
+        return jdbcTemplate.query(sql, classRowMapper);
     }
 
     @Override
-    public List<Class> getClassesByTeacherId(int teacherId) {
+    public List<Class> getClassesByTeacherId(Integer teacherId) {
         return null;
     }
 
     @Override
-    public List<Class> getClassesByGroupId(int groupId) {
+    public List<Class> getClassesByGroupId(Integer groupId) {
         return null;
     }
 
@@ -73,7 +71,7 @@ public class ClassRepositoryImpl implements ClassRepository {
     }
 
     @Override
-    public void deleteClass(int classId) {
+    public void deleteClass(Integer classId) {
         String sql = "delete from classes where class_id=?";
         jdbcTemplate.update(sql, classId);
     }

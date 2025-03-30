@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    int id;
+    Integer id;
     String email;
     String firstName;
     String lastName;

@@ -9,21 +9,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO: separate into 2 classes by creating UserRowMapper
-@Component
-public class UserMapper implements RowMapper<User> {
-    @Override
-    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-        User user = new User();
-        user.setId(rs.getInt("profile_id"));
-        user.setBirthdayDate(rs.getDate("birthday_date"));
-        user.setCreateAt(rs.getDate("creation_date"));
-        user.setEmail(rs.getString("email"));
-        user.setFirstName(rs.getString("firstname"));
-        user.setLastName(rs.getString("lastname"));
-        user.setPassword(rs.getString("encrypted_password"));
-        return user;
-    }
+public class UserMapper  {
     public static UserDTO userToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -39,7 +25,6 @@ public class UserMapper implements RowMapper<User> {
 
     public static User userCreationDTOToUser(UserCreationDTO userDTO) {
         User user = new User();
-        user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setFirstName(userDTO.getFirstName());

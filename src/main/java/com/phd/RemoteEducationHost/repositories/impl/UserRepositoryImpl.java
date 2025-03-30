@@ -1,46 +1,42 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phd.RemoteEducationHost.enteties.User;
 import com.phd.RemoteEducationHost.enteties.enums.Role;
-import com.phd.RemoteEducationHost.mappers.UserMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.UserRowMapper;
 import com.phd.RemoteEducationHost.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final UserMapper userMapper;
+    private final UserRowMapper userRowMapper;
 
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Integer id) {
         String sql = "select * from profiles where profile_id = ?";
 
-        return (User) jdbcTemplate.queryForObject(sql, userMapper, id);
+        return (User) jdbcTemplate.queryForObject(sql, userRowMapper, id);
     }
 
     @Override
     public User getUserByEmail(String email) {
         String sql = "select * from profiles where email = ?";
 
-        return (User) jdbcTemplate.queryForObject(sql, userMapper, email);
+        return (User) jdbcTemplate.queryForObject(sql, userRowMapper, email);
     }
 
     @Override
-    public User getUserWithRolesById(int id) {
+    public User getUserWithRolesById(Integer id) {
         String sql = "select * from profiles where profile_id = ?";
 
-        User user = (User) jdbcTemplate.queryForObject(sql, userMapper, id);
+        User user = (User) jdbcTemplate.queryForObject(sql, userRowMapper, id);
         user.setRoles(getUserRoles(user.getId()));
         return user;
     }
@@ -57,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
                 rs.getDate("birthday_date"), new LinkedList<>()));
     }
 
-    private List<Role> getUserRoles(int userId) {
+    private List<Role> getUserRoles(Integer userId) {
         List<Role> roles = new LinkedList<>();
         String sql = "SELECT EXISTS(SELECT 1 FROM students WHERE student_id=?)";
         if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
@@ -87,7 +83,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUser(int userId) {
+    public void deleteUser(Integer userId) {
         String sql = "delete from profiles where profile_id=?";
         jdbcTemplate.update(sql, userId);
     }

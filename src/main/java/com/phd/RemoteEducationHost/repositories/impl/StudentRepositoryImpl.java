@@ -1,26 +1,22 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
-import com.phd.RemoteEducationHost.enteties.Group;
 import com.phd.RemoteEducationHost.enteties.Student;
-import com.phd.RemoteEducationHost.mappers.StudentMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.StudentRowMapper;
 import com.phd.RemoteEducationHost.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.repositories.StudentRepository {
     private final JdbcTemplate jdbcTemplate;
     private final UserRepository userRepository;
-
-    private final StudentMapper studentMapper;
+    private final StudentRowMapper studentRowMapper;
     @Override
-    public Student getStudentById(int id) {
+    public Student getStudentById(Integer id) {
 //        String sql = "select * from students s " +
 //                "join profiles p on p.profile_id=s.student_id " +
 //                "where s.student_id = ?";
@@ -28,22 +24,22 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
                 "JOIN profiles p ON p.profile_id = s.student_id \n" +
                 "WHERE s.student_id = ?\n";
 
-        return (Student) jdbcTemplate.queryForObject(sql, studentMapper, id);
+        return (Student) jdbcTemplate.queryForObject(sql, studentRowMapper, id);
     }
 
     @Override
     public List<Student> getAllStudents() {
         String sql = "select * from students s " +
                 "join profiles p on p.profile_id=s.student_id";
-        return jdbcTemplate.query(sql, studentMapper);
+        return jdbcTemplate.query(sql, studentRowMapper);
     }
 
     @Override
-    public List<Student> getStudentsByGroupId(int groupId) {
+    public List<Student> getStudentsByGroupId(Integer groupId) {
         String sql = "select * from students s " +
                 "join profiles p on p.profile_id=s.student_id " +
                 "where s.group_=?";
-        return jdbcTemplate.query(sql, studentMapper, groupId);
+        return jdbcTemplate.query(sql, studentRowMapper, groupId);
     }
 
     @Override
@@ -63,7 +59,7 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
     }
 
     @Override
-    public void deleteStudent(int studentId) {
+    public void deleteStudent(Integer studentId) {
         String sql = "delete from students where student_id=?";
         jdbcTemplate.update(sql, studentId);
     }

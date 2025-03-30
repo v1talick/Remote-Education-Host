@@ -29,7 +29,6 @@ public class SecurityConfiguration {
                 .jwsAlgorithm(SignatureAlgorithm.RS256).build();
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(management ->
@@ -40,16 +39,9 @@ public class SecurityConfiguration {
                                 .anyRequest().authenticated()
 //                        .anyRequest().permitAll()
                 )
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll())
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
-//                .oauth2ResourceServer((oauth2) -> oauth2
-//                        .jwt(Customizer.withDefaults())
-////                        .jwt(jwt -> jwt.decoder(jwtDecoder()))
-//                );
         return http.build();
     }
 

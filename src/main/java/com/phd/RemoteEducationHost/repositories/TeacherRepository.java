@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TeacherRepository {
-    Teacher getTeacherById(int id);
+    Teacher getTeacherById(Integer id);
     List<Teacher> getAllTeachers();
     void saveTeacher(Teacher teacher);
     void updateTeacher(Teacher teacher);
-    void deleteTeacher(int teacherId);
+    void deleteTeacher(Integer teacherId);
 }

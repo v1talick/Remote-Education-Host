@@ -10,10 +10,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Answer {
-    int id;
+    Integer id;
     Task task;
     Student student;
-    int grade;
+    Integer grade;
     String filePath;
     Date taskDeliveryTime;
 }

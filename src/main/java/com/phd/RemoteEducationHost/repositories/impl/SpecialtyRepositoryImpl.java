@@ -2,33 +2,33 @@ package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Specialty;
-import com.phd.RemoteEducationHost.mappers.SpecialtyMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.SpecialtyRowMapper;
 import com.phd.RemoteEducationHost.repositories.SpecialtyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 @Repository
+@RequiredArgsConstructor
 public class SpecialtyRepositoryImpl implements SpecialtyRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    SpecialtyMapper specialtyMapper;
+
+    private final JdbcTemplate jdbcTemplate;
+
+    private final SpecialtyRowMapper specialtyRowMapper;
     @Override
-    public Specialty getSpecialtyById(int id) {
+    public Specialty getSpecialtyById(Integer id) {
         String sql = "SELECT * FROM specialties WHERE specialty_id = ?";
 
-        return (Specialty) jdbcTemplate.queryForObject(sql, specialtyMapper, id);
+        return (Specialty) jdbcTemplate.queryForObject(sql, specialtyRowMapper, id);
     }
 
     @Override
-    public Specialty getSpecialtyWithDetailsById(int id) {
+    public Specialty getSpecialtyWithDetailsById(Integer id) {
         String sql = "select * from specialties s join departments d 0n s.department=d.department_id where s.specialty_id=?";
 
-        return (Specialty) jdbcTemplate.queryForObject(sql, specialtyMapper, id);
+        return (Specialty) jdbcTemplate.queryForObject(sql, specialtyRowMapper, id);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     }
 
     @Override
-    public void deleteSpecialty(int id) {
+    public void deleteSpecialty(Integer id) {
         String sql = "delete from specialties where specialty_id=?";
         jdbcTemplate.update(sql, id);
     }

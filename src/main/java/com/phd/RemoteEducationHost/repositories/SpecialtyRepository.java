@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SpecialtyRepository {
-    Specialty getSpecialtyById(int id);
-    Specialty getSpecialtyWithDetailsById(int id);
+    Specialty getSpecialtyById(Integer id);
+    Specialty getSpecialtyWithDetailsById(Integer id);
     List<Specialty> getAllSpecialties();
     void saveSpecialty(Specialty specialty);
     void updateSpecialty(Specialty specialty);
-    void deleteSpecialty(int id);
+    void deleteSpecialty(Integer id);
 }

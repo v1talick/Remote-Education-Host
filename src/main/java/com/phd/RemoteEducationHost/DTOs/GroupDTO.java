@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupDTO {
-    int id;
+    Integer id;
     Specialty specialty;
     String name;
     Date creationDate;

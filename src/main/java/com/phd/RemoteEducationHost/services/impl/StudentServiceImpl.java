@@ -16,7 +16,7 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
     public final StudentRepository studentRepository;
     @Override
-    public StudentDTO getStudentById(int id) {
+    public StudentDTO getStudentById(Integer id) {
         return StudentMapper.studentToStudentDTO(studentRepository.getStudentById(id));
     }
 
@@ -36,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudentById(int id) {
+    public void deleteStudentById(Integer id) {
         studentRepository.deleteStudent(id);
     }
 }

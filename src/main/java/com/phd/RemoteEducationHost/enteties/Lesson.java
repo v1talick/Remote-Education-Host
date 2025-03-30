@@ -11,9 +11,9 @@ import java.time.DayOfWeek;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Lesson {
-    int id;
+    Integer id;
     DayOfWeek dayOfWeek;
-    int lessonNumber;
+    Integer lessonNumber;
     Class aClass;
     LessonType lessonType;
     String lessonLink;

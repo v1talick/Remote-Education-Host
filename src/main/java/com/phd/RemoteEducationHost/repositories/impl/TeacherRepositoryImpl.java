@@ -1,28 +1,27 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Teacher;
-import com.phd.RemoteEducationHost.mappers.TeacherMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.TeacherRowMapper;
 import com.phd.RemoteEducationHost.repositories.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 @Repository
+@RequiredArgsConstructor
 public class TeacherRepositoryImpl implements TeacherRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    TeacherMapper teacherMapper;
+    private final JdbcTemplate jdbcTemplate;
+
+    private final TeacherRowMapper teacherRowMapper;
     @Override
-    public Teacher getTeacherById(int id) {
+    public Teacher getTeacherById(Integer id) {
         String sql = "select * from teachers t " +
                 "join profiles p on p.profile_id=t.teacher_id " +
                 "where t.teacher_id=?";
 
-        return (Teacher) jdbcTemplate.queryForObject(sql, teacherMapper, id);
+        return (Teacher) jdbcTemplate.queryForObject(sql, teacherRowMapper, id);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         String sql = "select * from teachers t " +
                 "join profiles p on p.profile_id=t.teacher_id";
 
-        return jdbcTemplate.query(sql, teacherMapper);
+        return jdbcTemplate.query(sql, teacherRowMapper);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public void deleteTeacher(int teacherId) {
+    public void deleteTeacher(Integer teacherId) {
         String sql = "delete from teachers where teacher_id=?";
         jdbcTemplate.update(sql, teacherId);
     }

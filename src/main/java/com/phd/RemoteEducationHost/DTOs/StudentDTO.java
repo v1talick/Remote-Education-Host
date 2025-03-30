@@ -12,7 +12,7 @@ import java.util.List;
 public class StudentDTO extends UserDTO{
     GroupDTO groupDTO;
 
-    public StudentDTO(int id, String email, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, GroupDTO groupDTO) {
+    public StudentDTO(Integer id, String email, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, GroupDTO groupDTO) {
         super(id, email, firstName, lastName, createAt, birthdayDate, roles);
         this.groupDTO = groupDTO;
     }

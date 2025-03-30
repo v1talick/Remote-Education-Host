@@ -14,7 +14,7 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     @Override
-    public GroupDTO getGroupById(int id) {
+    public GroupDTO getGroupById(Integer id) {
         return null;
     }
 
@@ -34,7 +34,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void deleteGroupById(int id) {
+    public void deleteGroupById(Integer id) {
 
     }
 }

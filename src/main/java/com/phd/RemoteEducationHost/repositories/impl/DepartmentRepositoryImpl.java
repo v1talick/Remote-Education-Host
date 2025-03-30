@@ -1,32 +1,27 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Department;
-import com.phd.RemoteEducationHost.mappers.DepartmentMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.DepartmentRowMapper;
 import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class DepartmentRepositoryImpl implements DepartmentRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final DepartmentMapper departmentMapper;
+    private final DepartmentRowMapper departmentRowMapper;
 
     @Override
-    public Department getDepartmentById(int id) {
+    public Department getDepartmentById(Integer id) {
         String sql = "select * from departments d where d.department_id=?";
-            return (Department) jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
-                    new Department(rs.getInt("department_id"), rs.getString("department_name")
-                            , rs.getString("description"), rs.getDate("created_at"))
-                    ,id);
-
+        return (Department) jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+                        new Department(rs.getInt("department_id"), rs.getString("department_name")
+                                , rs.getString("description"), rs.getDate("created_at"))
+                , id);
     }
 
     @Override
@@ -41,7 +36,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
     @Override
     public void saveDepartment(Department department) {
         String sql = "insert into departments (department_name, description, created_at) values (?, ?, ?)";
-        jdbcTemplate.update(sql,  department.getName(), department.getDescription(), department.getCreatedAt());
+        jdbcTemplate.update(sql, department.getName(), department.getDescription(), department.getCreatedAt());
     }
 
     @Override
@@ -51,7 +46,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
     }
 
     @Override
-    public void deleteDepartment(int departmentId) {
+    public void deleteDepartment(Integer departmentId) {
         String sql = "delete from departments where department_id=?";
         jdbcTemplate.update(sql, departmentId);
     }

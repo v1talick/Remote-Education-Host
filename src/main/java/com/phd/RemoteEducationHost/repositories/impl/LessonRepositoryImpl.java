@@ -1,34 +1,32 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Lesson;
-import com.phd.RemoteEducationHost.mappers.LessonMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.LessonRowMapper;
 import com.phd.RemoteEducationHost.repositories.LessonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class LessonRepositoryImpl implements LessonRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    LessonMapper lessonMapper;
+    private final JdbcTemplate jdbcTemplate;
+
+    private final LessonRowMapper lessonRowMapper;
 
     @Override
-    public Lesson getLessonById(int id) {
+    public Lesson getLessonById(Integer id) {
         String sql = "select * from lessons " +
                 "where lesson_id=?";
 
-        return (Lesson) jdbcTemplate.queryForObject(sql, lessonMapper, id);
+        return (Lesson) jdbcTemplate.queryForObject(sql, lessonRowMapper, id);
     }
 
     @Override
-    public Lesson getLessonWithDetailsById(int id) {
+    public Lesson getLessonWithDetailsById(Integer id) {
         String sql = "select * from lessons l " +
                 "join classes c on c.class_id=l.class_ " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -37,7 +35,7 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join groups_ g on g.group_id=c.group_ " +
                 "where l.lesson_id=?";
 
-        return (Lesson) jdbcTemplate.queryForObject(sql, lessonMapper, id);
+        return (Lesson) jdbcTemplate.queryForObject(sql, lessonRowMapper, id);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_" ;
-        return jdbcTemplate.query(sql, lessonMapper);
+        return jdbcTemplate.query(sql, lessonRowMapper);
     }
 
     @Override
@@ -60,11 +58,11 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "where week_day=?";
-        return jdbcTemplate.query(sql, lessonMapper, day.getValue());
+        return jdbcTemplate.query(sql, lessonRowMapper, day.getValue());
     }
 
     @Override
-    public List<Lesson> getLessonsByGroupId(int groupId) {
+    public List<Lesson> getLessonsByGroupId(Integer groupId) {
         String sql = "select * from lessons l " +
                 "join classes c on c.class_id=l.class_ " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -72,11 +70,11 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "where c.group_=?";
-        return jdbcTemplate.query(sql, lessonMapper, groupId);
+        return jdbcTemplate.query(sql, lessonRowMapper, groupId);
     }
 
     @Override
-    public List<Lesson> getLessonsByTeacherId(int teacherId) {
+    public List<Lesson> getLessonsByTeacherId(Integer teacherId) {
         String sql = "select * from lessons l " +
                 "join classes c on c.class_id=l.class_ " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -84,11 +82,11 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "where c.teacher=?";
-        return jdbcTemplate.query(sql, lessonMapper, teacherId);
+        return jdbcTemplate.query(sql, lessonRowMapper, teacherId);
     }
 
     @Override
-    public List<Lesson> getLessonsByClassId(int classId) {
+    public List<Lesson> getLessonsByClassId(Integer classId) {
         String sql = "select * from lessons l " +
                 "join classes c on c.class_id=l.class_ " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -96,11 +94,11 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_ " +
                 "where l.class_=?";
-        return jdbcTemplate.query(sql, lessonMapper, classId);
+        return jdbcTemplate.query(sql, lessonRowMapper, classId);
     }
 
     @Override
-    public Lesson getLessonByGroupIdAndDay(int groupId, DayOfWeek day) {
+    public Lesson getLessonByGroupIdAndDay(Integer groupId, DayOfWeek day) {
         return null;
     }
 
@@ -123,7 +121,7 @@ public class LessonRepositoryImpl implements LessonRepository {
     }
 
     @Override
-    public void deleteLesson(int lessonId) {
+    public void deleteLesson(Integer lessonId) {
         String sql = "delete from lessons where lesson_id=?";
         jdbcTemplate.update(sql, lessonId);
     }

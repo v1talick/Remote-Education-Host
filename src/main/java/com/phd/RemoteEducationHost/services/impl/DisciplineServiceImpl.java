@@ -18,7 +18,7 @@ import java.util.Optional;
 public class DisciplineServiceImpl implements DisciplineService {
     private final DisciplineRepository disciplineRepository;
     @Override
-    public DisciplineDTO getDisciplineById(int id) {
+    public DisciplineDTO getDisciplineById(Integer id) {
         return DisciplineMapper.disciplineToDisciplineDTO(disciplineRepository.getDisciplineById(id));
     }
 
@@ -38,7 +38,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public void deleteDisciplineById(int id) {
+    public void deleteDisciplineById(Integer id) {
         disciplineRepository.deleteDiscipline(id);
     }
 }

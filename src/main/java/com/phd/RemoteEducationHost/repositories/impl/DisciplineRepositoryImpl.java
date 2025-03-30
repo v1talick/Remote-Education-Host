@@ -2,7 +2,9 @@ package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Discipline;
 import com.phd.RemoteEducationHost.mappers.DisciplineMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.DisciplineRowMapper;
 import com.phd.RemoteEducationHost.repositories.DisciplineRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,13 +13,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 @Repository
+@RequiredArgsConstructor
 public class DisciplineRepositoryImpl implements DisciplineRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    DisciplineMapper disciplineMapper;
+    private final JdbcTemplate jdbcTemplate;
+    private final DisciplineRowMapper disciplineMapper;
     @Override
-    public Discipline getDisciplineById(int id) {
+    public Discipline getDisciplineById(Integer id) {
         String sql = "select * from disciplines where discipline_id = ?";
 
         return (Discipline) jdbcTemplate.queryForObject(sql, disciplineMapper, id);
@@ -42,7 +43,7 @@ public class DisciplineRepositoryImpl implements DisciplineRepository {
     }
 
     @Override
-    public void deleteDiscipline(int disciplineId) {
+    public void deleteDiscipline(Integer disciplineId) {
         String sql = "delete from disciplines where discipline_id=?";
         jdbcTemplate.update(sql, disciplineId);
     }

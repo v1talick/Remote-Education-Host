@@ -16,7 +16,7 @@ import java.util.List;
 //@AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
-    int id;
+    Integer id;
     String email;
     String password;
     String firstName;
@@ -25,7 +25,7 @@ public class User implements UserDetails {
     Date birthdayDate;
     List<Role> roles;
 
-    public User(int id, String email, String password, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles) {
+    public User(Integer id, String email, String password, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles) {
         this.id = id;
         this.email = email;
         this.password = password;

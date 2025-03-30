@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     @Override
-    public UserDTO getUserById(int id) {
+    public UserDTO getUserById(Integer id) {
         return UserMapper.userToUserDTO(userRepository.getUserById(id));
     }
 
@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
     public AuthResponse saveUser(UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = new AuthResponse();
 
+        String originalPassword = userCreationDTO.getPassword();
         userCreationDTO.setCreateAt(new Date());
         userCreationDTO.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
         User user = UserMapper.userCreationDTOToUser(userCreationDTO);
@@ -53,18 +54,37 @@ public class UserServiceImpl implements UserService {
 
             return authResponse;
         }
-        Authentication authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
+        Authentication authentication;
+
+        // TODO: remove this catch to exception handler advice
+        try {
+            authentication = authenticate(userCreationDTO.getEmail(), originalPassword);
+        } catch (BadCredentialsException e) {
+            authResponse.setStatus(false);
+            authResponse.setMessage("Wrong data for registration");
+
+            return authResponse;
+        }
+
         String jwt = JwtProvider.generateToken(authentication);
         authResponse.setJwt(jwt);
         authResponse.setStatus(true);
         authResponse.setMessage("User successfully registered");
+
         return authResponse;
     }
 
     @Override
     public AuthResponse login(UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = new AuthResponse();
-        Authentication authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
+        Authentication authentication;
+        try {
+            authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
+        } catch (BadCredentialsException e) {
+            authResponse.setStatus(false);
+            authResponse.setMessage(e.getMessage());
+            return authResponse;
+        }
         authResponse.setMessage("User successfully logged in");
         authResponse.setStatus(true);
         authResponse.setJwt(JwtProvider.generateToken(authentication));
@@ -73,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(int id) {
+    public void deleteUserById(Integer id) {
         userRepository.deleteUser(id);
     }
 

@@ -10,12 +10,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
-    int id;
+    Integer id;
     String name;
     String description;
     Date createdAt;
 
-    public Department(int id) {
+    public Department(Integer id) {
         this.id = id;
     }
 }

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DepartmentRepository {
-    Department getDepartmentById(int id);
+    Department getDepartmentById(Integer id);
     List<Department> getAllDepartments();
     void saveDepartment(Department department);
     void updateDepartment(Department department);
-    void deleteDepartment(int departmentId);
+    void deleteDepartment(Integer departmentId);
 }

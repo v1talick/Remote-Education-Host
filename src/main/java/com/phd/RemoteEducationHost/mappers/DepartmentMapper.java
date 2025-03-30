@@ -8,15 +8,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
-public class DepartmentMapper implements RowMapper {
-    @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Department department = new Department();
-        department.setId(rs.getInt("department_id"));
-        department.setName(rs.getString("department_name"));
-        return null;
-    }
+public class DepartmentMapper {
     public static DepartmentDTO departmentToDepartmentDTO(Department department) {
         DepartmentDTO departmentDTO = new DepartmentDTO();
         departmentDTO.setId(department.getId());

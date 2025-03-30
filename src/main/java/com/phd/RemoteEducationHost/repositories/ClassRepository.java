@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClassRepository {
-    Class getClassById(int id);
-    Class getClassWithDetailsById(int id);
+    Class getClassById(Integer id);
+    Class getClassWithDetailsById(Integer id);
     List<Class> getAllClasses();
-    List<Class> getClassesByTeacherId(int teacherId);
-    List<Class> getClassesByGroupId(int groupId);
+    List<Class> getClassesByTeacherId(Integer teacherId);
+    List<Class> getClassesByGroupId(Integer groupId);
     void saveClass(Class aClass);
     void updateClass(Class aClass);
-    void deleteClass(int classId);
+    void deleteClass(Integer classId);
 }

@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    UserDTO getUserById(int id);
+    UserDTO getUserById(Integer id);
     List<UserDTO> getAllUser();
     AuthResponse saveUser(UserCreationDTO userCreationDTO);
     AuthResponse login(UserCreationDTO userCreationDTO);
-    void deleteUserById(int id);
+    void deleteUserById(Integer id);
 }

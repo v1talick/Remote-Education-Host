@@ -16,7 +16,7 @@ public class Teacher extends User{
     ScienceDegree scienceDegree;
     Department department;
 
-    public Teacher(int id, String email, String password, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, ScienceDegree scienceDegree, Department department) {
+    public Teacher(Integer id, String email, String password, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, ScienceDegree scienceDegree, Department department) {
         super(id, email, password, firstName, lastName, createAt, birthdayDate, roles);
         this.scienceDegree = scienceDegree;
         this.department = department;

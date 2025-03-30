@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DisciplineDTO {
-    int id;
+    Integer id;
     String name;
     String description;
 }

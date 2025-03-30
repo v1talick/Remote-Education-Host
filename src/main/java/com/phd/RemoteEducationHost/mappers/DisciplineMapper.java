@@ -8,17 +8,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
-public class DisciplineMapper implements RowMapper {
-    @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Discipline discipline = new Discipline();
-        discipline.setId(rs.getInt("discipline_id"));
-        discipline.setName(rs.getString("discipline_name"));
-        discipline.setDescription(rs.getString("description"));
-
-        return discipline;
-    }
+public class DisciplineMapper {
 
     public static Discipline disciplineDTOtoDiscipline(DisciplineDTO disciplineDTO) {
         Discipline discipline = new Discipline();

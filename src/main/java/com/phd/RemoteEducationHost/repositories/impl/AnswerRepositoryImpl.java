@@ -1,52 +1,50 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Answer;
-import com.phd.RemoteEducationHost.mappers.AnswerMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.AnswerRowMapper;
 import com.phd.RemoteEducationHost.repositories.AnswerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class AnswerRepositoryImpl implements AnswerRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    AnswerMapper answerMapper;
+    private final JdbcTemplate jdbcTemplate;
+    private final AnswerRowMapper answerRowMapper;
 
     @Override
-    public Answer getAnswerById(int id) {
+    public Answer getAnswerById(Integer id) {
         String sql = "select * from answers a " +
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
                 "where a.answer_id=?";
 
-            return (Answer) jdbcTemplate.queryForObject(sql, answerMapper, id);
+            return (Answer) jdbcTemplate.queryForObject(sql, answerRowMapper, id);
     }
 
     @Override
-    public List<Answer> getAnswersByStudentId(int studentId) {
+    public List<Answer> getAnswersByStudentId(Integer studentId) {
         String sql = "select * from answers a " +
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
                 "where s.student_id=?";
-        return jdbcTemplate.query(sql, answerMapper, studentId);
+        return jdbcTemplate.query(sql, answerRowMapper, studentId);
     }
 
     @Override
-    public List<Answer> getAnswersByTaskId(int taskId) {
+    public List<Answer> getAnswersByTaskId(Integer taskId) {
         String sql = "select * from answers a " +
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
                 "where a.task=?";
-        return jdbcTemplate.query(sql, answerMapper, taskId);
+        return jdbcTemplate.query(sql, answerRowMapper, taskId);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task";
-        return jdbcTemplate.query(sql, answerMapper);
+        return jdbcTemplate.query(sql, answerRowMapper);
     }
 
     @Override
@@ -77,7 +75,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     }
 
     @Override
-    public void deleteAnswer(int answerId) {
+    public void deleteAnswer(Integer answerId) {
         String sql = "delete from answers where answer_id=?";
         jdbcTemplate.update(sql, answerId);
     }

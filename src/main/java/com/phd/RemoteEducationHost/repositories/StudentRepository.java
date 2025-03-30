@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository {
-    Student getStudentById(int id);
+    Student getStudentById(Integer id);
     List<Student> getAllStudents();
-    List<Student> getStudentsByGroupId(int groupId);
+    List<Student> getStudentsByGroupId(Integer groupId);
     void saveStudent(Student student);
     void updateStudent(Student student);
-    void deleteStudent(int studentId);
+    void deleteStudent(Integer studentId);
 }
 

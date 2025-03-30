@@ -29,15 +29,9 @@ public class UserController {
     public ResponseEntity<AuthResponse> login(@RequestBody UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = new AuthResponse();
         try {
-            Authentication authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = JwtProvider.generateToken(authentication);
-
-            authResponse.setJwt(jwt);
-            authResponse.setMessage("Success login");
-            authResponse.setStatus(true);
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+            return new ResponseEntity<>(userService.login(userCreationDTO), HttpStatus.OK);
         } catch (BadCredentialsException e) {
+            // TODO: replace this catch into exception handler
             authResponse.setStatus(false);
             authResponse.setMessage("Invalid email or password");
             return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
@@ -51,26 +45,4 @@ public class UserController {
         }
         return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
     }
-    private Authentication authenticate(String username, String password) {
-
-        System.out.println(username+"---++----"+password);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-        System.out.println("Sig in in user details"+ userDetails);
-
-        if(userDetails == null) {
-            System.out.println("Sign in details - null" + userDetails);
-
-            throw new BadCredentialsException("Invalid username and password");
-        }
-        if(!passwordEncoder.matches(password,userDetails.getPassword())) {
-            System.out.println("Sign in userDetails - password mismatch"+userDetails);
-
-            throw new BadCredentialsException("Invalid password");
-
-        }
-        return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-    }
-
 }

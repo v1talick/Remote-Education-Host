@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Class {
-    int id;
+    Integer id;
     Teacher teacher;
     Discipline discipline;
     Group group;

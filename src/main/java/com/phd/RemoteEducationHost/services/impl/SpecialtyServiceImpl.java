@@ -16,7 +16,7 @@ import java.util.Optional;
 public class SpecialtyServiceImpl implements SpecialtyService{
     private final SpecialtyRepository specialtyRepository;
     @Override
-    public SpecialtyDTO getSpecialtyById(int id) {
+    public SpecialtyDTO getSpecialtyById(Integer id) {
         return SpecialtyMapper.specialtyToSpecialtyDTO(specialtyRepository.getSpecialtyById(id));
     }
 
@@ -36,7 +36,7 @@ public class SpecialtyServiceImpl implements SpecialtyService{
     }
 
     @Override
-    public void deleteSpecialty(int id) {
+    public void deleteSpecialty(Integer id) {
         specialtyRepository.deleteSpecialty(id);
     }
 }

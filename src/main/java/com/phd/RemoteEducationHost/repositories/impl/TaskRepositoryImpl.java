@@ -1,31 +1,30 @@
 package com.phd.RemoteEducationHost.repositories.impl;
 
 import com.phd.RemoteEducationHost.enteties.Task;
-import com.phd.RemoteEducationHost.mappers.TaskMapper;
+import com.phd.RemoteEducationHost.mappers.rowmappers.TaskRowMapper;
 import com.phd.RemoteEducationHost.repositories.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 @Repository
+@RequiredArgsConstructor
 public class TaskRepositoryImpl implements TaskRepository {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    TaskMapper taskMapper;
+    private final JdbcTemplate jdbcTemplate;
+    private final TaskRowMapper taskRowMapper;
+
     @Override
-    public Task getTaskById(int id) {
+    public Task getTaskById(Integer id) {
         String sql = "select * from tasks " +
                 "where task_id=?";
 
-        return (Task) jdbcTemplate.queryForObject(sql, taskMapper, id);
+        return (Task) jdbcTemplate.queryForObject(sql, taskRowMapper, id);
     }
 
     @Override
-    public Task getTaskWithDetailsById(int id) {
+    public Task getTaskWithDetailsById(Integer id) {
         String sql = "select * from tasks t " +
                 "join classes c on t.class_=c.class_id " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -34,11 +33,11 @@ public class TaskRepositoryImpl implements TaskRepository {
                 "join groups_ g on g.group_id=c.group_ " +
                 "where task_id=?";
 
-        return (Task) jdbcTemplate.queryForObject(sql, taskMapper, id);
+        return (Task) jdbcTemplate.queryForObject(sql, taskRowMapper, id);
     }
 
     @Override
-    public List<Task> getAllTasksByClassId(int classId) {
+    public List<Task> getAllTasksByClassId(Integer classId) {
         String sql = "select * from tasks t " +
                 "join classes c on t.class_=c.class_id " +
                 "join disciplines d on d.discipline_id=c.discipline " +
@@ -46,13 +45,13 @@ public class TaskRepositoryImpl implements TaskRepository {
                 "join profiles p on p.profile_id=c.teacher " +
                 "join groups_ g on g.group_id=c.group_  " +
                 "where class_=?";
-        return jdbcTemplate.query(sql, taskMapper, classId);
+        return jdbcTemplate.query(sql, taskRowMapper, classId);
     }
 
     @Override
     public List<Task> getAllTasks() {
         String sql = "select * from tasks";
-        return jdbcTemplate.query(sql, taskMapper);
+        return jdbcTemplate.query(sql, taskRowMapper);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void deleteTask(int taskId) {
+    public void deleteTask(Integer taskId) {
         String sql =  "delete from tasks where task_id=?;";
         jdbcTemplate.update(sql, taskId);
     }

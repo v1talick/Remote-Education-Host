@@ -10,26 +10,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
-public class StudentMapper implements RowMapper {
-    @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Student student = new Student();
-        student.setId(rs.getInt("student_id"));
-        student.setEmail(rs.getString("email"));
-        student.setPassword(rs.getString("encrypted_password"));
-        student.setFirstName(rs.getString("firstname"));
-        student.setLastName(rs.getString("lastname"));
-        student.setBirthdayDate(rs.getDate("birthday_date"));
-        student.setCreateAt(rs.getDate("creation_date"));
-
-        Group group = new Group();
-        group.setId(rs.getInt("group_"));
-        student.setGroup(group);
-
-        return student;
-    }
-
+public class StudentMapper {
     public static StudentDTO studentToStudentDTO(Student student) {
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setId(student.getId());
@@ -44,10 +25,8 @@ public class StudentMapper implements RowMapper {
         return studentDTO;
     }
 
-
     public static Student studentCreationToStudent(StudentCreationDTO studentCreationDTO) {
         Student student = new Student();
-        student.setId(studentCreationDTO.getId());
         student.setEmail(studentCreationDTO.getEmail());
         student.setPassword(studentCreationDTO.getPassword());
         student.setFirstName(studentCreationDTO.getFirstName());

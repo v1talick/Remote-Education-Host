@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DisciplineService {
-    public DisciplineDTO getDisciplineById(int id);
+    public DisciplineDTO getDisciplineById(Integer id);
     public List<DisciplineDTO> getAllDisciplines();
     public void saveDiscipline(DisciplineDTO disciplineDTO);
     public void updateDiscipline(DisciplineDTO disciplineDTO);
-    public void deleteDisciplineById(int id);
+    public void deleteDisciplineById(Integer id);
 }
