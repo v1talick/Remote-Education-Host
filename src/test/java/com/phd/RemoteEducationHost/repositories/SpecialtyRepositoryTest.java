@@ -18,7 +18,9 @@ public class SpecialtyRepositoryTest {
 
     @Test
     public void saveSpecialtyTest() {
-        Specialty specialty = new Specialty(0, "testName", new Department(1));
+        Department department = new Department();
+        department.setId(1);
+        Specialty specialty = new Specialty(0, "testName", department);
         specialtyRepository.saveSpecialty(specialty);
         assertEquals(7, specialtyRepository.getAllSpecialties().size());
     }
@@ -29,7 +31,9 @@ public class SpecialtyRepositoryTest {
     }
     @Test
     public void updateSpecialtyTest() {
-        Specialty specialty = new Specialty(1, "testName", new Department(1));
+        Department department = new Department();
+        department.setId(1);
+        Specialty specialty = new Specialty(1, "testName", department);
         specialtyRepository.updateSpecialty(specialty);
         assertEquals("testName", specialtyRepository.getSpecialtyById(1).getName());
     }

@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,11 +32,10 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 SecretKey key = Keys.hmacShaKeyFor("wpembytrwcvnryxksdbqwjebruyGHyudqgwveytrtrCSnwifoesarjbwe".getBytes());
                 @SuppressWarnings("deprecation")
                 Claims claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
-                System.out.print(claims);
 
                 String email = String.valueOf(claims.get("email"));
-                System.out.print(email);
                 String authorities = String.valueOf(claims.get("authorities"));
+
                 List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);

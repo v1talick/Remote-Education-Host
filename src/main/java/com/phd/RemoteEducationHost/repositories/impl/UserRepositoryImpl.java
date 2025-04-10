@@ -42,6 +42,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public User getUserByEmailWithRoles(String email) {
+        User user = getUserByEmail(email);
+        user.setRoles(getUserRoles(user.getId()));
+
+        return user;
+    }
+
+    @Override
     public List<User> getAllUsers() {
         String sql = "select * from profiles";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new User(rs.getInt("profile_id"),

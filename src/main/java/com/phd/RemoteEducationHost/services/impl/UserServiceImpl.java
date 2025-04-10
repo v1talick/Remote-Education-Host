@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,16 +56,7 @@ public class UserServiceImpl implements UserService {
             return authResponse;
         }
         Authentication authentication;
-
-        // TODO: remove this catch to exception handler advice
-        try {
-            authentication = authenticate(userCreationDTO.getEmail(), originalPassword);
-        } catch (BadCredentialsException e) {
-            authResponse.setStatus(false);
-            authResponse.setMessage("Wrong data for registration");
-
-            return authResponse;
-        }
+        authentication = authenticate(userCreationDTO.getEmail(), originalPassword);
 
         String jwt = JwtProvider.generateToken(authentication);
         authResponse.setJwt(jwt);
@@ -78,13 +70,7 @@ public class UserServiceImpl implements UserService {
     public AuthResponse login(UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = new AuthResponse();
         Authentication authentication;
-        try {
-            authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
-        } catch (BadCredentialsException e) {
-            authResponse.setStatus(false);
-            authResponse.setMessage(e.getMessage());
-            return authResponse;
-        }
+        authentication = authenticate(userCreationDTO.getEmail(), userCreationDTO.getPassword());
         authResponse.setMessage("User successfully logged in");
         authResponse.setStatus(true);
         authResponse.setJwt(JwtProvider.generateToken(authentication));
@@ -114,8 +100,10 @@ public class UserServiceImpl implements UserService {
             System.out.println("Sign in userDetails - password mismatch"+userDetails);
 
             throw new BadCredentialsException("Invalid password");
-
         }
-        return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return authentication;
     }
 }

@@ -16,7 +16,7 @@ public class GroupMapper {
         Group group = new Group();
         group.setId(groupDTO.getId());
         group.setName(groupDTO.getName());
-        group.setSpecialty(groupDTO.getSpecialty());
+        group.setSpecialty(SpecialtyMapper.specialtyDTOtoSpecialty(groupDTO.getSpecialtyDTO()));
         group.setCreationDate(groupDTO.getCreationDate());
 
         return group;
@@ -26,7 +26,7 @@ public class GroupMapper {
         GroupDTO group = new GroupDTO();
         group.setId(groupDTO.getId());
         group.setName(groupDTO.getName());
-        group.setSpecialty(groupDTO.getSpecialty());
+        group.setSpecialtyDTO(SpecialtyMapper.specialtyToSpecialtyDTO(groupDTO.getSpecialty()));
         group.setCreationDate(groupDTO.getCreationDate());
 
         return group;

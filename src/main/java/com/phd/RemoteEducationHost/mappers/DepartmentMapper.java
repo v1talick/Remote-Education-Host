@@ -2,6 +2,7 @@ package com.phd.RemoteEducationHost.mappers;
 
 import com.phd.RemoteEducationHost.DTOs.DepartmentDTO;
 import com.phd.RemoteEducationHost.enteties.Department;
+import org.mapstruct.Mapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DepartmentMapper {
+
     public static DepartmentDTO departmentToDepartmentDTO(Department department) {
         DepartmentDTO departmentDTO = new DepartmentDTO();
         departmentDTO.setId(department.getId());

@@ -28,11 +28,17 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -84,6 +90,12 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.36</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok-mapstruct-binding</artifactId>
+			<version>0.2.0</version>
 		</dependency>
 
 		<dependency>
@@ -143,6 +155,30 @@
 				<configuration>
 					<forkCount>1</forkCount> <!-- Runs tests sequentially -->
 					<reuseForks>false</reuseForks>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${java.version}</source> <!-- depending on your project -->
+					<target>${java.version}</target> <!-- depending on your project -->
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+						<!-- other annotation processors -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.36</version>
+						</path>
+
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 		</plugins>

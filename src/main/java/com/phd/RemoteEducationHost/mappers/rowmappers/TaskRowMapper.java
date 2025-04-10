@@ -35,7 +35,9 @@ public class TaskRowMapper implements RowMapper {
                 discipline.setDescription(rs.getString("description"));
 //            teacher = (Teacher) new TeacherMapper().mapRow(rs, rowNum);
                 teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));
-                teacher.setDepartment(new Department(rs.getInt("department")));
+                Department department = new Department();
+            department.setId(rs.getInt("department"));
+            teacher.setDepartment(department);
                 teacher.setBirthdayDate(rs.getDate("birthday_date"));
                 teacher.setCreateAt(rs.getDate("creation_date"));
                 teacher.setEmail(rs.getString("email"));

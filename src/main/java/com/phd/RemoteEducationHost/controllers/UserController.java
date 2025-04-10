@@ -15,11 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -27,22 +26,21 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody UserCreationDTO userCreationDTO) {
-        AuthResponse authResponse = new AuthResponse();
-        try {
-            return new ResponseEntity<>(userService.login(userCreationDTO), HttpStatus.OK);
-        } catch (BadCredentialsException e) {
-            // TODO: replace this catch into exception handler
-            authResponse.setStatus(false);
-            authResponse.setMessage("Invalid email or password");
-            return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(userService.login(userCreationDTO), HttpStatus.OK);
     }
+
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = userService.saveUser(userCreationDTO);
         if (!authResponse.getStatus()) {
-            return new ResponseEntity(authResponse, HttpStatus.OK);
+            return new ResponseEntity(authResponse, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @DeleteMapping("/admin-panel/{id}")
+    public ResponseEntity deleteUser(@PathVariable int id) {
+        userService.deleteUserById(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

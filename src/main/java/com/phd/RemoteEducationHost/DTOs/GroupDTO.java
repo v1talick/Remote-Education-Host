@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class GroupDTO {
     Integer id;
-    Specialty specialty;
+    SpecialtyDTO specialtyDTO;
     String name;
     Date creationDate;
 }

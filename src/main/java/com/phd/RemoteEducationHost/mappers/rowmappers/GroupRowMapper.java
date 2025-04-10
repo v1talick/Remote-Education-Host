@@ -14,7 +14,6 @@ import java.sql.SQLException;
 public class GroupRowMapper implements RowMapper {
     @Override
     public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-//        System.out.println(rs.getMetaData().getColumnCount());
         Group group = new Group();
         group.setId(rs.getInt("group_id"));
         group.setName(rs.getString("group_name"));
@@ -25,8 +24,10 @@ public class GroupRowMapper implements RowMapper {
 
         group.setSpecialty(specialty);
         if(rs.getMetaData().getColumnCount() > 4) {
+            Department department = new Department();
+            department.setId(rs.getInt("department_id"));
+            specialty.setDepartment(department);
             specialty.setName(rs.getString("specialty_name"));
-            specialty.setDepartment(new Department(rs.getInt("department_id")));
         }
         return group;
     }

@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost.security;
 
+import com.phd.RemoteEducationHost.enteties.User;
 import com.phd.RemoteEducationHost.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -19,10 +20,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = new User();
         try {
-            return userRepository.getUserByEmail(username);
+            return userRepository.getUserByEmailWithRoles(username);
         } catch (EmptyResultDataAccessException e) {
-            throw new UsernameNotFoundException("User not found with this email "+ username);
+            throw new BadCredentialsException("User not found with this email "+ username);
         } catch (DataAccessException e) {
             throw new RuntimeException("Database error while fetching user with email: " + username, e);
         }

@@ -1,12 +1,11 @@
 package com.phd.RemoteEducationHost.enteties;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
@@ -18,4 +17,5 @@ public class Department {
     public Department(Integer id) {
         this.id = id;
     }
+
 }

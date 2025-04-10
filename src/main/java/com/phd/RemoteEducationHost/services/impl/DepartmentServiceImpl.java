@@ -8,6 +8,9 @@ import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
 import com.phd.RemoteEducationHost.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,16 +31,24 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void saveDepartment(DepartmentDTO department) {
-        departmentRepository.saveDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            departmentRepository.saveDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        }
+        throw new RuntimeException("You don`t have permission to add department");
     }
 
     @Override
     public void updateDepartment(DepartmentDTO department) {
-        departmentRepository.updateDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            departmentRepository.updateDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        }
+        throw new RuntimeException("You don`t have permission to update department");
     }
 
     @Override
     public void deleteDepartment(Integer departmentId) {
-        departmentRepository.getDepartmentById(departmentId);
+        departmentRepository.deleteDepartment(departmentId);
     }
 }
