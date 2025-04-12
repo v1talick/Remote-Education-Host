@@ -50,10 +50,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.saveUser(user);
         } catch (DataIntegrityViolationException e) {
-            authResponse.setStatus(false);
-            authResponse.setMessage("Wrong data for registration");
-
-            return authResponse;
+            throw new BadCredentialsException("Email address already in use");
         }
         Authentication authentication;
         authentication = authenticate(userCreationDTO.getEmail(), originalPassword);

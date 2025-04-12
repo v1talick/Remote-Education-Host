@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<AuthResponse> handleBadCredentialsException(BadCredentialsException e) {
-        AuthResponse authResponse = new AuthResponse(null, "Invalid email or password", false);
+        AuthResponse authResponse = new AuthResponse(null, e.getMessage(), false);
         return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity handleEmptyResultDataAccessException(EmptyResultDataAccessException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 }

@@ -31,20 +31,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void saveDepartment(DepartmentDTO department) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            departmentRepository.saveDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
-        }
-        throw new RuntimeException("You don`t have permission to add department");
+        departmentRepository.saveDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
     }
 
     @Override
     public void updateDepartment(DepartmentDTO department) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            departmentRepository.updateDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
-        }
-        throw new RuntimeException("You don`t have permission to update department");
+        departmentRepository.updateDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
     }
 
     @Override

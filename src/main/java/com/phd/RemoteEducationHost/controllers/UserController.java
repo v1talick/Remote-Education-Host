@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost.controllers;
 
+import com.phd.RemoteEducationHost.DTOs.UserDTO;
 import com.phd.RemoteEducationHost.DTOs.creationDTOs.UserCreationDTO;
 import com.phd.RemoteEducationHost.security.responses.AuthResponse;
 import com.phd.RemoteEducationHost.security.jwt.JwtProvider;
@@ -17,13 +18,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUser() {
+        return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody UserCreationDTO userCreationDTO) {
         return new ResponseEntity<>(userService.login(userCreationDTO), HttpStatus.OK);
