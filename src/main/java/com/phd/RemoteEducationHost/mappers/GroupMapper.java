@@ -14,6 +14,9 @@ import java.sql.SQLException;
 public class GroupMapper {
     public static Group groupDTOtoGroup(GroupDTO groupDTO){
         Group group = new Group();
+        if(groupDTO == null) {
+            return group;
+        }
         group.setId(groupDTO.getId());
         group.setName(groupDTO.getName());
         group.setSpecialty(SpecialtyMapper.specialtyDTOtoSpecialty(groupDTO.getSpecialtyDTO()));
@@ -24,6 +27,9 @@ public class GroupMapper {
 
     public static GroupDTO groupToGroupDTO(Group groupDTO){
         GroupDTO group = new GroupDTO();
+        if (groupDTO == null) {
+            return group;
+        }
         group.setId(groupDTO.getId());
         group.setName(groupDTO.getName());
         group.setSpecialtyDTO(SpecialtyMapper.specialtyToSpecialtyDTO(groupDTO.getSpecialty()));

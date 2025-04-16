@@ -21,7 +21,7 @@ public class TeacherRepositoryTest {
     @Test
     public void saveTeacher() {
         Teacher teacher = new Teacher(5, "testEmail@mail.com", "testSurname", "testEmail@mail.com"
-                , "testPassword", new Date(), new Date(), List.of(), ScienceDegree.ASSOCIATE_OF_SCIENCE, new Department(1));
+                , "testPassword", new Date(), new Date(), List.of(), ScienceDegree.DOCTOR_OF_SCIENCE, new Department(1));
         teacherRepository.saveTeacher(teacher);
         assertEquals(3, teacherRepository.getAllTeachers().size());
     }

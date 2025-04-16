@@ -4,10 +4,17 @@ import com.phd.RemoteEducationHost.DTOs.creationDTOs.UserCreationDTO;
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.enums.Role;
 import com.phd.RemoteEducationHost.enteties.enums.ScienceDegree;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TeacherDTO extends UserDTO {
     Integer id;
     ScienceDegree scienceDegree;

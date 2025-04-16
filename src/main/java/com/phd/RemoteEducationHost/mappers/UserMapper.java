@@ -12,6 +12,9 @@ import java.sql.SQLException;
 public class UserMapper  {
     public static UserDTO userToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
+        if(user == null) {
+            return userDTO;
+        }
         userDTO.setId(user.getId());
         userDTO.setEmail(userDTO.getEmail());
         userDTO.setFirstName(user.getFirstName());
@@ -25,6 +28,9 @@ public class UserMapper  {
 
     public static User userCreationDTOToUser(UserCreationDTO userDTO) {
         User user = new User();
+        if(userDTO == null) {
+            return user;
+        }
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setFirstName(userDTO.getFirstName());

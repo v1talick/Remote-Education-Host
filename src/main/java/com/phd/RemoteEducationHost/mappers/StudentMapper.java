@@ -13,6 +13,9 @@ import java.sql.SQLException;
 public class StudentMapper {
     public static StudentDTO studentToStudentDTO(Student student) {
         StudentDTO studentDTO = new StudentDTO();
+        if(student == null) {
+            return studentDTO;
+        }
         studentDTO.setId(student.getId());
         studentDTO.setEmail(student.getEmail());
         studentDTO.setFirstName(student.getFirstName());
@@ -27,6 +30,9 @@ public class StudentMapper {
 
     public static Student studentCreationToStudent(StudentCreationDTO studentCreationDTO) {
         Student student = new Student();
+        if(studentCreationDTO == null) {
+            return student;
+        }
         student.setEmail(studentCreationDTO.getEmail());
         student.setPassword(studentCreationDTO.getPassword());
         student.setFirstName(studentCreationDTO.getFirstName());

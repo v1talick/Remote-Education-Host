@@ -22,7 +22,7 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
 //                "where s.student_id = ?";
         String sql = "SELECT * FROM students s \n" +
                 "JOIN profiles p ON p.profile_id = s.student_id \n" +
-                "WHERE s.student_id = ?\n";
+                "WHERE s.student_id = ?";
 
         return (Student) jdbcTemplate.queryForObject(sql, studentRowMapper, id);
     }

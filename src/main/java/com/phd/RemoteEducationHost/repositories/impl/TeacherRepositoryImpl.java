@@ -33,10 +33,25 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public void saveTeacher(Teacher teacher) {
-        String sql = "insert into teachers (teacher_id, science_degree, department) values (?,?,?)";
-        jdbcTemplate.update(sql, teacher.getId(), teacher.getScienceDegree().toString(), teacher.getDepartment().getId());
+    public List<Teacher> getAllTeachersFromDepartment(Integer departmentId) {
+        String sql = "select * from teachers t" +
+                "join profiles p on p.profile_id=t.teacher_id" +
+                "where t.department=?";
+        return jdbcTemplate.query(sql, teacherRowMapper, departmentId);
     }
+
+    @Override
+    public void saveTeacher(Teacher teacher) {
+        String sql = "INSERT INTO teachers (teacher_id, science_degree, department) " +
+                "VALUES (?, ?::science_degree_enum, ?)";
+        jdbcTemplate.update(
+                sql,
+                teacher.getId(),
+                teacher.getScienceDegree().toString(),
+                teacher.getDepartment().getId()
+        );
+    }
+
 
     @Override
     public void updateTeacher(Teacher teacher) {

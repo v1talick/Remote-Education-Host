@@ -6,13 +6,17 @@ import com.phd.RemoteEducationHost.mappers.StudentMapper;
 import com.phd.RemoteEducationHost.repositories.StudentRepository;
 import com.phd.RemoteEducationHost.services.StudentService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     public final StudentRepository studentRepository;
     @Override
@@ -26,8 +30,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentDTO> getAllStudentsByGroupId(Integer groupId) {
+        return studentRepository.getStudentsByGroupId(groupId).stream().map(StudentMapper::studentToStudentDTO).toList();
+    }
+
+    @Override
     public void saveStudent(StudentCreationDTO studentCreationDTO) {
-        studentRepository.saveStudent(StudentMapper.studentCreationToStudent(studentCreationDTO));
+        //TODO process this exceptions by custom unchecked exception
+        try {
+            studentRepository.saveStudent(StudentMapper.studentCreationToStudent(studentCreationDTO));
+        } catch (DuplicateKeyException e) {
+            // handle duplicate key (e.g. log or notify user)
+            throw new IllegalArgumentException("Duplicate key");
+        } catch (DataIntegrityViolationException e) {
+            // handle foreign key / null constraint violations
+        } catch (DataAccessException e) {
+            // generic catch-all for database issues
+        }
     }
 
     @Override

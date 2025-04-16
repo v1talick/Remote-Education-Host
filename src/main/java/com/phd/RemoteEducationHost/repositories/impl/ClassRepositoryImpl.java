@@ -44,12 +44,24 @@ public class ClassRepositoryImpl implements ClassRepository {
 
     @Override
     public List<Class> getClassesByTeacherId(Integer teacherId) {
-        return null;
+        String sql = "select * from classes c " +
+                "join disciplines d on d.discipline_id=c.discipline " +
+                "join teachers t on t.teacher_id=c.teacher " +
+                "join profiles p on p.profile_id=c.teacher " +
+                "join groups_ g on g.group_id=c.group_ " +
+                "where c.teacher=?";
+        return jdbcTemplate.query(sql, classRowMapper, teacherId);
     }
 
     @Override
     public List<Class> getClassesByGroupId(Integer groupId) {
-        return null;
+        String sql = "select * from classes c " +
+                "join disciplines d on d.discipline_id=c.discipline " +
+                "join teachers t on t.teacher_id=c.teacher " +
+                "join profiles p on p.profile_id=c.teacher " +
+                "join groups_ g on g.group_id=c.group_ " +
+                "where c.group_=?";
+        return jdbcTemplate.query(sql, classRowMapper, groupId);
     }
 
     @Override

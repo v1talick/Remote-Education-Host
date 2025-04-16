@@ -13,6 +13,9 @@ public class SpecialtyMapper {
 
     public static Specialty specialtyDTOtoSpecialty(SpecialtyDTO specialtyDTO) {
         Specialty specialty = new Specialty();
+        if(specialtyDTO == null) {
+            return specialty;
+        }
         specialty.setId(specialtyDTO.getId());
         specialty.setName(specialtyDTO.getName());
         specialty.setDepartment(DepartmentMapper.departmentDTOtoDepartment(specialtyDTO.getDepartment()));
@@ -22,6 +25,9 @@ public class SpecialtyMapper {
 
     public static SpecialtyDTO  specialtyToSpecialtyDTO(Specialty specialty) {
         SpecialtyDTO specialtyDTO = new SpecialtyDTO();
+        if (specialty == null) {
+            return specialtyDTO;
+        }
         specialtyDTO.setId(specialty.getId());
         specialtyDTO.setName(specialty.getName());
         specialtyDTO.setDepartment(DepartmentMapper.departmentToDepartmentDTO(specialty.getDepartment()));

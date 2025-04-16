@@ -89,13 +89,9 @@ public class UserServiceImpl implements UserService {
         System.out.println("Sig in in user details"+ userDetails);
 
         if(userDetails == null) {
-            System.out.println("Sign in details - null" + userDetails);
-
             throw new BadCredentialsException("Invalid username and password");
         }
         if(!passwordEncoder.matches(password,userDetails.getPassword())) {
-            System.out.println("Sign in userDetails - password mismatch"+userDetails);
-
             throw new BadCredentialsException("Invalid password");
         }
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
