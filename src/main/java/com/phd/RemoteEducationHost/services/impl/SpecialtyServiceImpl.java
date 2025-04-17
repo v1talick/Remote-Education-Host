@@ -1,15 +1,16 @@
 package com.phd.RemoteEducationHost.services.impl;
 
 import com.phd.RemoteEducationHost.DTOs.SpecialtyDTO;
-import com.phd.RemoteEducationHost.enteties.Specialty;
+import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.mappers.SpecialtyMapper;
 import com.phd.RemoteEducationHost.repositories.SpecialtyRepository;
 import com.phd.RemoteEducationHost.services.SpecialtyService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,16 +28,29 @@ public class SpecialtyServiceImpl implements SpecialtyService{
 
     @Override
     public void saveSpecialty(SpecialtyDTO specialtyDTO) {
-        specialtyRepository.saveSpecialty(SpecialtyMapper.specialtyDTOtoSpecialty(specialtyDTO));
+        // TODO: make unique (name, department) for specialty
+        try {
+            specialtyRepository.saveSpecialty(SpecialtyMapper.specialtyDTOtoSpecialty(specialtyDTO));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Specialty with such name already exists");
+        }
     }
 
     @Override
     public void updateSpecialty(SpecialtyDTO specialtyDTO) {
-        specialtyRepository.updateSpecialty(SpecialtyMapper.specialtyDTOtoSpecialty(specialtyDTO));
+        try {
+            specialtyRepository.updateSpecialty(SpecialtyMapper.specialtyDTOtoSpecialty(specialtyDTO));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Specialty with such name already exists");
+        }
     }
 
     @Override
     public void deleteSpecialty(Integer id) {
-        specialtyRepository.deleteSpecialty(id);
+        try {
+            specialtyRepository.deleteSpecialty(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidArgumentException("Specialty with such id does is used in other entities");
+        }
     }
 }

@@ -1,14 +1,7 @@
 package com.phd.RemoteEducationHost.mappers;
 
 import com.phd.RemoteEducationHost.DTOs.TeacherDTO;
-import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Teacher;
-import com.phd.RemoteEducationHost.enteties.enums.ScienceDegree;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 public class TeacherMapper {
     public static Teacher mapToEntity(TeacherDTO teacherDTO) {
         Teacher teacher = new Teacher();
@@ -17,7 +10,7 @@ public class TeacherMapper {
         }
         teacher.setId(teacherDTO.getId());
         teacher.setScienceDegree(teacherDTO.getScienceDegree());
-        teacher.setDepartment(teacherDTO.getDepartment());
+        teacher.setDepartment(DepartmentMapper.departmentDTOtoDepartment(teacherDTO.getDepartmentDTO()));
 //        teacher.setEmail(teacherDTO.getEmail());
 //        teacher.setFirstName(teacherDTO.getFirstName());
 //        teacher.setLastName(teacherDTO.getLastName());
@@ -34,7 +27,7 @@ public class TeacherMapper {
         }
         teacherDTO.setId(teacher.getId());
         teacherDTO.setScienceDegree(teacher.getScienceDegree());
-        teacherDTO.setDepartment(teacher.getDepartment());
+        teacherDTO.setDepartmentDTO(DepartmentMapper.departmentToDepartmentDTO(teacher.getDepartment()));
         teacherDTO.setFirstName(teacher.getFirstName());
         teacherDTO.setLastName(teacher.getLastName());
         teacherDTO.setCreateAt(teacher.getCreateAt());

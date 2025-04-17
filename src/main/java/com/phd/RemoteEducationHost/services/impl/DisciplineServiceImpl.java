@@ -1,17 +1,16 @@
 package com.phd.RemoteEducationHost.services.impl;
 
-import com.phd.RemoteEducationHost.DTOs.DepartmentDTO;
 import com.phd.RemoteEducationHost.DTOs.DisciplineDTO;
-import com.phd.RemoteEducationHost.enteties.Discipline;
+import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.mappers.DisciplineMapper;
 import com.phd.RemoteEducationHost.repositories.DisciplineRepository;
-import com.phd.RemoteEducationHost.services.DepartmentService;
 import com.phd.RemoteEducationHost.services.DisciplineService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -29,16 +28,28 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public void saveDiscipline(DisciplineDTO disciplineDTO) {
-        disciplineRepository.saveDiscipline(DisciplineMapper.disciplineDTOtoDiscipline(disciplineDTO));
+        try {
+            disciplineRepository.saveDiscipline(DisciplineMapper.disciplineDTOtoDiscipline(disciplineDTO));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Discipline with such name already exists");
+        }
     }
 
     @Override
     public void updateDiscipline(DisciplineDTO disciplineDTO) {
-        disciplineRepository.updateDiscipline(DisciplineMapper.disciplineDTOtoDiscipline(disciplineDTO));
+        try {
+            disciplineRepository.updateDiscipline(DisciplineMapper.disciplineDTOtoDiscipline(disciplineDTO));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Discipline with such name already exists");
+        }
     }
 
     @Override
     public void deleteDisciplineById(Integer id) {
-        disciplineRepository.deleteDiscipline(id);
+        try {
+            disciplineRepository.deleteDiscipline(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidArgumentException("Discipline with such id does is used in other entities");
+        }
     }
 }

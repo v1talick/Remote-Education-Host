@@ -44,6 +44,9 @@ VALUES ('dave.miller@example.com', 'hashed_password_4', 'Dave', 'Miller',CURRENT
 INSERT INTO profiles (email, encrypted_password, firstname, lastname, creation_date, birthday_date)
 VALUES ('arthur.johnson@example.com', 'hashed_password_5', 'Arthur', 'Johnson',CURRENT_DATE, '1983-04-05');
 
+INSERT INTO profiles (email, encrypted_password, firstname, lastname, creation_date, birthday_date)
+VALUES ('admin@example.com', 'hashed_password_6', 'Admin', 'Admin',CURRENT_DATE, '1983-04-05');
+
 INSERT INTO students (student_id, group_) VALUES
 (1, 1), -- Alice Smith in CS-101
 (2, 3); -- Bob Johnson in EE-101
@@ -81,3 +84,5 @@ INSERT INTO lessons (week_day, lesson_number, class_, lesson_type, lesson_link) 
 
 -- Wednesday, 3rd lesson: DSP class
 (3, 3, 2, 'Laboratory lesson', 'https://university.edu/dsp-lab');
+
+INSERT INTO admins (admin_id) VALUES (6);

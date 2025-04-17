@@ -1,20 +1,16 @@
 package com.phd.RemoteEducationHost.services.impl;
 
 import com.phd.RemoteEducationHost.DTOs.DepartmentDTO;
-import com.phd.RemoteEducationHost.enteties.Department;
+import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.mappers.DepartmentMapper;
-import com.phd.RemoteEducationHost.mappers.UserMapper;
 import com.phd.RemoteEducationHost.repositories.DepartmentRepository;
 import com.phd.RemoteEducationHost.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
@@ -31,16 +27,28 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void saveDepartment(DepartmentDTO department) {
-        departmentRepository.saveDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        try {
+            departmentRepository.saveDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Department with such name already exists");
+        }
     }
 
     @Override
     public void updateDepartment(DepartmentDTO department) {
-        departmentRepository.updateDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        try {
+            departmentRepository.updateDepartment(DepartmentMapper.departmentDTOtoDepartment(department));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Department with such name already exists");
+        }
     }
 
     @Override
     public void deleteDepartment(Integer departmentId) {
-        departmentRepository.deleteDepartment(departmentId);
+        try {
+            departmentRepository.deleteDepartment(departmentId);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidArgumentException("Department with such id does is used in other entities");
+        }
     }
 }

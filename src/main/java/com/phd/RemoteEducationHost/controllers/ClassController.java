@@ -4,9 +4,7 @@ import com.phd.RemoteEducationHost.DTOs.ClassDTO;
 import com.phd.RemoteEducationHost.services.ClassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,8 +41,8 @@ public class ClassController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/admin-panel/{id}")
-    public ResponseEntity<Void> updateClass(@PathVariable Integer id, @RequestBody ClassDTO classDTO) {
+    @PutMapping("/admin-panel")
+    public ResponseEntity<Void> updateClass(@RequestBody ClassDTO classDTO) {
         classService.updateClass(classDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
