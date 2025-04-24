@@ -1,9 +1,11 @@
 package com.phd.RemoteEducationHost;
 
 import com.phd.RemoteEducationHost.DTOs.*;
+import com.phd.RemoteEducationHost.DTOs.creationDTOs.UserCreationDTO;
 import com.phd.RemoteEducationHost.enteties.enums.ScienceDegree;
 
 import java.util.Date;
+import java.util.List;
 
 public class TestObjectDTOsFactory {
     public static DepartmentDTO getDepartmentDTO() {
@@ -53,6 +55,18 @@ public class TestObjectDTOsFactory {
                 getGroupDTO(),
                 true,
                 new Date()
+        );
+    }
+
+    public static UserCreationDTO getUserCreationDTO() {
+        return new UserCreationDTO(
+                "testUser@gmail.com",
+                "testPassword123",
+                "TestFirstName",
+                "TestLastName",
+                new Date(),
+                new Date(),
+                List.of()
         );
     }
 }
