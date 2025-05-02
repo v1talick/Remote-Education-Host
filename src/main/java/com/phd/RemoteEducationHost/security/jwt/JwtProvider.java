@@ -21,7 +21,7 @@ public class JwtProvider {
         @SuppressWarnings("deprecation")
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+86400000))
+                .setExpiration(new Date(new Date().getTime() + 86400000)) // 1 day
                 .claim("email", authentication.getName())
                 .claim("authorities", roles)
                 .signWith(key)
@@ -29,13 +29,15 @@ public class JwtProvider {
         System.out.println("Token for parsing in JwtProvider: " + jwt);
         return jwt;
     }
+
     private static String populateAuthoreties(Collection<? extends GrantedAuthority> authorities) {
         Set<String> auths = new HashSet<>();
-        for (GrantedAuthority authority: authorities) {
+        for (GrantedAuthority authority : authorities) {
             auths.add(authority.getAuthority());
         }
         return String.join(",", auths);
     }
+
     @SuppressWarnings("deprecation")
     public static String getEmailFromJwtToken(String jwt) {
         jwt = jwt.substring(7); // Assuming "Bearer " is removed from the token

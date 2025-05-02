@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Teacher extends User{
+public class Teacher extends User {
     ScienceDegree scienceDegree;
     Department department;
 

@@ -9,7 +9,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -18,11 +20,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+// @Sql(scripts = "classpath:testdb/delete_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 public class SpecialtyControllerTests {
+    private static final String BASIC_URL = "/specialties";
     @Autowired
     private MockMvc mockMvc;
-    
-    private static String BASIC_URL = "/specialties";
 
     @Test
     @WithMockUser(username = "adminUser", roles = {"ADMIN"})
@@ -50,6 +53,7 @@ public class SpecialtyControllerTests {
     public void createSpecialtyTest() throws Exception {
         SpecialtyDTO specialtyDTO = TestObjectDTOsFactory.getSpecialtyDTO();
         // Convert DTO to JSON
+        specialtyDTO.setName("New Software Engineering");
         String json = new ObjectMapper().writeValueAsString(specialtyDTO);
 
         String basicURL = BASIC_URL;
@@ -67,7 +71,7 @@ public class SpecialtyControllerTests {
         // Convert DTO to JSON
         String json = new ObjectMapper().writeValueAsString(specialtyDTO);
 
-        mockMvc.perform(put(BASIC_URL + "/admin-panel")
+        mockMvc.perform(post(BASIC_URL + "/admin-panel")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isBadRequest());

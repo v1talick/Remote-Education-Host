@@ -12,11 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class DisciplineRepositoryImpl implements DisciplineRepository {
     private final JdbcTemplate jdbcTemplate;
     private final DisciplineRowMapper disciplineMapper;
+
     @Override
     public Discipline getDisciplineById(Integer id) {
         String sql = "select * from disciplines where discipline_id = ?";

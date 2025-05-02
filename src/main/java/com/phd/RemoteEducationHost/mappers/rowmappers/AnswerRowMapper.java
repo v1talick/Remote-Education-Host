@@ -16,14 +16,14 @@ public class AnswerRowMapper implements RowMapper {
     public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
         Answer answer = new Answer();
         answer.setId(rs.getInt("answer_id"));
-        answer.setFilePath((String) rs.getString("file_path"));
+        answer.setFilePath(rs.getString("file_path"));
         answer.setGrade(rs.getObject("grade", Integer.class)); // nullable
         answer.setTaskDeliveryTime(rs.getTime("task_delivery_time"));
         Student student = new Student();
         student.setId(rs.getInt("student"));
         Task task = new Task();
         task.setId(rs.getInt("task"));
-        if(rs.getMetaData().getColumnCount() > 6){
+        if (rs.getMetaData().getColumnCount() > 6) {
             Group group = new Group();
             group.setId(rs.getInt("group_"));
             student.setGroup(group);

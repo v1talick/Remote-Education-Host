@@ -17,9 +17,15 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+
     @Override
     public UserDTO getUserById(Integer id) {
         return UserMapper.userToUserDTO(userRepository.getUserById(id));
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) {
+        return UserMapper.userToUserDTO(userRepository.getUserByEmailWithRoles(username));
     }
 
     @Override

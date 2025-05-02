@@ -13,11 +13,11 @@ public class DepartmentMapper {
 
     public static DepartmentDTO departmentToDepartmentDTO(Department department) {
         DepartmentDTO departmentDTO = new DepartmentDTO();
-        if(department == null) {
+        if (department == null) {
             return departmentDTO;
         }
         departmentDTO.setId(department.getId());
-        if(department.getName() == null) {
+        if (department.getName() == null) {
             return departmentDTO;
         }
         departmentDTO.setName(department.getName());
@@ -26,13 +26,14 @@ public class DepartmentMapper {
 
         return departmentDTO;
     }
+
     public static Department departmentDTOtoDepartment(DepartmentDTO departmentDTO) {
         Department department = new Department();
-        if(departmentDTO == null) {
+        if (departmentDTO == null) {
             return department;
         }
         department.setId(departmentDTO.getId());
-        if(departmentDTO.getName() == null) {
+        if (departmentDTO.getName() == null) {
             return department;
         }
         department.setName(departmentDTO.getName());

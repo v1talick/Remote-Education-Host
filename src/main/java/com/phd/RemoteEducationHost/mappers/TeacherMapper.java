@@ -2,10 +2,11 @@ package com.phd.RemoteEducationHost.mappers;
 
 import com.phd.RemoteEducationHost.DTOs.TeacherDTO;
 import com.phd.RemoteEducationHost.enteties.Teacher;
+
 public class TeacherMapper {
     public static Teacher mapToEntity(TeacherDTO teacherDTO) {
         Teacher teacher = new Teacher();
-        if(teacherDTO == null) {
+        if (teacherDTO == null) {
             return teacher;
         }
         teacher.setId(teacherDTO.getId());
@@ -22,7 +23,7 @@ public class TeacherMapper {
 
     public static TeacherDTO mapToDTO(Teacher teacher) {
         TeacherDTO teacherDTO = new TeacherDTO();
-        if(teacher == null) {
+        if (teacher == null) {
             return teacherDTO;
         }
         teacherDTO.setId(teacher.getId());

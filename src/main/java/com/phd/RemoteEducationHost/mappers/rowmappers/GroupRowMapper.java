@@ -23,7 +23,7 @@ public class GroupRowMapper implements RowMapper {
         specialty.setId(rs.getInt("specialty"));
 
         group.setSpecialty(specialty);
-        if(rs.getMetaData().getColumnCount() > 4) {
+        if (rs.getMetaData().getColumnCount() > 4) {
             Department department = new Department();
             department.setId(rs.getInt("department_id"));
             specialty.setDepartment(department);

@@ -24,7 +24,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 "join tasks t on t.task_id=a.task " +
                 "where a.answer_id=?";
 
-            return (Answer) jdbcTemplate.queryForObject(sql, answerRowMapper, id);
+        return (Answer) jdbcTemplate.queryForObject(sql, answerRowMapper, id);
     }
 
     @Override

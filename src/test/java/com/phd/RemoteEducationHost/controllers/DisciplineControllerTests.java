@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -20,16 +22,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// @Sql(scripts = "classpath:testdb/delete_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 public class DisciplineControllerTests {
+    private static final String BASE_URL = "/disciplines";
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-    private static final String BASE_URL = "/disciplines";
 
     @Test
     @WithMockUser(username = "adminUser", roles = {"ADMIN"})
@@ -81,7 +83,7 @@ public class DisciplineControllerTests {
     public void saveDisciplineTest() throws Exception {
         DisciplineDTO disciplineDTO = TestObjectDTOsFactory.getDisciplineDTO();
 
-         mockMvc.perform(post(BASE_URL + "/admin-panel")
+        mockMvc.perform(post(BASE_URL + "/admin-panel")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(disciplineDTO)))
                 .andExpect(status().isCreated());

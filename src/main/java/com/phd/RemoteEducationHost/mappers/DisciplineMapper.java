@@ -12,7 +12,7 @@ public class DisciplineMapper {
 
     public static Discipline disciplineDTOtoDiscipline(DisciplineDTO disciplineDTO) {
         Discipline discipline = new Discipline();
-        if(disciplineDTO == null) {
+        if (disciplineDTO == null) {
             return discipline;
         }
         discipline.setId(disciplineDTO.getId());
@@ -24,7 +24,7 @@ public class DisciplineMapper {
 
     public static DisciplineDTO disciplineToDisciplineDTO(Discipline discipline) {
         DisciplineDTO disciplineDTO = new DisciplineDTO();
-        if(discipline == null) {
+        if (discipline == null) {
             return disciplineDTO;
         }
         disciplineDTO.setId(discipline.getId());

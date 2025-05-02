@@ -1,11 +1,11 @@
 package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.UserDTO;
-import com.phd.RemoteEducationHost.facades.AuthenticationFacade;
 import com.phd.RemoteEducationHost.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +19,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
+    }
+
+    @GetMapping("/my-profile")
+    public ResponseEntity<UserDTO> getMyProfile(Authentication authentication) {
+        return new ResponseEntity<>(userService.getUserByUsername(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

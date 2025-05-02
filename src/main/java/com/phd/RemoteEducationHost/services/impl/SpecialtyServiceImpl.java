@@ -14,8 +14,9 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class SpecialtyServiceImpl implements SpecialtyService{
+public class SpecialtyServiceImpl implements SpecialtyService {
     private final SpecialtyRepository specialtyRepository;
+
     @Override
     public SpecialtyDTO getSpecialtyById(Integer id) {
         return SpecialtyMapper.specialtyToSpecialtyDTO(specialtyRepository.getSpecialtyById(id));

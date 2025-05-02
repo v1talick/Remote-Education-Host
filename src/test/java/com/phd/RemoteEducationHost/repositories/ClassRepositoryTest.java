@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ClassRepositoryTest {
     @Autowired
     ClassRepository classRepository;
+
     @Test
     public void saveClassTest() {
         Class newClass = new Class();
@@ -38,6 +39,7 @@ public class ClassRepositoryTest {
         classRepository.saveClass(newClass);
         assertEquals(3, classRepository.getAllClasses().size());
     }
+
     @Test
     public void getClassByIdTest() {
         Class expectedClass = new Class();
@@ -57,6 +59,7 @@ public class ClassRepositoryTest {
         Class classFromDB = classRepository.getClassById(1);
         assertEquals(expectedClass, classFromDB);
     }
+
     @Test
     public void updateClass() {
         Class aClass = classRepository.getClassById(2);
@@ -64,6 +67,7 @@ public class ClassRepositoryTest {
         classRepository.updateClass(aClass);
         assertEquals("2025-02-27", classRepository.getClassById(2).getStartedAt().toString());
     }
+
     @Test
     public void deleteClass() {
         classRepository.deleteClass(3);

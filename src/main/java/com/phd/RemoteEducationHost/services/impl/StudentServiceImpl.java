@@ -2,10 +2,10 @@ package com.phd.RemoteEducationHost.services.impl;
 
 import com.phd.RemoteEducationHost.DTOs.StudentDTO;
 import com.phd.RemoteEducationHost.DTOs.creationDTOs.StudentCreationDTO;
+import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.mappers.StudentMapper;
 import com.phd.RemoteEducationHost.repositories.StudentRepository;
 import com.phd.RemoteEducationHost.services.StudentService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,12 +13,12 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     public final StudentRepository studentRepository;
+
     @Override
     public StudentDTO getStudentById(Integer id) {
         return StudentMapper.studentToStudentDTO(studentRepository.getStudentById(id));
@@ -35,17 +35,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void saveStudent(StudentCreationDTO studentCreationDTO) {
-        //TODO process this exceptions by custom unchecked exception
+    public void saveStudent(StudentDTO studentDTO) {
         try {
-            studentRepository.saveStudent(StudentMapper.studentCreationToStudent(studentCreationDTO));
+            studentRepository.saveStudent(StudentMapper.studentDTOToStudent(studentDTO));
         } catch (DuplicateKeyException e) {
-            // handle duplicate key (e.g. log or notify user)
-            throw new IllegalArgumentException("Duplicate key");
+            throw new InvalidArgumentException("Duplicate key");
         } catch (DataIntegrityViolationException e) {
-            // handle foreign key / null constraint violations
+            throw new InvalidArgumentException("foreign key / null constraint violations");
         } catch (DataAccessException e) {
-            // generic catch-all for database issues
+            throw new InvalidArgumentException("Database access error");
         }
     }
 

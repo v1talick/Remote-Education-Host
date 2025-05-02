@@ -13,7 +13,7 @@ public class SpecialtyMapper {
 
     public static Specialty specialtyDTOtoSpecialty(SpecialtyDTO specialtyDTO) {
         Specialty specialty = new Specialty();
-        if(specialtyDTO == null) {
+        if (specialtyDTO == null) {
             return specialty;
         }
         specialty.setId(specialtyDTO.getId());
@@ -23,7 +23,7 @@ public class SpecialtyMapper {
         return specialty;
     }
 
-    public static SpecialtyDTO  specialtyToSpecialtyDTO(Specialty specialty) {
+    public static SpecialtyDTO specialtyToSpecialtyDTO(Specialty specialty) {
         SpecialtyDTO specialtyDTO = new SpecialtyDTO();
         if (specialty == null) {
             return specialtyDTO;

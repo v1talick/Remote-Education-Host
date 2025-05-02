@@ -1,0 +1,12 @@
+DELETE FROM answers;
+DELETE FROM tasks;
+DELETE FROM lessons;
+DELETE FROM classes;
+DELETE FROM disciplines;
+DELETE FROM teachers;
+DELETE FROM students;
+DELETE FROM admins;
+DELETE FROM profiles;
+DELETE FROM groups_;
+DELETE FROM specialities;
+DELETE FROM departments;

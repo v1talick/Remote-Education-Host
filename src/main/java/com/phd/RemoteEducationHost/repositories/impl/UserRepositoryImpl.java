@@ -22,21 +22,21 @@ public class UserRepositoryImpl implements UserRepository {
     public User getUserById(Integer id) {
         String sql = "select * from profiles where profile_id = ?";
 
-        return (User) jdbcTemplate.queryForObject(sql, userRowMapper, id);
+        return jdbcTemplate.queryForObject(sql, userRowMapper, id);
     }
 
     @Override
     public User getUserByEmail(String email) {
         String sql = "select * from profiles where email = ?";
 
-        return (User) jdbcTemplate.queryForObject(sql, userRowMapper, email);
+        return jdbcTemplate.queryForObject(sql, userRowMapper, email);
     }
 
     @Override
     public User getUserWithRolesById(Integer id) {
         String sql = "select * from profiles where profile_id = ?";
 
-        User user = (User) jdbcTemplate.queryForObject(sql, userRowMapper, id);
+        User user = jdbcTemplate.queryForObject(sql, userRowMapper, id);
         user.setRoles(getUserRoles(user.getId()));
         return user;
     }
@@ -61,23 +61,6 @@ public class UserRepositoryImpl implements UserRepository {
                 rs.getDate("birthday_date"), new LinkedList<>()));
     }
 
-    private List<Role> getUserRoles(Integer userId) {
-        List<Role> roles = new LinkedList<>();
-        String sql = "SELECT EXISTS(SELECT 1 FROM students WHERE student_id=?)";
-        if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
-            roles.add(Role.STUDENT);
-        }
-        sql = "SELECT EXISTS(SELECT 1 FROM teachers WHERE teacher_id=?)";
-        if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
-            roles.add(Role.TEACHER);
-        }
-        sql = "SELECT EXISTS(SELECT 1 FROM admins WHERE admin_id=?)";
-        if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
-            roles.add(Role.ADMIN);
-        }
-        return roles;
-    }
-
     @Override
     public void saveUser(User user) {
         String sql = "insert into profiles (email, encrypted_password, firstname, lastname, creation_date, birthday_date) values (?, ?, ?, ?, ?, ?)";
@@ -94,5 +77,22 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteUser(Integer userId) {
         String sql = "delete from profiles where profile_id=?";
         jdbcTemplate.update(sql, userId);
+    }
+
+    private List<Role> getUserRoles(Integer userId) {
+        List<Role> roles = new LinkedList<>();
+        String sql = "SELECT EXISTS(SELECT 1 FROM students WHERE student_id=?)";
+        if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
+            roles.add(Role.STUDENT);
+        }
+        sql = "SELECT EXISTS(SELECT 1 FROM teachers WHERE teacher_id=?)";
+        if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
+            roles.add(Role.TEACHER);
+        }
+        sql = "SELECT EXISTS(SELECT 1 FROM admins WHERE admin_id=?)";
+        if (jdbcTemplate.queryForObject(sql, Boolean.class, userId)) {
+            roles.add(Role.ADMIN);
+        }
+        return roles;
     }
 }

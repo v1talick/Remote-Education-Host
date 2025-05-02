@@ -17,8 +17,8 @@ public class TeacherRowMapper implements RowMapper {
         teacher.setId(rs.getInt("teacher_id"));
         teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));
         Department department = new Department();
-            department.setId(rs.getInt("department"));
-            teacher.setDepartment(department);
+        department.setId(rs.getInt("department"));
+        teacher.setDepartment(department);
         teacher.setBirthdayDate(rs.getDate("birthday_date"));
         teacher.setCreateAt(rs.getDate("creation_date"));
         teacher.setEmail(rs.getString("email"));

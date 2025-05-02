@@ -48,12 +48,12 @@ public class SecurityConfiguration {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration ccfg = new CorsConfiguration();
-                ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                ccfg.setAllowedOrigins(List.of("http://localhost:3000"));
 //                ccfg.setAllowedMethods(Collections.singletonList("*"));
                 ccfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
                 ccfg.setAllowCredentials(true);
                 ccfg.setAllowedHeaders(Collections.singletonList("*"));
-                ccfg.setExposedHeaders(Arrays.asList("Authorization"));
+                ccfg.setExposedHeaders(List.of("Authorization"));
                 ccfg.setMaxAge(3600L);
                 return ccfg;
             }

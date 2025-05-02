@@ -17,7 +17,8 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public Task getTaskById(Integer id) {
-        String sql = "select * from tasks " +
+        String sql = "select * from tasks t " +
+                "join classes c on t.class_=c.class_id " +
                 "where task_id=?";
 
         return (Task) jdbcTemplate.queryForObject(sql, taskRowMapper, id);
@@ -25,8 +26,8 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public Task getTaskWithDetailsById(Integer id) {
-        String sql = "select * from tasks t " +
-                "join classes c on t.class_=c.class_id " +
+        String sql = "select * from tasks ts " +
+                "join classes c on ts.class_=c.class_id " +
                 "join disciplines d on d.discipline_id=c.discipline " +
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join profiles p on p.profile_id=c.teacher " +
@@ -38,8 +39,8 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public List<Task> getAllTasksByClassId(Integer classId) {
-        String sql = "select * from tasks t " +
-                "join classes c on t.class_=c.class_id " +
+        String sql = "select * from tasks ts " +
+                "join classes c on ts.class_=c.class_id " +
                 "join disciplines d on d.discipline_id=c.discipline " +
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join profiles p on p.profile_id=c.teacher " +
@@ -49,8 +50,22 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
+    public List<Task> getAllTasksByGroupId(Integer groupId) {
+        String sql = "select * from tasks ts " +
+                "join classes c on ts.class_=c.class_id " +
+                "join disciplines d on d.discipline_id=c.discipline " +
+                "join teachers t on t.teacher_id=c.teacher " +
+                "join profiles p on p.profile_id=c.teacher " +
+                "join groups_ g on g.group_id=c.group_  " +
+                "where g.group_id=?";
+        return jdbcTemplate.query(sql, taskRowMapper, groupId);
+    }
+
+    @Override
     public List<Task> getAllTasks() {
-        String sql = "select * from tasks";
+        String sql = "select * from tasks t " +
+                "join classes c on t.class_=c.class_id " +
+                "join disciplines d on d.discipline_id=c.discipline ";
         return jdbcTemplate.query(sql, taskRowMapper);
     }
 
@@ -59,7 +74,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         String sql = "INSERT INTO tasks(\n" +
                 "\t class_, description, file_path, deadline)\n" +
                 "\t VALUES (?, ?, ?, ?);";
-        jdbcTemplate.update(sql, task.getAClass().getId(),task.getDescription()
+        jdbcTemplate.update(sql, task.getAClass().getId(), task.getDescription()
                 , task.getFilePath(), task.getDeadline());
     }
 
@@ -68,13 +83,13 @@ public class TaskRepositoryImpl implements TaskRepository {
         String sql = "UPDATE public.tasks\n" +
                 "\tSET class_=?, description=?, file_path=?, deadline=?\n" +
                 "\tWHERE task_id=?;";
-        jdbcTemplate.update(sql, task.getAClass().getId(),task.getDescription()
+        jdbcTemplate.update(sql, task.getAClass().getId(), task.getDescription()
                 , task.getFilePath(), task.getDeadline(), task.getId());
     }
 
     @Override
     public void deleteTask(Integer taskId) {
-        String sql =  "delete from tasks where task_id=?;";
+        String sql = "delete from tasks where task_id=?;";
         jdbcTemplate.update(sql, taskId);
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DisciplineServiceImpl implements DisciplineService {
     private final DisciplineRepository disciplineRepository;
+
     @Override
     public DisciplineDTO getDisciplineById(Integer id) {
         return DisciplineMapper.disciplineToDisciplineDTO(disciplineRepository.getDisciplineById(id));

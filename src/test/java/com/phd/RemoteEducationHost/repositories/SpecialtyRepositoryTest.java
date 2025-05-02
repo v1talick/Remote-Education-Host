@@ -4,12 +4,10 @@ import com.phd.RemoteEducationHost.configuration.SystemTestConfiguration;
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Specialty;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringJUnitConfig(SystemTestConfiguration.class)
 public class SpecialtyRepositoryTest {
@@ -20,15 +18,17 @@ public class SpecialtyRepositoryTest {
     public void saveSpecialtyTest() {
         Department department = new Department();
         department.setId(1);
-        Specialty specialty = new Specialty(0, "testName", department);
+        Specialty specialty = new Specialty(0, "unique testName", department);
         specialtyRepository.saveSpecialty(specialty);
         assertEquals(7, specialtyRepository.getAllSpecialties().size());
     }
+
     @Test
     public void getSpecialtyByIdTest() {
         Specialty specialty = specialtyRepository.getSpecialtyById(1);
         assertEquals("Software Engineering", specialty.getName());
     }
+
     @Test
     public void updateSpecialtyTest() {
         Department department = new Department();
@@ -37,6 +37,7 @@ public class SpecialtyRepositoryTest {
         specialtyRepository.updateSpecialty(specialty);
         assertEquals("testName", specialtyRepository.getSpecialtyById(1).getName());
     }
+
     @Test
     public void deleteSpecialtyTest() {
         specialtyRepository.deleteSpecialty(7);

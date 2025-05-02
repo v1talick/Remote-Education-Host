@@ -10,12 +10,14 @@ public enum ScienceDegree {
     DOCTOR_OF_SCIENCE,
     PROFESSIONAL_DOCTORATE,
     NONE;
+
     public static ScienceDegree getEnum(String s) {
         s = s.toUpperCase();
-        s = s.replaceAll("\\s+","_");
+        s = s.replaceAll("\\s+", "_");
 
         return ScienceDegree.valueOf(s);
     }
+
     public String toString() {
         Map<ScienceDegree, String> map = Map.of(
                 ASSOCIATE_OF_SCIENCE, "Associate of Science",

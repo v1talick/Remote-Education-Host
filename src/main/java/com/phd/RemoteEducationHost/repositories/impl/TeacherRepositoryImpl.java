@@ -15,6 +15,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private final TeacherRowMapper teacherRowMapper;
+
     @Override
     public Teacher getTeacherById(Integer id) {
         String sql = "select * from teachers t " +
@@ -34,8 +35,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
     public List<Teacher> getAllTeachersFromDepartment(Integer departmentId) {
-        String sql = "select * from teachers t" +
-                "join profiles p on p.profile_id=t.teacher_id" +
+        String sql = "select * from teachers t " +
+                "join profiles p on p.profile_id=t.teacher_id " +
                 "where t.department=?";
         return jdbcTemplate.query(sql, teacherRowMapper, departmentId);
     }

@@ -1,14 +1,15 @@
 package com.phd.RemoteEducationHost.services.impl;
 
 import com.phd.RemoteEducationHost.DTOs.TeacherDTO;
+import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.mappers.TeacherMapper;
 import com.phd.RemoteEducationHost.repositories.TeacherRepository;
 import com.phd.RemoteEducationHost.services.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void saveTeacher(TeacherDTO teacherDTO) {
-        teacherRepository.saveTeacher(TeacherMapper.mapToEntity(teacherDTO));
+        try {
+            teacherRepository.saveTeacher(TeacherMapper.mapToEntity(teacherDTO));
+        } catch (DuplicateKeyException e) {
+            throw new InvalidArgumentException("Teacher with such profile %d id already exists".formatted(teacherDTO.getId()));
+        }
     }
 
     @Override

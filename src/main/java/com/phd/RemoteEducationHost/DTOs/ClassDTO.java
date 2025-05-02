@@ -1,9 +1,5 @@
 package com.phd.RemoteEducationHost.DTOs;
 
-import com.phd.RemoteEducationHost.DTOs.creationDTOs.TeacherCreationDTO;
-import com.phd.RemoteEducationHost.enteties.Discipline;
-import com.phd.RemoteEducationHost.enteties.Group;
-import com.phd.RemoteEducationHost.enteties.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

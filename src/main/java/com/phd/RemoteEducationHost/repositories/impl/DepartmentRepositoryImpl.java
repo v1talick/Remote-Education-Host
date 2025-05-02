@@ -18,7 +18,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
     @Override
     public Department getDepartmentById(Integer id) {
         String sql = "select * from departments d where d.department_id=?";
-        return (Department) jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
                         new Department(rs.getInt("department_id"), rs.getString("department_name")
                                 , rs.getString("description"), rs.getDate("created_at"))
                 , id);

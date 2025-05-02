@@ -17,6 +17,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private final SpecialtyRowMapper specialtyRowMapper;
+
     @Override
     public Specialty getSpecialtyById(Integer id) {
         String sql = "SELECT * FROM specialties WHERE specialty_id = ?";
@@ -34,7 +35,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public List<Specialty> getAllSpecialties() {
         String sql = "select * from specialties";
-        return  jdbcTemplate.query(sql, (rs, rowNum) -> new Specialty(
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Specialty(
                 rs.getInt("specialty_id"),
                 rs.getString("specialty_name"),
                 new Department(rs.getInt("department"))));

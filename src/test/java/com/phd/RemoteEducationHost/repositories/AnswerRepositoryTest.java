@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringJUnitConfig(SystemTestConfiguration.class)
 public class AnswerRepositoryTest {
     @Autowired
@@ -24,6 +25,7 @@ public class AnswerRepositoryTest {
         assertEquals("alice.smith@example.com", answerFromDb.getStudent().getEmail());
         assertEquals("Implement a sorting algorithm.", answerFromDb.getTask().getDescription());
     }
+
     @Test
     public void getAnswersByTaskIdTest() {
         Answer answerFromDb = answerRepository.getAnswersByTaskId(1).get(0);
@@ -32,6 +34,7 @@ public class AnswerRepositoryTest {
         assertEquals("alice.smith@example.com", answerFromDb.getStudent().getEmail());
         assertEquals("Implement a sorting algorithm.", answerFromDb.getTask().getDescription());
     }
+
     @Test
     public void getAnswersByStudentIdTest() {
         Answer answerFromDb = answerRepository.getAnswersByStudentId(2).get(0);
@@ -39,6 +42,7 @@ public class AnswerRepositoryTest {
         assertEquals("bob.johnson@example.com", answerFromDb.getStudent().getEmail());
         assertEquals("Analyze a given digital signal.", answerFromDb.getTask().getDescription());
     }
+
     @Test
     public void saveAnswerTest() {
         Answer newAnswer = new Answer();
@@ -56,6 +60,7 @@ public class AnswerRepositoryTest {
 
         assertEquals(3, answerRepository.getAllAnswers().size());
     }
+
     @Test
     public void updateAnswerTest() {
         Answer updatedAnswer = answerRepository.getAnswerById(3);

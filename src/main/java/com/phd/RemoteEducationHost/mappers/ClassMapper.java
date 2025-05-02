@@ -1,17 +1,14 @@
 package com.phd.RemoteEducationHost.mappers;
 
 import com.phd.RemoteEducationHost.DTOs.ClassDTO;
-import com.phd.RemoteEducationHost.enteties.*;
 import com.phd.RemoteEducationHost.enteties.Class;
-import com.phd.RemoteEducationHost.enteties.enums.ScienceDegree;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 public class ClassMapper {
     public static Class mapToEntity(ClassDTO classDTO) {
         Class classEntity = new Class();
+        if (classDTO == null) {
+            return classEntity;
+        }
         classEntity.setId(classDTO.getId());
         classEntity.setActive(classDTO.isActive());
         classEntity.setStartedAt(classDTO.getStartedAt());
@@ -24,6 +21,10 @@ public class ClassMapper {
 
     public static ClassDTO mapToDTO(Class classEntity) {
         ClassDTO classDTO = new ClassDTO();
+        if (classEntity == null) {
+            return classDTO;
+        }
+
         classDTO.setId(classEntity.getId());
         classDTO.setActive(classEntity.isActive());
         classDTO.setStartedAt(classEntity.getStartedAt());

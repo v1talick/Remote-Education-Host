@@ -13,8 +13,10 @@ public class LoggingAspect {
     @Pointcut("execution(* com.phd.RemoteEducationHost.services..*(..)) " +
             "|| execution(* com.phd.RemoteEducationHost.repositories..*(..))" +
             "|| execution(* com.phd.RemoteEducationHost.mappers..*(..))")
-    public void applicationPackagePointcut() {}
-//
+    public void applicationPackagePointcut() {
+    }
+
+    //
     @Before("applicationPackagePointcut()")
     public void logBefore(JoinPoint joinPoint) {
 //        if (LoggingContext.shouldSkip()) return;

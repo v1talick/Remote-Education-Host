@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -19,16 +20,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// @Sql(scripts = "classpath:testdb/delete_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 public class ClassControllerTests {
+    private static final String BASE_URL = "/classes";
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-    private static final String BASE_URL = "/classes";
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
@@ -39,7 +40,8 @@ public class ClassControllerTests {
 
         String jsonResponse = mvcResult.getResponse().getContentAsString();
         // Deserialize JSON to List<ClassDTO>
-        List<ClassDTO> classes = objectMapper.readValue(jsonResponse, new TypeReference<List<ClassDTO>>() {});
+        List<ClassDTO> classes = objectMapper.readValue(jsonResponse, new TypeReference<List<ClassDTO>>() {
+        });
 
         assertFalse(classes.isEmpty());
         assertEquals(1, classes.get(0).getId());
@@ -78,7 +80,8 @@ public class ClassControllerTests {
 
         String jsonResponse = mvcResult.getResponse().getContentAsString();
         // Deserialize JSON to List<ClassDTO>
-        List<ClassDTO> classes = objectMapper.readValue(jsonResponse, new TypeReference<List<ClassDTO>>() {});
+        List<ClassDTO> classes = objectMapper.readValue(jsonResponse, new TypeReference<List<ClassDTO>>() {
+        });
 
         assertFalse(classes.isEmpty());
         assertEquals(1, classes.get(0).getId());
@@ -104,7 +107,8 @@ public class ClassControllerTests {
     public void testCreateClass() throws Exception {
         ClassDTO classDTO = TestObjectDTOsFactory.getClassDTO();
         GroupDTO groupDTO = TestObjectDTOsFactory.getGroupDTO();
-        groupDTO.setId(6);
+        groupDTO.setId(1);
+        classDTO.setGroup(groupDTO);
 
         mockMvc.perform(post(BASE_URL + "/admin-panel")
                         .contentType("application/json")

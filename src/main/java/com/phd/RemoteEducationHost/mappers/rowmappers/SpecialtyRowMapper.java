@@ -21,7 +21,7 @@ public class SpecialtyRowMapper implements RowMapper {
         Department department = new Department();
         department.setId(rs.getInt("department"));
 
-        if(rs.getMetaData().getColumnCount() > 3) {
+        if (rs.getMetaData().getColumnCount() > 3) {
             department.setName(rs.getString("department_name"));
             department.setDescription(rs.getString("description"));
             department.setCreatedAt(rs.getDate("created_at"));

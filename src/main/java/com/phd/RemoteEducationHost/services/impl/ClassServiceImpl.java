@@ -40,7 +40,7 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<ClassDTO> getClassesByTeacherId(Integer teacherId) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(!Objects.equals(user.getId(), teacherId) && !user.getRoles().contains(Role.ADMIN)) {
+        if (!Objects.equals(user.getId(), teacherId) && !user.getRoles().contains(Role.ADMIN)) {
             throw new AccessDeniedException("You can`t see this teacher`s classes");
         }
         return classRepository.getClassesByTeacherId(teacherId).stream().map(ClassMapper::mapToDTO).toList();

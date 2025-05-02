@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS specialties
     specialty_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     specialty_name VARCHAR(255) NOT NULL,
     department BIGINT NOT NULL,
+    CONSTRAINT specialty_name_unique UNIQUE (specialty_name),
     CONSTRAINT specialties_department_fkey FOREIGN KEY (department) REFERENCES departments (department_id) ON DELETE NO ACTION
 );
 

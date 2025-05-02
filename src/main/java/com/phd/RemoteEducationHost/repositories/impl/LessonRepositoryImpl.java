@@ -45,7 +45,7 @@ public class LessonRepositoryImpl implements LessonRepository {
                 "join disciplines d on d.discipline_id=c.discipline " +
                 "join teachers t on t.teacher_id=c.teacher " +
                 "join profiles p on p.profile_id=c.teacher " +
-                "join groups_ g on g.group_id=c.group_" ;
+                "join groups_ g on g.group_id=c.group_";
         return jdbcTemplate.query(sql, lessonRowMapper);
     }
 

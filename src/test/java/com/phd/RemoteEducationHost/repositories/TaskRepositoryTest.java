@@ -21,6 +21,7 @@ public class TaskRepositoryTest {
         Task taskFromDB = taskRepository.getTaskById(1);
         assertEquals("Implement a sorting algorithm.", taskFromDB.getDescription());
     }
+
     @Test
     public void getTaskWithDetailsByIdTest() {
         Task taskFromDB = taskRepository.getTaskWithDetailsById(2);
@@ -30,6 +31,7 @@ public class TaskRepositoryTest {
         assertEquals("Digital Signal Processing", taskFromDB.getAClass().getDiscipline().getName());
         assertNull(taskFromDB.getFilePath());
     }
+
     @Test
     public void getAllTasksByClassIdTest() {
         Task taskFromDB = taskRepository.getAllTasksByClassId(2).get(0);
@@ -39,6 +41,7 @@ public class TaskRepositoryTest {
         assertEquals("EE-101", taskFromDB.getAClass().getGroup().getName());
         assertEquals("Digital Signal Processing", taskFromDB.getAClass().getDiscipline().getName());
     }
+
     @Test
     public void saveTaskTest() {
         Task task = new Task();
@@ -55,6 +58,7 @@ public class TaskRepositoryTest {
         assertEquals(3, taskRepository.getAllTasks().size());
         assertNull(taskRepository.getTaskById(3).getFilePath());
     }
+
     @Test
     public void updateTaskTest() {
         Task updatedTask = taskRepository.getTaskById(3);
@@ -62,6 +66,7 @@ public class TaskRepositoryTest {
         taskRepository.updateTask(updatedTask);
         assertEquals(updatedTask, taskRepository.getTaskById(3));
     }
+
     @Test
     public void deleteTastByIdTest() {
         taskRepository.deleteTask(3);

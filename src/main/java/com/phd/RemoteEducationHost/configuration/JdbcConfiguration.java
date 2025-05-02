@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("com.phd.RemoteEducationHost")
 public class JdbcConfiguration {
-//    @Bean
+    //    @Bean
 //    public DataSource dataSource(){
 //        PGSimpleDataSource dataSource = new PGSimpleDataSource();
 //        dataSource.setServerName();

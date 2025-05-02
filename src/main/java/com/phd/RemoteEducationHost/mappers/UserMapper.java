@@ -3,32 +3,27 @@ package com.phd.RemoteEducationHost.mappers;
 import com.phd.RemoteEducationHost.DTOs.UserDTO;
 import com.phd.RemoteEducationHost.DTOs.creationDTOs.UserCreationDTO;
 import com.phd.RemoteEducationHost.enteties.User;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class UserMapper  {
+public class UserMapper {
     public static UserDTO userToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-        if(user == null) {
+        if (user == null) {
             return userDTO;
         }
         userDTO.setId(user.getId());
-        userDTO.setEmail(userDTO.getEmail());
+        userDTO.setEmail(user.getEmail());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setCreateAt(user.getCreateAt());
         userDTO.setBirthdayDate(user.getBirthdayDate());
-        userDTO.setRoles(userDTO.getRoles());
+        userDTO.setRoles(user.getRoles());
 
         return userDTO;
     }
 
     public static User userCreationDTOToUser(UserCreationDTO userDTO) {
         User user = new User();
-        if(userDTO == null) {
+        if (userDTO == null) {
             return user;
         }
         user.setEmail(userDTO.getEmail());
@@ -37,7 +32,7 @@ public class UserMapper  {
         user.setLastName(userDTO.getLastName());
         user.setCreateAt(userDTO.getCreateAt());
         user.setBirthdayDate(userDTO.getBirthdayDate());
-        user.setRoles(user.getRoles());
+        user.setRoles(userDTO.getRoles());
 
         return user;
     }

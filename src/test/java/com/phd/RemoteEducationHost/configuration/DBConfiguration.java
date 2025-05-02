@@ -15,6 +15,7 @@ public class DBConfiguration {
     public JdbcTemplate testJdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
+
     @Bean
     @Primary
     public DataSource testDataSource() {

@@ -32,7 +32,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
         userCreationDTO.setCreateAt(new Date());
         userCreationDTO.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
 
-        userService .saveUser(userCreationDTO);
+        userService.saveUser(userCreationDTO);
 
         Authentication authentication = authenticate(userCreationDTO.getEmail(), originalPassword);
 
@@ -58,16 +58,16 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
     private Authentication authenticate(String username, String password) {
 
-        System.out.println(username+"---++----"+password);
+        System.out.println(username + "---++----" + password);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        System.out.println("Sig in in user details"+ userDetails);
+        System.out.println("Sig in in user details" + userDetails);
 
-        if(userDetails == null) {
+        if (userDetails == null) {
             throw new BadCredentialsException("Invalid username and password");
         }
-        if(!passwordEncoder.matches(password,userDetails.getPassword())) {
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -19,11 +19,26 @@ public class LessonRepositoryTest {
     @Autowired
     LessonRepository lessonRepository;
 
+    public static Lesson getLessonTestInstance() {
+        Lesson lesson = new Lesson();
+        lesson.setId(228);
+        lesson.setLessonNumber(4);
+        lesson.setLessonType(LessonType.PRACTICAL_LESSON);
+        lesson.setLessonLink("https://www.youtube.com/watch?v=3jpUDB7E39c");
+        lesson.setDayOfWeek(DayOfWeek.FRIDAY);
+        Class aClass = new Class();
+        aClass.setId(1);
+        lesson.setAClass(aClass);
+
+        return lesson;
+    }
+
     @Test
     public void saveLessonTest() {
         lessonRepository.saveLesson(getLessonTestInstance());
         assertEquals(3, lessonRepository.getAllLessons().size());
     }
+
     @Test
     public void getLessonTest() {
         Lesson expectedLesson = new Lesson();
@@ -38,6 +53,7 @@ public class LessonRepositoryTest {
 //        assertTrue(lessonRepository.getLessonById(2).isPresent());
         assertEquals(expectedLesson, lessonRepository.getLessonById(2));
     }
+
     @Test
     public void getLessonWithDetails() {
         Lesson lessonFromDB = lessonRepository.getLessonWithDetailsById(1);
@@ -48,6 +64,7 @@ public class LessonRepositoryTest {
         assertEquals(lessonFromDB.getAClass().getGroup().getName(), "CS-101");
         assertEquals(lessonFromDB.getAClass().getDiscipline().getName(), "Algorithms and Data Structures");
     }
+
     @Test
     public void getAllLessons() {
         List<Lesson> lessons = lessonRepository.getAllLessons();
@@ -57,22 +74,26 @@ public class LessonRepositoryTest {
         assertEquals(lessons.get(0).getAClass().getGroup().getName(), "CS-101");
         assertEquals(lessons.get(0).getAClass().getDiscipline().getName(), "Algorithms and Data Structures");
     }
+
     @Test
     public void getLessonsByDayTest() {
         DayOfWeek day = DayOfWeek.MONDAY;
         List<Lesson> lessonsOnMonday = lessonRepository.getLessonsByDay(day).stream().filter(l -> l.getDayOfWeek().equals(day)).toList();
         assertEquals(lessonRepository.getLessonsByDay(day).size(), lessonsOnMonday.size());
     }
+
     @Test
     public void getLessonsByClassId() {
         List<Lesson> lessons = lessonRepository.getLessonsByClassId(1).stream().filter(l -> l.getAClass().getId() == 1).toList();
         assertEquals(lessonRepository.getLessonsByClassId(1).size(), lessons.size());
     }
+
     @Test
     public void getLessonsByTeacherId() {
         List<Lesson> lessons = lessonRepository.getAllLessons().stream().filter(l -> l.getAClass().getTeacher().getId() == 1).toList();
         assertEquals(lessonRepository.getLessonsByTeacherId(1).size(), lessons.size());
     }
+
     @Test
     public void updateLessonTest() {
         Lesson lesson = lessonRepository.getLessonById(1);
@@ -80,23 +101,11 @@ public class LessonRepositoryTest {
         lessonRepository.updateLesson(lesson);
         assertEquals(DayOfWeek.FRIDAY, lesson.getDayOfWeek());
     }
+
     @Test
     public void deleteLessonTest() {
         lessonRepository.deleteLesson(3);
 //        assertTrue(lessonRepository.getLessonById(3).isEmpty());
         assertEquals(2, lessonRepository.getAllLessons().size());
-    }
-    public static Lesson getLessonTestInstance() {
-        Lesson lesson = new Lesson();
-        lesson.setId(228);
-        lesson.setLessonNumber(4);
-        lesson.setLessonType(LessonType.PRACTICAL_LESSON);
-        lesson.setLessonLink("https://www.youtube.com/watch?v=3jpUDB7E39c");
-        lesson.setDayOfWeek(DayOfWeek.FRIDAY);
-        Class aClass = new Class();
-        aClass.setId(1);
-        lesson.setAClass(aClass);
-
-        return lesson;
     }
 }

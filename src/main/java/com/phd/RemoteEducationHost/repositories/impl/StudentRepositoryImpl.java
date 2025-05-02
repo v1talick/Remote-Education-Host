@@ -15,6 +15,7 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
     private final JdbcTemplate jdbcTemplate;
     private final UserRepository userRepository;
     private final StudentRowMapper studentRowMapper;
+
     @Override
     public Student getStudentById(Integer id) {
 //        String sql = "select * from students s " +
@@ -54,7 +55,7 @@ public class StudentRepositoryImpl implements com.phd.RemoteEducationHost.reposi
         String sql = "UPDATE students\n" +
                 "\tSET group_=?\n" +
                 "\tWHERE student_id=?";
-        jdbcTemplate.update(sql,student.getGroup().getId(), student.getId());
+        jdbcTemplate.update(sql, student.getGroup().getId(), student.getId());
         userRepository.updateUser(student);
     }
 

@@ -14,6 +14,7 @@ import java.util.List;
 public class ClassRepositoryImpl implements ClassRepository {
     private final JdbcTemplate jdbcTemplate;
     private final ClassRowMapper classRowMapper;
+
     @Override
     public Class getClassById(Integer id) {
         String sql = "select * from classes where class_id=?";

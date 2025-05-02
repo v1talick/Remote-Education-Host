@@ -40,6 +40,7 @@ public class TeacherRepositoryTest {
         teacherRepository.updateTeacher(teacher);
         assertEquals(ScienceDegree.ASSOCIATE_OF_SCIENCE, teacherRepository.getTeacherById(4).getScienceDegree());
     }
+
     @Test
     public void deleteTeacherTest() {
         teacherRepository.deleteTeacher(5);

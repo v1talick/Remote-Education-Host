@@ -23,7 +23,7 @@ public class ClassRowMapper implements RowMapper {
         group.setId(rs.getInt("group_"));
         Teacher teacher = new Teacher();
         teacher.setId(rs.getInt("teacher"));
-        if(rs.getMetaData().getColumnCount() > 6) {
+        if (rs.getMetaData().getColumnCount() > 6) {
             discipline.setName(rs.getString("discipline_name"));
             discipline.setDescription(rs.getString("description"));
             teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));

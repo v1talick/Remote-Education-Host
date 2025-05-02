@@ -21,12 +21,13 @@ public class DepartmentRepositoryTest {
     DepartmentRepository departmentRepository;
 
     @Test
-    public void saveDepartmentTest(){
+    public void saveDepartmentTest() {
         Department department = new Department(0, "testName", "testDescription", new Date());
         departmentRepository.saveDepartment(department);
 //        assertEquals("testName", departmentRepository.getDepartmentById(1).getName());
         assertEquals(4, departmentRepository.getAllDepartments().size());
     }
+
     @Test
     void getDepartmentByIdTest() {
         Department department = departmentRepository.getDepartmentById(1);
@@ -44,7 +45,7 @@ public class DepartmentRepositoryTest {
     }
 
     @Test
-    //?cascade delete?
+        //?cascade delete?
     void deleteDepartmentTest() {
 //        jdbcTemplate.update("INSERT INTO departments (department_name, description, created_at) VALUES (?, ?, ?)",
 //                "HR", "Handles recruitment", new java.sql.Date(System.currentTimeMillis()));

@@ -42,6 +42,7 @@ public class StudentRepositoryTest {
         studentRepository.updateStudent(student);
         assertEquals(6, studentRepository.getStudentById(2).getGroup().getId());
     }
+
     @Test
     public void deleteStudentTest() {
         studentRepository.deleteStudent(5);

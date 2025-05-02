@@ -11,7 +11,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class StudentCreationDTO extends UserCreationDTO{
+public class StudentCreationDTO extends UserCreationDTO {
     private GroupDTO groupDTO;
 
     public StudentCreationDTO(String email, String password, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, GroupDTO groupDTO) {

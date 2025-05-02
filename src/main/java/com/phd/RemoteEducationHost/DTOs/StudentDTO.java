@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class StudentDTO extends UserDTO{
+public class StudentDTO extends UserDTO {
     GroupDTO groupDTO;
 
     public StudentDTO(Integer id, String email, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, GroupDTO groupDTO) {

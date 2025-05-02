@@ -31,21 +31,21 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Void> saveStudent(@RequestBody StudentCreationDTO studentCreationDTO) {
-        studentService.saveStudent(studentCreationDTO);
+    @PostMapping("/admin-panel")
+    public ResponseEntity<Void> saveStudent(@RequestBody StudentDTO studentDTO) {
+        studentService.saveStudent(studentDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/admin-panel")
     public ResponseEntity<Void> updateStudent(@RequestBody StudentCreationDTO studentCreationDTO) {
         studentService.updateStudent(studentCreationDTO);
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin-panel/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Integer id) {
         studentService.deleteStudentById(id);
 

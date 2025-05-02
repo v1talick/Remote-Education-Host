@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SpecialtyService {
-    public SpecialtyDTO getSpecialtyById(Integer id);
-    public List<SpecialtyDTO> getAllSpecialties();
+    SpecialtyDTO getSpecialtyById(Integer id);
+
+    List<SpecialtyDTO> getAllSpecialties();
+
     void saveSpecialty(SpecialtyDTO specialtyDTO);
+
     void updateSpecialty(SpecialtyDTO specialtyDTO);
+
     void deleteSpecialty(Integer id);
 }

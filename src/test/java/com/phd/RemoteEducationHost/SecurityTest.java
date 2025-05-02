@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class SecurityTest {
@@ -14,7 +15,8 @@ public class SecurityTest {
     JwtEncoder jwtEncoder;
 
     private String mint() {
-        return mint(consumer -> {});
+        return mint(consumer -> {
+        });
     }
 
     private String mint(Consumer<JwtClaimsSet.Builder> consumer) {
@@ -23,7 +25,7 @@ public class SecurityTest {
                 .expiresAt(Instant.now().plusSeconds(100000))
                 .subject("sarah1")
                 .issuer("http://localhost:9000")
-                .audience(Arrays.asList("cashcard-client"))
+                .audience(List.of("cashcard-client"))
                 .claim("scp", Arrays.asList("cashcard:read", "cashcard:write"));
         consumer.accept(builder);
         JwtEncoderParameters parameters = JwtEncoderParameters.from(builder.build());

@@ -24,7 +24,7 @@ public class LessonRowMapper implements RowMapper {
         Class aClass = new Class();
         aClass.setId(rs.getInt("class_"));
 
-        if(rs.getMetaData().getColumnCount() > 6) {
+        if (rs.getMetaData().getColumnCount() > 6) {
             aClass.setStartedAt(rs.getDate("started"));
             aClass.setActive(rs.getBoolean("active"));
             Discipline discipline = new Discipline();
@@ -34,26 +34,26 @@ public class LessonRowMapper implements RowMapper {
             Teacher teacher = new Teacher();
             teacher.setId(rs.getInt("teacher"));
 
-                discipline.setName(rs.getString("discipline_name"));
-                discipline.setDescription(rs.getString("description"));
+            discipline.setName(rs.getString("discipline_name"));
+            discipline.setDescription(rs.getString("description"));
 //            teacher = (Teacher) new TeacherMapper().mapRow(rs, rowNum);
-                teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));
-                Department department = new Department();
+            teacher.setScienceDegree(ScienceDegree.getEnum(rs.getString("science_degree")));
+            Department department = new Department();
             department.setId(rs.getInt("department"));
             teacher.setDepartment(department);
-                teacher.setBirthdayDate(rs.getDate("birthday_date"));
-                teacher.setCreateAt(rs.getDate("creation_date"));
-                teacher.setEmail(rs.getString("email"));
-                teacher.setFirstName(rs.getString("firstname"));
-                teacher.setLastName(rs.getString("lastname"));
-                teacher.setPassword(rs.getString("encrypted_password"));
+            teacher.setBirthdayDate(rs.getDate("birthday_date"));
+            teacher.setCreateAt(rs.getDate("creation_date"));
+            teacher.setEmail(rs.getString("email"));
+            teacher.setFirstName(rs.getString("firstname"));
+            teacher.setLastName(rs.getString("lastname"));
+            teacher.setPassword(rs.getString("encrypted_password"));
 //            group = (Group) new GroupMapper().mapRow(rs, rowNum);
-                group.setId(rs.getInt("group_id"));
-                group.setName(rs.getString("group_name"));
-                group.setCreationDate(rs.getDate("creation_date"));
-                Specialty specialty = new Specialty();
-                specialty.setId(rs.getInt("specialty"));
-                group.setSpecialty(specialty);
+            group.setId(rs.getInt("group_id"));
+            group.setName(rs.getString("group_name"));
+            group.setCreationDate(rs.getDate("creation_date"));
+            Specialty specialty = new Specialty();
+            specialty.setId(rs.getInt("specialty"));
+            group.setSpecialty(specialty);
 
             aClass.setDiscipline(discipline);
             aClass.setGroup(group);
