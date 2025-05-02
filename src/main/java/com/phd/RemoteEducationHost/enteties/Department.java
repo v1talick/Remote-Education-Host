@@ -9,10 +9,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
-    Integer id;
-    String name;
-    String description;
-    Date createdAt;
+    private Integer id;
+    private String name;
+    private String description;
+    private Date createdAt;
 
     public Department(Integer id) {
         this.id = id;

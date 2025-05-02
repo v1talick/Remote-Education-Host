@@ -57,12 +57,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     }
 
     private Authentication authenticate(String username, String password) {
-
-        System.out.println(username + "---++----" + password);
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-        System.out.println("Sig in in user details" + userDetails);
 
         if (userDetails == null) {
             throw new BadCredentialsException("Invalid username and password");

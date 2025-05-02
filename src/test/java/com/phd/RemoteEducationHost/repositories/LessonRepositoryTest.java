@@ -12,7 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.time.DayOfWeek;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringJUnitConfig(SystemTestConfiguration.class)
 public class LessonRepositoryTest {
@@ -41,7 +42,7 @@ public class LessonRepositoryTest {
 
     @Test
     public void getLessonTest() {
-        Lesson expectedLesson = new Lesson();
+        Lesson  expectedLesson  = new Lesson();
         expectedLesson.setId(2);
         expectedLesson.setLessonLink("https://university.edu/dsp-lab");
         Class aClass = new Class();
@@ -56,7 +57,7 @@ public class LessonRepositoryTest {
 
     @Test
     public void getLessonWithDetails() {
-        Lesson lessonFromDB = lessonRepository.getLessonWithDetailsById(1);
+        Lesson  lessonFromDB = lessonRepository.getLessonWithDetailsById(1);
 //        assertTrue(lessonRepository.getLessonWithDetailsById(1).isPresent());
         assertEquals("https://university.edu/algorithms-class", lessonFromDB.getLessonLink());
         assertTrue(lessonFromDB.getAClass().isActive());

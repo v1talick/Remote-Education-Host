@@ -4,7 +4,6 @@ import com.phd.RemoteEducationHost.enteties.Lesson;
 
 import java.time.DayOfWeek;
 import java.util.List;
-import java.util.Optional;
 
 public interface LessonRepository {
     Lesson getLessonById(Integer id);

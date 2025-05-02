@@ -1,4 +1,4 @@
-package com.phd.RemoteEducationHost.enteties;
+package com.phd.RemoteEducationHost.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,10 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Answer {
+public class AnswerDTO {
     private Integer id;
-    private Task task;
-    private Student student;
+    private TaskDTO task;
+    private StudentDTO student;
     private Integer grade;
     private String filePath;
     private Date taskDeliveryTime;

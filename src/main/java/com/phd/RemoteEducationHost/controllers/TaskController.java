@@ -20,11 +20,23 @@ public class TaskController {
     public ResponseEntity<Void> createTask(@RequestPart(value = "file", required = false) MultipartFile file,
                                            @RequestPart(value = "task") TaskDTO taskDTO) {
         taskFacade.createTask(file, taskDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
+    }
+
+    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> updateTask(@RequestPart(value = "file", required = false) MultipartFile file,
+                                           @RequestPart(value = "task") TaskDTO taskDTO) {
+        taskFacade.updateTask(file, taskDTO);
+        return ResponseEntity.status(200).build();
     }
 
     @GetMapping("/group/{id}")
     public ResponseEntity<List<TaskDTO>> getTasksByGroupId(@PathVariable Integer id) {
         return ResponseEntity.ok(taskFacade.getTasksByGroupId(id));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDTO> getTasksByStudentId(@PathVariable Integer id) {
+        return ResponseEntity.ok(taskFacade.getTaskById(id));
     }
 }

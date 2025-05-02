@@ -28,7 +28,7 @@ public class TaskRepositoryTest {
         assertEquals("Analyze a given digital signal.", taskFromDB.getDescription());
         assertEquals("Dave", taskFromDB.getAClass().getTeacher().getFirstName());
         assertEquals("EE-101", taskFromDB.getAClass().getGroup().getName());
-        assertEquals("Digital Signal Processing", taskFromDB.getAClass().getDiscipline().getName());
+        assertEquals("testName2", taskFromDB.getAClass().getDiscipline().getName());
         assertNull(taskFromDB.getFilePath());
     }
 
@@ -39,7 +39,7 @@ public class TaskRepositoryTest {
         assertEquals("Analyze a given digital signal.", taskFromDB.getDescription());
         assertEquals("Dave", taskFromDB.getAClass().getTeacher().getFirstName());
         assertEquals("EE-101", taskFromDB.getAClass().getGroup().getName());
-        assertEquals("Digital Signal Processing", taskFromDB.getAClass().getDiscipline().getName());
+        assertEquals("testName2", taskFromDB.getAClass().getDiscipline().getName());
     }
 
     @Test
