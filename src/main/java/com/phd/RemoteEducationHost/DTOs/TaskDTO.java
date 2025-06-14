@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,5 +19,6 @@ public class TaskDTO {
     ClassDTO aClass;
     String description;
     String filePath;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     Date deadline;
 }

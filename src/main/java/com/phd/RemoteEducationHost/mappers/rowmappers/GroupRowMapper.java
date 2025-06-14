@@ -1,6 +1,5 @@
 package com.phd.RemoteEducationHost.mappers.rowmappers;
 
-import com.phd.RemoteEducationHost.DTOs.GroupDTO;
 import com.phd.RemoteEducationHost.enteties.Department;
 import com.phd.RemoteEducationHost.enteties.Group;
 import com.phd.RemoteEducationHost.enteties.Specialty;
@@ -25,7 +24,7 @@ public class GroupRowMapper implements RowMapper {
         group.setSpecialty(specialty);
         if (rs.getMetaData().getColumnCount() > 4) {
             Department department = new Department();
-            department.setId(rs.getInt("department_id"));
+            department.setId(rs.getInt("department"));
             specialty.setDepartment(department);
             specialty.setName(rs.getString("specialty_name"));
         }

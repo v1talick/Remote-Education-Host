@@ -4,7 +4,6 @@ import com.phd.RemoteEducationHost.enteties.Answer;
 import com.phd.RemoteEducationHost.mappers.rowmappers.AnswerRowMapper;
 import com.phd.RemoteEducationHost.repositories.AnswerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,9 +21,22 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
+                "join classes cl on cl.class_id=t.class_ " +
                 "where a.answer_id=?";
 
         return (Answer) jdbcTemplate.queryForObject(sql, answerRowMapper, id);
+    }
+
+    @Override
+    public Answer getAnswerByStudentIdAndTaskId(Integer studentId, Integer taskId) {
+        String sql = "select * from answers a " +
+                "join students s on s.student_id=a.student " +
+                "join profiles p on p.profile_id=a.student " +
+                "join tasks t on t.task_id=a.task " +
+                "join classes cl on cl.class_id=t.class_ " +
+                "where t.task_id=? and s.student_id=?";
+
+        return (Answer) jdbcTemplate.queryForObject(sql, answerRowMapper, taskId, studentId);
     }
 
     @Override
@@ -33,6 +45,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
+                "join classes cl on cl.class_id=t.class_ " +
                 "where s.student_id=?";
         return jdbcTemplate.query(sql, answerRowMapper, studentId);
     }
@@ -43,6 +56,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 "join students s on s.student_id=a.student " +
                 "join profiles p on p.profile_id=a.student " +
                 "join tasks t on t.task_id=a.task " +
+                "join classes cl on t.class_=cl.class_id " +
                 "where a.task=?";
         return jdbcTemplate.query(sql, answerRowMapper, taskId);
     }
@@ -68,9 +82,9 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     @Override
     public void updateAnswer(Answer answer) {
         String sql = "UPDATE public.answers\n" +
-                "\tSET task=?, student=?, grade=?, file_path=?, task_delivery_time=?\n" +
+                "\tSET grade=?, file_path=?, task_delivery_time=?\n" +
                 "\tWHERE answer_id=?;";
-        jdbcTemplate.update(sql, answer.getTask().getId(), answer.getStudent().getId(),
+        jdbcTemplate.update(sql,
                 answer.getGrade(), answer.getFilePath(), answer.getTaskDeliveryTime(), answer.getId());
     }
 

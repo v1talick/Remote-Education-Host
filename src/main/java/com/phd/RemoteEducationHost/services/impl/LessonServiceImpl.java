@@ -51,7 +51,10 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonDTO> getLessonsByTeacherId(Integer teacherId) {
-        return List.of();
+        return lessonRepository.getLessonsByTeacherId(teacherId)
+                .stream()
+                .map(LessonMapper::mapToDTO)
+                .toList();
     }
 
     @Override

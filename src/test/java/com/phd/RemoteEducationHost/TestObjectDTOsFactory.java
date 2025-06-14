@@ -3,8 +3,11 @@ package com.phd.RemoteEducationHost;
 import com.phd.RemoteEducationHost.DTOs.*;
 import com.phd.RemoteEducationHost.DTOs.creationDTOs.StudentCreationDTO;
 import com.phd.RemoteEducationHost.DTOs.creationDTOs.UserCreationDTO;
+import com.phd.RemoteEducationHost.enteties.enums.LessonType;
 import com.phd.RemoteEducationHost.enteties.enums.ScienceDegree;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -110,5 +113,46 @@ public class TestObjectDTOsFactory {
                 ScienceDegree.BACHELOR_OF_SCIENCE,
                 getDepartmentDTO()
         );
+    }
+
+    public static TaskDTO getTaskDTO() {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(2);
+        taskDTO.setAClass(getClassDTO());
+        taskDTO.setDeadline(new Date());
+        taskDTO.setDescription("test description text");
+
+        return taskDTO;
+    }
+
+    public static AnswerDTO getAnswerDTO() {
+        AnswerDTO answerDTO = new AnswerDTO();
+        answerDTO.setId(13);
+        TaskDTO taskDTO = getTaskDTO();
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setId(1);
+        ClassDTO classDTO = new ClassDTO();
+        classDTO.setGroup(groupDTO);
+        taskDTO.setAClass(classDTO);
+        answerDTO.setTask(taskDTO);
+        answerDTO.setGrade(100);
+        StudentDTO studentDTO = getStudentDTO();
+        studentDTO.setId(2);
+        answerDTO.setStudent(studentDTO);
+        answerDTO.setTaskDeliveryTime(LocalDate.now());
+
+        return answerDTO;
+    }
+
+    public static LessonDTO getLessonDTO() {
+        LessonDTO lessonDTO = new LessonDTO();
+        lessonDTO.setId(1);
+        lessonDTO.setAClass(getClassDTO());
+        lessonDTO.setLessonLink("https://test.edu/test");
+        lessonDTO.setLessonType(LessonType.LECTURE);
+        lessonDTO.setDayOfWeek(DayOfWeek.FRIDAY);
+        lessonDTO.setLessonNumber(1);
+
+        return lessonDTO;
     }
 }

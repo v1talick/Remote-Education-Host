@@ -3,10 +3,11 @@ package com.phd.RemoteEducationHost.repositories;
 import com.phd.RemoteEducationHost.enteties.Answer;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AnswerRepository {
     Answer getAnswerById(Integer id);
+
+    Answer getAnswerByStudentIdAndTaskId(Integer studentId, Integer taskId);
 
     List<Answer> getAnswersByStudentId(Integer studentId);
 

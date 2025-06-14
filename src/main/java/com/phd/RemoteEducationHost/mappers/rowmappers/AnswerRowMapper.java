@@ -1,9 +1,7 @@
 package com.phd.RemoteEducationHost.mappers.rowmappers;
 
-import com.phd.RemoteEducationHost.enteties.Answer;
-import com.phd.RemoteEducationHost.enteties.Group;
-import com.phd.RemoteEducationHost.enteties.Student;
-import com.phd.RemoteEducationHost.enteties.Task;
+import com.phd.RemoteEducationHost.enteties.*;
+import com.phd.RemoteEducationHost.enteties.Class;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +34,17 @@ public class AnswerRowMapper implements RowMapper {
             task.setDescription(rs.getString("description"));
             task.setDeadline(rs.getDate("deadline"));
             task.setFilePath((String) rs.getObject("file_path"));
+            Class aClass = new Class();
+            aClass.setId(rs.getInt("class_"));
+            aClass.setId(rs.getInt("class_"));
+            if(rs.getMetaData().getColumnCount() > 20) {
+                Teacher teacher = new Teacher();
+                teacher.setId(rs.getInt("teacher"));
+                aClass.setTeacher(teacher);
+//                task.setClassId(rs.getInt("class_"));
+                answer.setTask(task);
+            }
+            task.setAClass(aClass);
         }
         answer.setTask(task);
         answer.setStudent(student);

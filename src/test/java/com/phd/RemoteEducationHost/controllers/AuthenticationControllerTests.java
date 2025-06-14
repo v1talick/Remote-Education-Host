@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-// @Sql(scripts = "classpath:testdb/delete_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 public class AuthenticationControllerTests {
     private static final String BASE_URL = "/authentication";
     @Autowired
@@ -56,6 +55,30 @@ public class AuthenticationControllerTests {
         // Assert JWT is not blank
         assertNotNull(jwt, "JWT should not be null");
         assertFalse(jwt.trim().isEmpty(), "JWT should not be empty");
+    }
+
+    @Test
+    public void loginWithInvalidCredentials() throws Exception {
+        UserCreationDTO userCreationDTO = TestObjectDTOsFactory.getUserCreationDTO();
+        userCreationDTO.setPassword("wrongpassword");
+
+        // Perform login with invalid credentials
+        mockMvc.perform(post(BASE_URL + "/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userCreationDTO)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void registerWithExistingEmail() throws Exception {
+        UserCreationDTO userCreationDTO = TestObjectDTOsFactory.getUserCreationDTO();
+        userCreationDTO.setEmail("admin@example.com");
+
+        // Try to register again with the same email
+        mockMvc.perform(post(BASE_URL + "/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userCreationDTO)))
+                .andExpect(status().isUnauthorized());
     }
 }
 

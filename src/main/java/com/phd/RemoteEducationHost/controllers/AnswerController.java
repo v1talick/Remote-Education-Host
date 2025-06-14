@@ -18,9 +18,16 @@ public class AnswerController {
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> createAnswer(@RequestPart(value = "file", required = false) MultipartFile file,
-                                           @RequestPart(value = "task") AnswerDTO answerDTO) {
+                                             @RequestPart(value = "task") AnswerDTO answerDTO) {
         answerFacade.createAnswer(answerDTO, file);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
+    }
+
+    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> updateAnswer(@RequestPart(value = "file", required = false) MultipartFile file,
+                                             @RequestPart(value = "task") AnswerDTO answerDTO) {
+        answerFacade.updateAnswer(answerDTO, file);
+        return ResponseEntity.status(200).build();
     }
 
     @GetMapping("/student/{id}")
@@ -36,5 +43,11 @@ public class AnswerController {
     @GetMapping("/{id}")
     public ResponseEntity<AnswerDTO> getAnswerById(@PathVariable Integer id) {
         return ResponseEntity.ok(answerFacade.getAnswerById(id));
+    }
+
+    @GetMapping("/student/{studentId}/task/{taskId}")
+    public ResponseEntity<AnswerDTO> getAnswerByStudentIdAndTaskId(@PathVariable Integer studentId,
+                                                                    @PathVariable Integer taskId) {
+        return ResponseEntity.ok(answerFacade.getAnswerByStudentIdAndTaskId(studentId, taskId));
     }
 }

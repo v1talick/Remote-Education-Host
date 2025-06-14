@@ -10,6 +10,7 @@ public interface AnswerFacade {
     List<AnswerDTO> getAllAnswersByTaskId(int taskId);
     List<AnswerDTO> getAllAnswersByStudentId(int studentId);
     AnswerDTO getAnswerById(int id);
+    AnswerDTO getAnswerByStudentIdAndTaskId(int studentId, int taskId);
     void createAnswer(AnswerDTO answerDTO, MultipartFile file);
     void updateAnswer(AnswerDTO answerDTO, MultipartFile file);
     void deleteAnswer(int id);

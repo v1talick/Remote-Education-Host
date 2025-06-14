@@ -18,7 +18,7 @@ public class GroupRepositoryImpl implements GroupRepository {
     private final GroupRowMapper groupRowMapper;
 
     @Override
-    public Group getGroupById(@lombok.NonNull Integer id) {
+    public Group getGroupById(@NonNull Integer id) {
         String sql = "select * from groups_ g where g.group_id=?";
 
         return (Group) jdbcTemplate.queryForObject(sql, groupRowMapper, id);
@@ -33,7 +33,8 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     @Override
     public List<Group> getAllGroups() {
-        return jdbcTemplate.query("select * from groups_", groupRowMapper);
+        List query = jdbcTemplate.query("select * from groups_ g join specialties s on g.specialty=s.specialty_id ", groupRowMapper);
+        return query;
     }
 
     @Override

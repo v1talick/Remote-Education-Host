@@ -7,11 +7,10 @@ import com.phd.RemoteEducationHost.enteties.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringJUnitConfig(SystemTestConfiguration.class)
 public class AnswerRepositoryTest {
@@ -20,7 +19,13 @@ public class AnswerRepositoryTest {
 
     @Test
     public void getAnswerByIdTest() {
-        Answer answerFromDb = answerRepository.getAnswerById(2);
+        // Arrange
+        int targetId = 2;
+
+        // Act
+        Answer answerFromDb = answerRepository.getAnswerById(targetId);
+
+        // Assert
         assertEquals(90, answerFromDb.getGrade());
         assertEquals("alice.smith@example.com", answerFromDb.getStudent().getEmail());
         assertEquals("Implement a sorting algorithm.", answerFromDb.getTask().getDescription());

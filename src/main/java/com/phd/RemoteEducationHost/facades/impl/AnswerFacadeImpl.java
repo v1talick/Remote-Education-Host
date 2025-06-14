@@ -1,6 +1,8 @@
 package com.phd.RemoteEducationHost.facades.impl;
 
 import com.phd.RemoteEducationHost.DTOs.AnswerDTO;
+import com.phd.RemoteEducationHost.DTOs.StudentDTO;
+import com.phd.RemoteEducationHost.DTOs.TaskDTO;
 import com.phd.RemoteEducationHost.enteties.User;
 import com.phd.RemoteEducationHost.enteties.enums.Role;
 import com.phd.RemoteEducationHost.exceptions.DataNotFoundException;
@@ -8,6 +10,7 @@ import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.facades.AnswerFacade;
 import com.phd.RemoteEducationHost.services.AnswerService;
 import com.phd.RemoteEducationHost.services.StudentService;
+import com.phd.RemoteEducationHost.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,6 +30,8 @@ public class AnswerFacadeImpl implements AnswerFacade {
     private final AnswerService answerService;
 
     private final StudentService studentService;
+
+    private final TaskService taskService;
 
     private static final String ANSWER_DIR = "src/main/resources/uploads/answers/";
 
@@ -42,7 +48,7 @@ public class AnswerFacadeImpl implements AnswerFacade {
         }
         AnswerDTO answerDTO = answers.get(0);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId())) {
+        if (!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId())) {
             throw new AccessDeniedException("User not allowed to see answer");
         }
         return answers;
@@ -56,7 +62,7 @@ public class AnswerFacadeImpl implements AnswerFacade {
         }
         AnswerDTO answerDTO = answers.get(0);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) ||
+        if (!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) &&
                 !user.getId().equals(answerDTO.getStudent().getId())) {
             throw new AccessDeniedException("User not allowed to see answer");
         }
@@ -68,7 +74,19 @@ public class AnswerFacadeImpl implements AnswerFacade {
     public AnswerDTO getAnswerById(int id) {
         AnswerDTO answerDTO = answerService.getAnswerById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) ||
+        if (!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) &&
+                !user.getId().equals(answerDTO.getStudent().getId())) {
+            throw new AccessDeniedException("User not allowed to see answer");
+        }
+
+        return answerDTO;
+    }
+
+    @Override
+    public AnswerDTO getAnswerByStudentIdAndTaskId(int studentId, int taskId) {
+        AnswerDTO answerDTO = answerService.getAnswerByStudentIdAndTaskId(studentId, taskId);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) &&
                 !user.getId().equals(answerDTO.getStudent().getId())) {
             throw new AccessDeniedException("User not allowed to see answer");
         }
@@ -79,12 +97,19 @@ public class AnswerFacadeImpl implements AnswerFacade {
     @Override
     public void createAnswer(AnswerDTO answerDTO, MultipartFile file) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) ||
-                !user.getId().equals(answerDTO.getStudent().getId())) {
-            throw new AccessDeniedException("User not allowed to see answer");
+        StudentDTO student = studentService.getStudentById(answerDTO.getStudent().getId());
+        boolean isUserStudent = user.getId().equals(answerDTO.getStudent().getId()) && user.getRoles().contains(Role.STUDENT);
+        TaskDTO task = taskService.getTaskById(answerDTO.getTask().getId());
+        boolean isStudentOfThisGroup = student.getGroupDTO().getId().equals(task.getAClass().getGroup().getId());
+        if(!isStudentOfThisGroup) {
+            throw new AccessDeniedException("This task is not assigned to this student`s group");
+        }
+        if (!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(task.getAClass().getTeacher().getId()) && !isUserStudent) {
+            throw new AccessDeniedException("User not allowed to create answer");
         }
         String filePath = saveAnswerToFileSystem(file);
         answerDTO.setFilePath(filePath);
+        answerDTO.setTaskDeliveryTime(LocalDate.now());
 
         answerService.createAnswer(answerDTO);
     }
@@ -92,8 +117,14 @@ public class AnswerFacadeImpl implements AnswerFacade {
     @Override
     public void updateAnswer(AnswerDTO answerDTO, MultipartFile file) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) ||
-                !user.getId().equals(answerDTO.getStudent().getId())) {
+        StudentDTO student = studentService.getStudentById(answerDTO.getStudent().getId());
+        boolean isUserStudent = user.getId().equals(answerDTO.getStudent().getId()) && user.getRoles().contains(Role.STUDENT);
+        TaskDTO task = taskService.getTaskById(answerDTO.getTask().getId());
+        boolean isStudentOfThisGroup = student.getGroupDTO().getId().equals(task.getAClass().getGroup().getId());
+        if(!isStudentOfThisGroup) {
+            throw new AccessDeniedException("This task is not assigned to this student`s group");
+        }
+        if ((!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(task.getAClass().getTeacher().getId())) && !isUserStudent) {
             throw new AccessDeniedException("User not allowed to see answer");
         }
         String filePath = saveAnswerToFileSystem(file);
@@ -106,9 +137,9 @@ public class AnswerFacadeImpl implements AnswerFacade {
     public void deleteAnswer(int id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AnswerDTO answerDTO = answerService.getAnswerById(id);
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) ||
+        if (!user.getRoles().contains(Role.ADMIN) && !user.getId().equals(answerDTO.getTask().getAClass().getTeacher().getId()) &&
                 !user.getId().equals(answerDTO.getStudent().getId())) {
-            throw new AccessDeniedException("User not allowed to see answer");
+            throw new AccessDeniedException("User not allowed to delete answer");
         }
 
         answerService.deleteAnswer(id);

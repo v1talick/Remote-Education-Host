@@ -3,6 +3,10 @@ package com.phd.RemoteEducationHost.mappers;
 import com.phd.RemoteEducationHost.DTOs.AnswerDTO;
 import com.phd.RemoteEducationHost.enteties.Answer;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+
 public class AnswerMapper {
     public static Answer mapToEntity(AnswerDTO answerDTO) {
         Answer answer = new Answer();
@@ -14,7 +18,7 @@ public class AnswerMapper {
         answer.setStudent(StudentMapper.studentDTOToStudent(answerDTO.getStudent()));
         answer.setFilePath(answerDTO.getFilePath());
         answer.setTask(TaskMapper.toEntity(answerDTO.getTask()));
-        answer.setTaskDeliveryTime(answerDTO.getTaskDeliveryTime());
+        answer.setTaskDeliveryTime(Date.valueOf(answerDTO.getTaskDeliveryTime()));
 
         return answer;
     }
@@ -29,7 +33,9 @@ public class AnswerMapper {
         DTO.setStudent(StudentMapper.studentToStudentDTO(entity.getStudent()));
         DTO.setFilePath(entity.getFilePath());
         DTO.setTask(TaskMapper.toDTO(entity.getTask()));
-        DTO.setTaskDeliveryTime(entity.getTaskDeliveryTime());
+        DTO.setTaskDeliveryTime(Instant.ofEpochMilli(entity.getTaskDeliveryTime().getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate());
 
         return DTO;
     }

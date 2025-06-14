@@ -1,5 +1,6 @@
 package com.phd.RemoteEducationHost.configuration;
 
+import com.phd.RemoteEducationHost.exceptions.DataNotFoundException;
 import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.security.responses.AuthResponse;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,8 +19,8 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity handleEmptyResultDataAccessException(EmptyResultDataAccessException e) {
+    @ExceptionHandler(exception = {EmptyResultDataAccessException.class, DataNotFoundException.class})
+    public ResponseEntity handleEmptyResultDataAccessException(RuntimeException e) {
         return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 

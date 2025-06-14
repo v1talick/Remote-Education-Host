@@ -19,18 +19,23 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.getLessonsByGroupId(id));
     }
 
+    @GetMapping("teacher/{id}")
+    public ResponseEntity<List<LessonDTO>> getLessonsByTeacherId(@PathVariable Integer id) {
+        return ResponseEntity.ok(lessonService.getLessonsByTeacherId(id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<LessonDTO> getLessonById(@PathVariable Integer id) {
         return ResponseEntity.ok(lessonService.getLessonWithDetailsById(id));
     }
 
-    @PostMapping
+    @PostMapping("/admin-panel")
     public ResponseEntity<Void> createLesson(@RequestBody LessonDTO lessonDTO) {
         lessonService.saveLesson(lessonDTO);
         return ResponseEntity.status(201).build();
     }
 
-    @PutMapping
+    @PutMapping("/admin-panel")
     public ResponseEntity<Void> updateLesson(@RequestBody LessonDTO lessonDTO) {
         lessonService.updateLesson(lessonDTO);
         return ResponseEntity.status(200).build();

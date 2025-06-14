@@ -1,11 +1,13 @@
 package com.phd.RemoteEducationHost.facades.impl;
 
+import com.phd.RemoteEducationHost.DTOs.ClassDTO;
 import com.phd.RemoteEducationHost.DTOs.TaskDTO;
 import com.phd.RemoteEducationHost.enteties.User;
 import com.phd.RemoteEducationHost.enteties.enums.Role;
 import com.phd.RemoteEducationHost.exceptions.DataNotFoundException;
 import com.phd.RemoteEducationHost.exceptions.InvalidArgumentException;
 import com.phd.RemoteEducationHost.facades.TaskFacade;
+import com.phd.RemoteEducationHost.services.ClassService;
 import com.phd.RemoteEducationHost.services.StudentService;
 import com.phd.RemoteEducationHost.services.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ import java.util.List;
 public class TaskFacadeImpl implements TaskFacade {
     private final TaskService taskService;
 
+    private final ClassService classService;
+
     private final StudentService studentService;
 
     private static final String TASKS_DIR = "src/main/resources/uploads/tasks/";
@@ -32,7 +36,8 @@ public class TaskFacadeImpl implements TaskFacade {
     @Override
     public void createTask(MultipartFile file, TaskDTO taskDTO) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(taskDTO.getAClass().getTeacher().getId())) {
+        ClassDTO classDTO = classService.getClassById(taskDTO.getAClass().getId());
+        if (!(user.getRoles().contains(Role.ADMIN) || user.getId().equals(classDTO.getTeacher().getId()))) {
             throw new AccessDeniedException("User not allowed to create task");
         }
 
@@ -44,7 +49,8 @@ public class TaskFacadeImpl implements TaskFacade {
     @Override
     public void updateTask(MultipartFile file, TaskDTO taskDTO) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(taskDTO.getAClass().getTeacher().getId())) {
+        ClassDTO classDTO = classService.getClassById(taskDTO.getAClass().getId());
+        if (!(user.getRoles().contains(Role.ADMIN) || user.getId().equals(classDTO.getTeacher().getId()))) {
             throw new AccessDeniedException("User not allowed to create task");
         }
 
@@ -57,7 +63,7 @@ public class TaskFacadeImpl implements TaskFacade {
     public void deleteTask(Integer id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TaskDTO task = taskService.getTaskById(id);
-        if (!user.getRoles().contains(Role.ADMIN) || !user.getId().equals(task.getAClass().getTeacher().getId())) {
+        if (!(user.getRoles().contains(Role.ADMIN) || user.getId().equals(task.getAClass().getTeacher().getId()))) {
             throw new AccessDeniedException("User not allowed to delete task");
         }
 
@@ -69,7 +75,7 @@ public class TaskFacadeImpl implements TaskFacade {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TaskDTO task = taskService.getTaskById(id);
 
-        boolean isStudentOfThisGroup = (user.getRoles().contains(Role.STUDENT) && !studentService.getStudentById(user.getId())
+        boolean isStudentOfThisGroup = (user.getRoles().contains(Role.STUDENT) && studentService.getStudentById(user.getId())
                 .getGroupDTO().getId().equals(task.getAClass().getGroup().getId()));
         boolean isTeacherOfThisClass = user.getId().equals(task.getAClass().getTeacher().getId());
         if (!user.getRoles().contains(Role.ADMIN) && !isStudentOfThisGroup && !isTeacherOfThisClass) {
@@ -101,7 +107,7 @@ public class TaskFacadeImpl implements TaskFacade {
         }
         TaskDTO task = tasks.get(0);
 
-        boolean isStudentOfThisGroup = (user.getRoles().contains(Role.STUDENT) && !studentService.getStudentById(user.getId())
+        boolean isStudentOfThisGroup = (user.getRoles().contains(Role.STUDENT) && studentService.getStudentById(user.getId())
                 .getGroupDTO().getId().equals(task.getAClass().getGroup().getId()));
         boolean isTeacherOfThisClass = user.getId().equals(task.getAClass().getTeacher().getId());
         if (!user.getRoles().contains(Role.ADMIN) && !isStudentOfThisGroup && !isTeacherOfThisClass) {
@@ -123,7 +129,7 @@ public class TaskFacadeImpl implements TaskFacade {
         }
         TaskDTO task = tasks.get(0);
 
-        boolean isStudentOfThisGroup = (user.getRoles().contains(Role.STUDENT) && !studentService.getStudentById(user.getId())
+        boolean isStudentOfThisGroup = (user.getRoles().contains(Role.STUDENT) && studentService.getStudentById(user.getId())
                 .getGroupDTO().getId().equals(task.getAClass().getGroup().getId()));
         boolean isTeacherOfThisClass = user.getId().equals(task.getAClass().getTeacher().getId());
         if (!user.getRoles().contains(Role.ADMIN) && !isStudentOfThisGroup && !isTeacherOfThisClass) {

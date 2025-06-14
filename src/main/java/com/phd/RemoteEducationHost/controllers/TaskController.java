@@ -30,6 +30,11 @@ public class TaskController {
         return ResponseEntity.status(200).build();
     }
 
+    @GetMapping("/class/{id}")
+    public ResponseEntity<List<TaskDTO>> getTasksByClassId(@PathVariable Integer id) {
+        return ResponseEntity.ok(taskFacade.getTasksByClassId(id));
+    }
+
     @GetMapping("/group/{id}")
     public ResponseEntity<List<TaskDTO>> getTasksByGroupId(@PathVariable Integer id) {
         return ResponseEntity.ok(taskFacade.getTasksByGroupId(id));

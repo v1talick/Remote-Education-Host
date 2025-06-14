@@ -42,6 +42,16 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public AnswerDTO getAnswerByStudentIdAndTaskId(int studentId, int taskId) {
+        try {
+            return AnswerMapper.mapToDto(answerRepository.getAnswerByStudentIdAndTaskId(studentId, taskId));
+        } catch (EmptyResultDataAccessException e) {
+            throw new DataNotFoundException("Answer with task id %d and student id %d not found".formatted(
+                    taskId, studentId));
+        }
+    }
+
+    @Override
     public void createAnswer(AnswerDTO answerDTO) {
         try {
             answerRepository.saveAnswer(AnswerMapper.mapToEntity(answerDTO));

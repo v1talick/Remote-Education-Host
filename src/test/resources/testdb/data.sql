@@ -1,3 +1,13 @@
+-- Reset sequences for manual ID insertion
+ALTER TABLE departments ALTER COLUMN department_id RESTART WITH 1;
+ALTER TABLE specialties ALTER COLUMN specialty_id RESTART WITH 1;
+ALTER TABLE groups_ ALTER COLUMN group_id RESTART WITH 1;
+ALTER TABLE disciplines ALTER COLUMN discipline_id RESTART WITH 1;
+ALTER TABLE classes ALTER COLUMN class_id RESTART WITH 1;
+ALTER TABLE tasks ALTER COLUMN task_id RESTART WITH 1;
+ALTER TABLE answers ALTER COLUMN answer_id RESTART WITH 1;
+ALTER TABLE lessons ALTER COLUMN lesson_id RESTART WITH 1;
+
 INSERT INTO departments (department_name, description) VALUES
 ('Computer Science', 'Focuses on programming, AI, and cybersecurity.'),
 ('Electrical Engineering', 'Covers electronics, power systems, and circuits.'),
@@ -81,8 +91,13 @@ INSERT INTO answers (task, student, grade, task_delivery_time) VALUES
 INSERT INTO lessons (week_day, lesson_number, class_, lesson_type, lesson_link) VALUES
 -- Monday, 1st lesson: Algorithms class
 (1, 1, 1, 'Laboratory lesson', 'https://university.edu/algorithms-class'),
+(1, 2, 1, 'Laboratory lesson', 'https://university.edu/algorithms-class'),
+(1, 3, 1, 'Laboratory lesson', 'https://university.edu/algorithms-class'),
+(1, 4, 1, 'Laboratory lesson', 'https://university.edu/algorithms-class'),
 
 -- Wednesday, 3rd lesson: DSP class
-(3, 3, 2, 'Laboratory lesson', 'https://university.edu/dsp-lab');
+(3, 3, 2, 'Laboratory lesson', 'https://university.edu/dsp-lab'),
+(3, 1, 2, 'Laboratory lesson', 'https://university.edu/dsp-lab'),
+(3, 2, 2, 'Laboratory lesson', 'https://university.edu/dsp-lab');
 
 INSERT INTO admins (admin_id) VALUES (6);

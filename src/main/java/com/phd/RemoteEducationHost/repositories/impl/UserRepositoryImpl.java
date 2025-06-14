@@ -4,6 +4,7 @@ import com.phd.RemoteEducationHost.enteties.User;
 import com.phd.RemoteEducationHost.enteties.enums.Role;
 import com.phd.RemoteEducationHost.mappers.rowmappers.UserRowMapper;
 import com.phd.RemoteEducationHost.repositories.UserRepository;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -42,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUserByEmailWithRoles(String email) {
+    public User getUserByEmailWithRoles(@NotNull String email) {
         User user = getUserByEmail(email);
         user.setRoles(getUserRoles(user.getId()));
 

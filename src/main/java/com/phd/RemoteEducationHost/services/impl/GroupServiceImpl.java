@@ -19,7 +19,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupDTO getGroupById(Integer id) {
-        return GroupMapper.groupToGroupDTO(groupRepository.getGroupById(id));
+        return GroupMapper.groupToGroupDTO(groupRepository.getGroupWithDetailsById(id));
     }
 
     @Override

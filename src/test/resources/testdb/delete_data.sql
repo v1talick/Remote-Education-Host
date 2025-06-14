@@ -1,12 +1,42 @@
-DELETE FROM answers;
-DELETE FROM tasks;
-DELETE FROM lessons;
-DELETE FROM classes;
-DELETE FROM disciplines;
-DELETE FROM teachers;
-DELETE FROM students;
-DELETE FROM admins;
-DELETE FROM profiles;
-DELETE FROM groups_;
-DELETE FROM specialities;
-DELETE FROM departments;
+--ALTER TABLE answers ALTER COLUMN answer_id RESTART WITH 1;
+--ALTER TABLE tasks ALTER COLUMN task_id RESTART WITH 1;
+--ALTER TABLE lessons ALTER COLUMN lesson_id RESTART WITH 1;
+--ALTER TABLE classes ALTER COLUMN class_id RESTART WITH 1;
+--ALTER TABLE disciplines ALTER COLUMN discipline_id RESTART WITH 1;
+--ALTER TABLE teachers ALTER COLUMN teacher_id RESTART WITH 1;
+--ALTER TABLE students ALTER COLUMN student_id RESTART WITH 1;
+--ALTER TABLE admins ALTER COLUMN admin_id RESTART WITH 1;
+--ALTER TABLE profiles ALTER COLUMN profile_id RESTART WITH 1;
+--ALTER TABLE groups_ ALTER COLUMN group_id RESTART WITH 1;
+--ALTER TABLE specialties ALTER COLUMN specialty_id RESTART WITH 1;
+--ALTER TABLE departments ALTER COLUMN department_id RESTART WITH 1;
+SET REFERENTIAL_INTEGRITY FALSE;
+
+TRUNCATE TABLE answers;
+TRUNCATE TABLE tasks;
+TRUNCATE TABLE lessons;
+TRUNCATE TABLE classes;
+TRUNCATE TABLE disciplines;
+TRUNCATE TABLE teachers;
+TRUNCATE TABLE students;
+TRUNCATE TABLE admins;
+TRUNCATE TABLE profiles;
+TRUNCATE TABLE groups_;
+TRUNCATE TABLE specialties;
+TRUNCATE TABLE departments;
+
+SET REFERENTIAL_INTEGRITY TRUE;
+
+
+--DELETE FROM answers;
+--DELETE FROM tasks;
+--DELETE FROM lessons;
+--DELETE FROM classes;
+--DELETE FROM disciplines;
+--DELETE FROM teachers;
+--DELETE FROM students;
+--DELETE FROM admins;
+--DELETE FROM profiles;
+--DELETE FROM groups_;
+--DELETE FROM specialties;
+--DELETE FROM departments;

@@ -15,9 +15,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/uploads")
 public class FileController {
-    private static final String FILES_DIR = "src/main/resources/files/";
+    private static final String FILES_DIR = "src/main/resources/uploads";
 
     // TODO: move functionality to a service
     @GetMapping("tasks/{filename:.+}")
