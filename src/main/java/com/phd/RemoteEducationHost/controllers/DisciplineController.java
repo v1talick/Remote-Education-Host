@@ -1,9 +1,9 @@
 package com.phd.RemoteEducationHost.controllers;
 
-import com.phd.RemoteEducationHost.DTOs.DepartmentDTO;
 import com.phd.RemoteEducationHost.DTOs.DisciplineDTO;
-import com.phd.RemoteEducationHost.enteties.Discipline;
 import com.phd.RemoteEducationHost.services.DisciplineService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +30,14 @@ public class DisciplineController {
     }
 
     @PostMapping("/admin-panel")
-    public ResponseEntity createDiscipline(@RequestBody DisciplineDTO disciplineDTO) {
+    public ResponseEntity createDiscipline(@RequestBody @Valid DisciplineDTO disciplineDTO) {
         disciplineService.saveDiscipline(disciplineDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/admin-panel")
-    public ResponseEntity updateDiscipline(@RequestBody DisciplineDTO disciplineDTO) {
+    public ResponseEntity updateDiscipline(@RequestBody @Valid DisciplineDTO disciplineDTO) {
         disciplineService.updateDiscipline(disciplineDTO);
 
         return ResponseEntity.ok().build();

@@ -2,6 +2,7 @@ package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.AnswerDTO;
 import com.phd.RemoteEducationHost.facades.AnswerFacade;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,14 @@ public class AnswerController {
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> createAnswer(@RequestPart(value = "file", required = false) MultipartFile file,
-                                             @RequestPart(value = "task") AnswerDTO answerDTO) {
+                                             @RequestPart(value = "task") @Valid AnswerDTO answerDTO) {
         answerFacade.createAnswer(answerDTO, file);
         return ResponseEntity.status(201).build();
     }
 
     @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> updateAnswer(@RequestPart(value = "file", required = false) MultipartFile file,
-                                             @RequestPart(value = "task") AnswerDTO answerDTO) {
+                                             @RequestPart(value = "task") @Valid AnswerDTO answerDTO) {
         answerFacade.updateAnswer(answerDTO, file);
         return ResponseEntity.status(200).build();
     }

@@ -19,16 +19,20 @@ public class StudentRepositoryTest {
 
     @Test
     public void saveStudentTest() {
+        Group group = new Group();
+        group.setId(1);
         Student student = new Student(5, "testEmail@mail.com", "testSurname"
-                , "testEmail@mail.com", "testPassword", new Date(), new Date(), List.of(), new Group(1));
+                , "testEmail@mail.com", "testPassword", new Date(), new Date(), List.of(), group);
         studentRepository.saveStudent(student);
         assertEquals(3, studentRepository.getAllStudents().size());
     }
 
     @Test
     public void getStudentByIdTest() {
+        Group group = new Group();
+        group.setId(1);
         Student expectedStudent = new Student(1, "alice.smith@example.com", "hashed_password_1"
-                , "Alice", "Smith", new Date(), new Date(), List.of(), new Group(1));
+                , "Alice", "Smith", new Date(), new Date(), List.of(), group);
         Student student = studentRepository.getStudentById(1);
         assertEquals("hashed_password_1", student.getPassword());
         assertEquals(student, expectedStudent);
@@ -37,7 +41,8 @@ public class StudentRepositoryTest {
     @Test
     public void updateStudentTest() {
         Student student = studentRepository.getStudentById(2);
-        Group group = new Group(6);
+        Group group = new Group();
+        group.setId(6);
         student.setGroup(group);
         studentRepository.updateStudent(student);
         assertEquals(6, studentRepository.getStudentById(2).getGroup().getId());

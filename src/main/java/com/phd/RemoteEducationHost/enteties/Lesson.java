@@ -11,10 +11,10 @@ import java.time.DayOfWeek;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Lesson {
-    Integer id;
-    DayOfWeek dayOfWeek;
-    Integer lessonNumber;
-    Class aClass;
-    LessonType lessonType;
-    String lessonLink;
+    private Integer id;
+    private DayOfWeek dayOfWeek;
+    private Integer lessonNumber;
+    private Class aClass;
+    private LessonType lessonType;
+    private String lessonLink;
 }

@@ -2,6 +2,8 @@ package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.GroupDTO;
 import com.phd.RemoteEducationHost.services.GroupService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +28,14 @@ public class GroupController {
     }
 
     @PostMapping("/admin-panel")
-    public ResponseEntity createGroup(@RequestBody GroupDTO groupDTO) {
+    public ResponseEntity createGroup(@RequestBody @Valid GroupDTO groupDTO) {
         groupService.saveGroup(groupDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/admin-panel")
-    public ResponseEntity updateGroup(@RequestBody GroupDTO groupDTO) {
+    public ResponseEntity updateGroup(@RequestBody @Valid GroupDTO groupDTO) {
         groupService.updateGroup(groupDTO);
 
         return ResponseEntity.ok().build();

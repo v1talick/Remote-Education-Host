@@ -2,6 +2,7 @@ package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.SpecialtyDTO;
 import com.phd.RemoteEducationHost.services.SpecialtyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,14 @@ public class SpecialtyController {
     }
 
     @PostMapping("/admin-panel")
-    private ResponseEntity createSpecialty(@RequestBody SpecialtyDTO specialtyDTO) {
+    private ResponseEntity createSpecialty(@RequestBody @Valid SpecialtyDTO specialtyDTO) {
         specialtyService.saveSpecialty(specialtyDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/admin-panel")
-    private ResponseEntity updateSpecialty(@RequestBody SpecialtyDTO specialtyDTO) {
+    private ResponseEntity updateSpecialty(@RequestBody @Valid SpecialtyDTO specialtyDTO) {
         specialtyService.updateSpecialty(specialtyDTO);
 
         return ResponseEntity.ok().build();

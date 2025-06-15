@@ -2,6 +2,7 @@ package com.phd.RemoteEducationHost.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskDTO {
-    Integer id;
+    private Integer id;
+    @NotNull
     @JsonProperty("class")
-    ClassDTO aClass;
-    String description;
-    String filePath;
+    private ClassDTO aClass;
+    private String description;
+    private String filePath;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    Date deadline;
+    private Date deadline;
 }

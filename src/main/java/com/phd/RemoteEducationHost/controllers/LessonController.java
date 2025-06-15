@@ -2,6 +2,8 @@ package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.LessonDTO;
 import com.phd.RemoteEducationHost.services.LessonService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +32,13 @@ public class LessonController {
     }
 
     @PostMapping("/admin-panel")
-    public ResponseEntity<Void> createLesson(@RequestBody LessonDTO lessonDTO) {
+    public ResponseEntity<Void> createLesson(@RequestBody @Valid LessonDTO lessonDTO) {
         lessonService.saveLesson(lessonDTO);
         return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/admin-panel")
-    public ResponseEntity<Void> updateLesson(@RequestBody LessonDTO lessonDTO) {
+    public ResponseEntity<Void> updateLesson(@RequestBody @Valid LessonDTO lessonDTO) {
         lessonService.updateLesson(lessonDTO);
         return ResponseEntity.status(200).build();
     }

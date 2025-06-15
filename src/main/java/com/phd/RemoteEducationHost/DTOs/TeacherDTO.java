@@ -2,6 +2,7 @@ package com.phd.RemoteEducationHost.DTOs;
 
 import com.phd.RemoteEducationHost.enteties.enums.Role;
 import com.phd.RemoteEducationHost.enteties.enums.ScienceDegree;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherDTO extends UserDTO {
-    Integer id;
-    ScienceDegree scienceDegree;
-    DepartmentDTO departmentDTO;
+    private Integer id;
+    @NotNull
+    private ScienceDegree scienceDegree;
+    @NotNull
+    private DepartmentDTO departmentDTO;
 
     public TeacherDTO(Integer id, String email, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, ScienceDegree scienceDegree, DepartmentDTO department) {
         super(id, email, firstName, lastName, createAt, birthdayDate, roles);

@@ -10,12 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group {
-    Integer id;
-    Specialty specialty;
-    String name;
-    Date creationDate;
-
-    public Group(Integer id) {
-        this.id = id;
-    }
+    private Integer id;
+    private Specialty specialty;
+    private String name;
+    private Date creationDate;
 }

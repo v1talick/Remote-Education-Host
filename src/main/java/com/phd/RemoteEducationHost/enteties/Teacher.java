@@ -13,8 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Teacher extends User {
-    ScienceDegree scienceDegree;
-    Department department;
+    private ScienceDegree scienceDegree;
+    private Department department;
 
     public Teacher(Integer id, String email, String password, String firstName, String lastName, Date createAt, Date birthdayDate, List<Role> roles, ScienceDegree scienceDegree, Department department) {
         super(id, email, password, firstName, lastName, createAt, birthdayDate, roles);

@@ -1,9 +1,9 @@
 package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.TeacherDTO;
-import com.phd.RemoteEducationHost.DTOs.creationDTOs.TeacherCreationDTO;
-import com.phd.RemoteEducationHost.repositories.TeacherRepository;
 import com.phd.RemoteEducationHost.services.TeacherService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +35,14 @@ public class TeacherController {
     }
 
     @PostMapping("/admin-panel")
-    public ResponseEntity<Void> saveTeacher(@RequestBody TeacherDTO teacherDTO) {
+    public ResponseEntity<Void> saveTeacher(@RequestBody @Valid TeacherDTO teacherDTO) {
         teacherService.saveTeacher(teacherDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/admin-panel")
-    public ResponseEntity<Void> updateTeacher(@RequestBody TeacherDTO teacherDTO) {
+    public ResponseEntity<Void> updateTeacher(@RequestBody @Valid TeacherDTO teacherDTO) {
         teacherService.updateTeacher(teacherDTO);
 
         return new ResponseEntity<>(HttpStatus.OK);

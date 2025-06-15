@@ -3,6 +3,7 @@ package com.phd.RemoteEducationHost.controllers;
 import com.phd.RemoteEducationHost.DTOs.creationDTOs.UserCreationDTO;
 import com.phd.RemoteEducationHost.facades.AuthenticationFacade;
 import com.phd.RemoteEducationHost.security.responses.AuthResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,12 @@ public class AuthenticationController {
     private final AuthenticationFacade authenticationFacade;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody UserCreationDTO userCreationDTO) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid UserCreationDTO userCreationDTO) {
         return new ResponseEntity<>(authenticationFacade.login(userCreationDTO), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody UserCreationDTO userCreationDTO) {
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid UserCreationDTO userCreationDTO) {
         AuthResponse authResponse = authenticationFacade.register(userCreationDTO);
         if (authResponse.getStatus()) {
             return new ResponseEntity(authResponse, HttpStatus.CREATED);

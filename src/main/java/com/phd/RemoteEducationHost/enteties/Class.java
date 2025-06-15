@@ -10,10 +10,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Class {
-    Integer id;
-    Teacher teacher;
-    Discipline discipline;
-    Group group;
-    boolean isActive;
-    Date startedAt;
+    private Integer id;
+    private Teacher teacher;
+    private Discipline discipline;
+    private Group group;
+    private boolean isActive;
+    private Date startedAt;
 }

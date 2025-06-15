@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Discipline {
-    Integer id;
-    String name;
-    String description;
+    private Integer id;
+    private String name;
+    private String description;
 }

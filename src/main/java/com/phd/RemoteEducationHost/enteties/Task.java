@@ -10,9 +10,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task {
-    Integer id;
-    Class aClass;
-    String description;
-    String filePath;
-    Date deadline;
+    private Integer id;
+    private Class aClass;
+    private String description;
+    private String filePath;
+    private Date deadline;
 }

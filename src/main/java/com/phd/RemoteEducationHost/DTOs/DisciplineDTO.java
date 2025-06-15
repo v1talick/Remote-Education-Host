@@ -1,5 +1,7 @@
 package com.phd.RemoteEducationHost.DTOs;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DisciplineDTO {
-    Integer id;
-    String name;
-    String description;
+    private Integer id;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String name;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String description;
 }

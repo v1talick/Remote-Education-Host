@@ -1,6 +1,11 @@
 package com.phd.RemoteEducationHost.DTOs;
 
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -9,8 +14,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentDTO {
-    Integer id;
-    String name;
-    String description;
-    Date createdAt;
+    private Integer id;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String name;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String description;
+    private Date createdAt;
 }

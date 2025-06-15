@@ -2,14 +2,13 @@ package com.phd.RemoteEducationHost.controllers;
 
 import com.phd.RemoteEducationHost.DTOs.DepartmentDTO;
 import com.phd.RemoteEducationHost.services.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/departments")
@@ -29,13 +28,13 @@ public class DepartmentController {
     }
 
     @PostMapping("/admin-panel")
-    public ResponseEntity createDepartment(@RequestBody DepartmentDTO departmentDTO) {
+    public ResponseEntity createDepartment(@RequestBody @Valid DepartmentDTO departmentDTO) {
         departmentService.saveDepartment(departmentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/admin-panel")
-    public ResponseEntity updateDepartment(@RequestBody DepartmentDTO departmentDTO) {
+    public ResponseEntity updateDepartment(@RequestBody @Valid DepartmentDTO departmentDTO) {
         departmentService.updateDepartment(departmentDTO);
         return ResponseEntity.ok().build();
     }
